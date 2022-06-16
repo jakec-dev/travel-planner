@@ -11,6 +11,7 @@ A CRUD application for planning gear to bring for hiking/bikepacking/moto-campin
 ### Install
 ```
 git clone https://github.com/jakec-dev/travel-planner.git
+cd travel-planner
 yarn
 ```
 
