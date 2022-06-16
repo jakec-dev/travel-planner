@@ -1,33 +1,19 @@
 import React from 'react'
 
-const items = [
-  { 
-    id: 1, 
-    name: "test item" 
-  },
-  { 
-    id: 2, 
-    name: "test item 2" 
-  },
-  { 
-    id: 3, 
-    name: "test item 3" 
-  },
-]
-
-const GearList = () => {
-  return (
+const GearList = (props) => {
+  const { gear } = props
+  return gear.length > 0 ? (
     <table>
       <tr>
-        <th>Item</th>
+        <th>Item Name</th>
       </tr>
-      {items.map(({id, name}) => (
+      {gear.map(({id, name}) => (
         <tr key={id}>
           {name}
         </tr>
       ))}
     </table>
-  )
+  ) : null
 }
 
 export default GearList
