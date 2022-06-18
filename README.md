@@ -4,7 +4,7 @@ A CRUD application for planning gear to bring for hiking/bikepacking/moto-campin
 
 | Phase | Scope                                                                                                                                                                         |
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1     | _ Simple application that allows users to create, read, update and delete gear.<br />_ This should should consist of React.js, Node.js with Express and an SQL Lite Database. |
+| 1     | - Simple application that allows users to create, read, update and delete gear.<br />- This should should consist of React.js, Node.js with Express and an SQL Lite Database. |
 
 ## Usage
 
