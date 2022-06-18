@@ -9,7 +9,8 @@
   "private": true,
   "scripts": {
     "dev": "webpack serve",
-    "build": "webpack"
+    "build": "webpack",
+    "start": "node server.js"
   },
   "dependencies": {
     "@csstools/normalize.css": "^12.0.0",
