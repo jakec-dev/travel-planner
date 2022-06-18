@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaEdit } from "react-icons/fa";
 
 function Item({ item, onDelete }) {
   return (
     <tr>
       <td>{item.name}</td>
       <td>{item.brand}</td>
-      <td>
+      <td className="alignRight">
+        <FaEdit />
         <FaTimes onClick={() => onDelete(item.id)} />
       </td>
     </tr>

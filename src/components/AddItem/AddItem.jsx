@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import "./AddItem.css";
 
 function AddItem({ onAdd }) {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (!name) {
@@ -13,34 +15,37 @@ function AddItem({ onAdd }) {
     setName("");
     setBrand("");
   };
+
   return (
-    <form onSubmit={(e) => onSubmit(e)}>
-      <div>
-        <label htmlFor="itemName">
-          Item name
-          <input
-            id="itemName"
-            type="text"
-            placeholder="Add item name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="itemBrand">
-          Brand
-          <input
-            id="itemBrand"
-            type="text"
-            placeholder="Add item brand"
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
-          />
-        </label>
-      </div>
-      <input type="submit" value="Add Item" />
-    </form>
+    <div className="paper">
+      <form onSubmit={(e) => onSubmit(e)} style={{ marginBottom: "24px" }}>
+        <div className="textInput">
+          <label htmlFor="itemName">
+            Item name
+            <input
+              id="itemName"
+              type="text"
+              placeholder="Add item name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="textInput">
+          <label htmlFor="itemBrand">
+            Brand
+            <input
+              id="itemBrand"
+              type="text"
+              placeholder="Add item brand"
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+            />
+          </label>
+        </div>
+        <button type="submit">Add Item</button>
+      </form>
+    </div>
   );
 }
 
