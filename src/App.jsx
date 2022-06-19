@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import ItemInspector from "./components/ItemInspector";
 
 function App() {
-  // const [showAddItem, setShowAddItem] = useState(false);
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -27,12 +26,7 @@ function App() {
         return item;
       })
     );
-    setSelectedItems(
-      items.map((item) => {
-        if (item.id === modifiedItem.id) return modifiedItem;
-        return item;
-      })
-    );
+    setSelectedItems([modifiedItem]);
   };
 
   const toggleItemSelect = (item) => {
@@ -52,16 +46,11 @@ function App() {
           items={items}
           onDelete={deleteItem}
           toggleCheckbox={toggleItemSelect}
+          selectedItems={selectedItems}
+          setSelectedItems={setSelectedItems}
         />
         <ItemInspector selectedItems={selectedItems} onUpdate={updateItem} />
       </div>
-      {/* <button
-        type="button"
-        className="showAddItem"
-        onClick={() => setShowAddItem(!showAddItem)}
-      >
-        {showAddItem ? "Close" : "Add Item"}
-  </button> */}
       <div className="addItem">
         <AddItem onAdd={addItem} />
       </div>
