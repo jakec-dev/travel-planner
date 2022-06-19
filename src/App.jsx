@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddItem from "./components/AddItem";
 import GearTable from "./components/GearTable";
 import Header from "./components/Header";
 import ItemInspector from "./components/ItemInspector";
+import "@csstools/normalize.css";
+import "./App.css";
 
 function App() {
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jakecdev-travel-planner-server.herokuapp.com/items/get")
+      .then((resp) => resp.json())
+      .then((data) => {
+        setItems(data.items);
+      });
+  }, []);
 
   const addItem = (item) => {
     const id = items.length > 0 ? items[items.length - 1].id + 1 : 1;
