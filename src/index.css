@@ -64,23 +64,27 @@ th {
   text-align: right;
 }
 
-.centerBlock {
-  margin: 0 auto;
-}
-
 .pageContainer {
   margin: 0 auto;
   width: 1080px;
 }
-
-#showAddItem {
+.showAddItem {
   background-color: var(--color-primary);
   color: var(--color-textOnPrimary);
   padding: 8px 22px;
 }
 
-#showAddItem:hover {
+.showAddItem:hover {
   background-color: var(--color-primaryDark);
+}
+
+.gearTableAndInspector {
+  display: flex;
+}
+
+.addItem {
+  width: 100%;
+  margin: 24px auto;
 }
 
 .paper {

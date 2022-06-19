@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FaTimes, FaEdit } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 
-function Item({ item, onDelete }) {
+function Item({ item, onDelete, toggleCheckbox }) {
   return (
     <tr>
+      <td>
+        <input type="checkbox" onChange={toggleCheckbox} />
+      </td>
       <td>{item.name}</td>
       <td>{item.brand}</td>
       <td className="alignRight">
-        <FaEdit />
         <FaTimes onClick={() => onDelete(item.id)} />
       </td>
     </tr>
@@ -22,6 +24,7 @@ Item.propTypes = {
     brand: PropTypes.string,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
+  toggleCheckbox: PropTypes.func.isRequired,
 };
 
 export default Item;
