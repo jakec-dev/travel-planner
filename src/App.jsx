@@ -10,18 +10,19 @@ function App() {
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  useEffect(() => {
-    fetch("https://jakecdev-travel-planner-server.herokuapp.com/items")
-      .then((resp) => resp.json())
-      .then((data) => {
-        setItems(data.items);
-      });
-  }, []);
-
   const addItem = (item) => {
     const id = items.length > 0 ? items[items.length - 1].id + 1 : 1;
     const newItem = { id, ...item };
     setItems([...items, newItem]);
+    fetch("https://jakecdev-travel-planner-server.herokuapp.com/item", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newItem),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   const deleteItem = (id) => {
@@ -47,6 +48,14 @@ function App() {
     }
     setSelectedItems(selectedItems.filter((o) => o.id !== item.id));
   };
+
+  useEffect(() => {
+    fetch("https://jakecdev-travel-planner-server.herokuapp.com/items")
+      .then((resp) => resp.json())
+      .then((data) => {
+        setItems(data.items);
+      });
+  }, []);
 
   return (
     <main className="pageContainer">
