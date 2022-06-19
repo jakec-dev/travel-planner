@@ -3,6 +3,8 @@ import AddItem from "./components/AddItem";
 import GearTable from "./components/GearTable";
 import Header from "./components/Header";
 import ItemInspector from "./components/ItemInspector";
+import "@csstools/normalize.css";
+import "./App.css";
 
 function App() {
   const [items, setItems] = useState([]);
