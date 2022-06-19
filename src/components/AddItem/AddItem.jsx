@@ -18,6 +18,7 @@ function AddItem({ onAdd }) {
 
   return (
     <div className="paper">
+      <h2>Add Item</h2>
       <form onSubmit={(e) => onSubmit(e)} style={{ marginBottom: "24px" }}>
         <div className="textInput">
           <label htmlFor="itemName">

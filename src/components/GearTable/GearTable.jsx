@@ -2,12 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import Item from "./Item";
 
-function GearTable({ items, onDelete }) {
-  return items.length > 0 ? (
-    <div className="paper centerBlock">
+function GearTable({ items, onDelete, toggleCheckbox }) {
+  return (
+    <div className="paper">
       <table>
         <thead>
           <tr>
+            <th>
+              <input type="checkbox" />
+            </th>
             <th>Name</th>
             <th>Brand</th>
             <th className="alignRight">Actions</th>
@@ -15,12 +18,17 @@ function GearTable({ items, onDelete }) {
         </thead>
         <tbody>
           {items.map((item) => (
-            <Item key={item.id} item={item} onDelete={onDelete} />
+            <Item
+              key={item.id}
+              item={item}
+              onDelete={onDelete}
+              toggleCheckbox={() => toggleCheckbox(item)}
+            />
           ))}
         </tbody>
       </table>
     </div>
-  ) : null;
+  );
 }
 
 GearTable.propTypes = {
@@ -31,6 +39,7 @@ GearTable.propTypes = {
     })
   ).isRequired,
   onDelete: PropTypes.func.isRequired,
+  toggleCheckbox: PropTypes.func.isRequired,
 };
 
 export default GearTable;
