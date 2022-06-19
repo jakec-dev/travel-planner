@@ -11,7 +11,7 @@ function App() {
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/items/get")
+    fetch("https://jakecdev-travel-planner-server.herokuapp.com/items/get")
       .then((resp) => resp.json())
       .then((data) => {
         setItems(data.items);
