@@ -7,8 +7,8 @@ import ItemInspector from "./components/ItemInspector";
 import "@csstools/normalize.css";
 import "./App.css";
 
-const serverURL = "http://localhost:5000";
-// const serverURL = "https://jakecdev-travel-planner-server.herokuapp.com";
+// const serverURL = "http://localhost:5000";
+const serverURL = "https://jakecdev-travel-planner-server.herokuapp.com";
 
 function App() {
   const [items, setItems] = useState([]);
