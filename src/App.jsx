@@ -38,7 +38,7 @@ function App() {
   };
 
   const updateItem = (modifiedItem) => {
-    fetch(`https://jakecdev-travel-planner-server.herokuapp.com`, {
+    fetch(`https://jakecdev-travel-planner-server.herokuapp.com/item`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(modifiedItem),
