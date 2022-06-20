@@ -57,6 +57,20 @@ function App() {
       });
   }, []);
 
+  const [itemId, setItemId] = useState(0);
+  const fetchItemTest = () => {
+    fetch(`http://localhost:5000/item/${itemId}`)
+      .then((resp) => resp.json())
+      .then((data) => console.log(data));
+  };
+
+  const [itemToDelete, setItemToDelete] = useState(0);
+  const deleteItemTest = () => {
+    fetch(`http://localhost:5000/item/${itemToDelete}`, { method: "DELETE" })
+      .then((resp) => resp.json())
+      .then((data) => console.log(data));
+  };
+
   return (
     <main className="pageContainer">
       <Header />
@@ -72,6 +86,18 @@ function App() {
       </div>
       <div className="addItem">
         <AddItem onAdd={addItem} />
+      </div>
+      <div>
+        <input onChange={(e) => setItemId(e.target.value)} />
+        <button type="button" onClick={fetchItemTest}>
+          Fetch item by ID (check console)
+        </button>
+      </div>
+      <div>
+        <input onChange={(e) => setItemToDelete(e.target.value)} />
+        <button type="button" onClick={deleteItemTest}>
+          Delete item by ID (check console)
+        </button>
       </div>
     </main>
   );
