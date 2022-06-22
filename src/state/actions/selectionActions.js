@@ -1,0 +1,27 @@
+import * as SELECTION_ACTION_TYPES from "./selectionActionTypes";
+
+const itemsActions = (dispatch) => {
+  const clearAll = () => {
+    dispatch({
+      type: SELECTION_ACTION_TYPES.CLEAR_ALL,
+    });
+  };
+
+  const selectAll = (items) => {
+    dispatch({
+      type: SELECTION_ACTION_TYPES.SELECT_ALL,
+      payload: items,
+    });
+  };
+
+  const toggleItem = (itemId) => {
+    dispatch({
+      type: SELECTION_ACTION_TYPES.TOGGLE_ITEM,
+      payload: itemId,
+    });
+  };
+
+  return { clearAll, selectAll, toggleItem };
+};
+
+export default itemsActions;

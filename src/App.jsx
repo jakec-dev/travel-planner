@@ -1,29 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaSync } from "react-icons/fa";
 import AddItem from "./components/AddItem";
 import GearTable from "./components/GearTable";
 import Header from "./components/Header";
 import ItemInspector from "./components/ItemInspector";
+import { AppStateProvider } from "./contexts/appState";
 import "@csstools/normalize.css";
 import "./App.css";
 
 // const serverURL = "http://localhost:5000";
-const serverURL = "https://jakecdev-travel-planner-server.herokuapp.com";
+// const serverURL = "https://jakecdev-travel-planner-server.herokuapp.com";
 
 function App() {
-  const [items, setItems] = useState([]);
+  /* const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
-
-  const addItem = async (item) => {
-    const newItem = item;
-    newItem.id = items.length > 0 ? items[items.length - 1].id + 1 : 1;
-    const data = await fetch(`${serverURL}/item`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newItem),
-    }).then((resp) => resp.json());
-    setItems([...items, data]);
-  };
 
   const deleteItem = async (id) => {
     const data = await fetch(`${serverURL}/item/${id}`, {
@@ -55,11 +45,6 @@ function App() {
     const data = await fetch(`${serverURL}/item/${item.id}`).then((resp) =>
       resp.json()
     );
-    if (selectedItems.findIndex((o) => o.id === data.id) === -1) {
-      setSelectedItems([...selectedItems, data]);
-      return;
-    }
-    setSelectedItems(selectedItems.filter((o) => o.id !== data.id));
   };
 
   const syncFromServer = async () => {
@@ -69,28 +54,24 @@ function App() {
 
   useEffect(() => {
     syncFromServer();
-  }, []);
+  }, []); */
 
   return (
-    <main className="pageContainer">
-      <Header />
-      <div className="gearTableAndInspector">
-        <GearTable
-          items={items}
-          onDelete={deleteItem}
-          toggleCheckbox={toggleItemSelect}
-          selectedItems={selectedItems}
-          setSelectedItems={setSelectedItems}
-        />
-        <ItemInspector selectedItems={selectedItems} onUpdate={updateItem} />
-      </div>
-      <div className="addItem">
-        <AddItem onAdd={addItem} />
-      </div>
-      <div className="addItem">
-        <FaSync onClick={syncFromServer} />
-      </div>
-    </main>
+    <AppStateProvider>
+      <main className="pageContainer">
+        <Header />
+        <div className="gearTableAndInspector">
+          <GearTable />
+          <ItemInspector />
+        </div>
+        <div className="addItem">
+          <AddItem />
+        </div>
+        <div className="addItem">
+          <FaSync />
+        </div>
+      </main>
+    </AppStateProvider>
   );
 }
 

@@ -1,17 +1,23 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+import { useAppState } from "../../contexts/appState";
 import "./AddItem.css";
 
-function AddItem({ onAdd }) {
+function AddItem() {
+  const { items, itemsActions } = useAppState();
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
+
+  const handleSubmit = async (newItem) => {
+    const newItemWithId = { ...newItem, id: items.length };
+    itemsActions.addItem(newItemWithId);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (!name) {
       return;
     }
-    onAdd({ name, brand });
+    handleSubmit({ name, brand });
     setName("");
     setBrand("");
   };
@@ -19,39 +25,31 @@ function AddItem({ onAdd }) {
   return (
     <div className="paper">
       <h2>Add Item</h2>
-      <form onSubmit={(e) => onSubmit(e)} style={{ marginBottom: "24px" }}>
-        <div className="textInput">
-          <label htmlFor="itemName">
-            Item name
-            <input
-              id="itemName"
-              type="text"
-              placeholder="Add item name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </label>
-        </div>
-        <div className="textInput">
-          <label htmlFor="itemBrand">
-            Brand
-            <input
-              id="itemBrand"
-              type="text"
-              placeholder="Add item brand"
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-            />
-          </label>
-        </div>
+      <form onSubmit={(e) => onSubmit(e)}>
+        <label htmlFor="itemName" className="textInput">
+          Item name
+          <input
+            id="itemName"
+            type="text"
+            placeholder="Add item name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+        <label htmlFor="itemBrand" className="textInput">
+          Brand
+          <input
+            id="itemBrand"
+            type="text"
+            placeholder="Add item brand"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+          />
+        </label>
         <button type="submit">Add Item</button>
       </form>
     </div>
   );
 }
-
-AddItem.propTypes = {
-  onAdd: PropTypes.func.isRequired,
-};
 
 export default AddItem;

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FaSave } from "react-icons/fa";
+import { useAppState } from "../../../../contexts/appState";
 
-function TextInput({ field, onSave, item, setIsEditable }) {
+function TextInput({ field, item, setIsEditable }) {
+  const { itemsActions } = useAppState();
   const [value, setValue] = useState(item[field]);
 
   const handleClick = () => {
-    onSave({ ...item, [field]: value });
+    itemsActions.updateItem({ ...item, [field]: value });
     setIsEditable(false);
   };
 
@@ -25,7 +27,6 @@ TextInput.propTypes = {
     name: PropTypes.string.isRequired,
     brand: PropTypes.string,
   }).isRequired,
-  onSave: PropTypes.func.isRequired,
   setIsEditable: PropTypes.func.isRequired,
 };
 
