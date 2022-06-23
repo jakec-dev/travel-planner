@@ -21,6 +21,13 @@ const itemsActions = (dispatch) => {
     });
   };
 
+  const setItems = (items) => {
+    dispatch({
+      type: ITEMS_ACTION_TYPES.SET_ITEMS,
+      payload: items,
+    });
+  };
+
   const updateItem = (modifiedItem) => {
     dispatch({
       type: ITEMS_ACTION_TYPES.UPDATE_ITEM,
@@ -28,7 +35,7 @@ const itemsActions = (dispatch) => {
     });
   };
 
-  return { addItem, clearItems, deleteItem, updateItem };
+  return { addItem, clearItems, deleteItem, setItems, updateItem };
 };
 
 export default itemsActions;

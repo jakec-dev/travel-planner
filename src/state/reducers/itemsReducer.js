@@ -17,6 +17,12 @@ export const itemsReducer = (state = itemsInitialState, action) => {
         items: state.items.filter((item) => item.id !== action.payload),
       };
 
+    case ITEMS_ACTION_TYPES.SET_ITEMS:
+      return {
+        ...state,
+        items: action.payload,
+      };
+
     case ITEMS_ACTION_TYPES.UPDATE_ITEM:
       return {
         ...state,

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { createItem } from "../../api/itemsAPI";
 import { useAppState } from "../../contexts/appState";
 import "./AddItem.css";
 
@@ -7,25 +8,24 @@ function AddItem() {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
 
-  const handleSubmit = async (newItem) => {
-    const newItemWithId = { ...newItem, id: items.length };
-    itemsActions.addItem(newItemWithId);
-  };
-
-  const onSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name) {
       return;
     }
-    handleSubmit({ name, brand });
-    setName("");
-    setBrand("");
+    const newItem = { id: items.length + 1, name, brand };
+    await createItem(newItem).then((resp) => {
+      console.log("createItem resp: ", resp);
+      itemsActions.addItem(newItem);
+      setName("");
+      setBrand("");
+    });
   };
 
   return (
     <div className="paper">
       <h2>Add Item</h2>
-      <form onSubmit={(e) => onSubmit(e)}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="itemName" className="textInput">
           Item name
           <input

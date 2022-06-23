@@ -1,10 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
+import { deleteItem } from "../../../api/itemsAPI";
 import { useAppState } from "../../../contexts/appState";
 
 function Item({ item }) {
   const { itemsActions, selectionActions, selectedItems } = useAppState();
+
+  const handleDelete = async () => {
+    await deleteItem(item.id).then((resp) => {
+      console.log("deleteItem resp: ", resp);
+      itemsActions.deleteItem(item.id);
+    });
+  };
 
   const handleSelect = () => {
     selectionActions.toggleItem(item.id);
@@ -29,7 +37,7 @@ function Item({ item }) {
       <td>{item.name}</td>
       <td>{item.brand}</td>
       <td className="alignRight">
-        <FaTimes onClick={() => itemsActions.deleteItem(item.id)} />
+        <FaTimes onClick={handleDelete} />
       </td>
     </tr>
   );

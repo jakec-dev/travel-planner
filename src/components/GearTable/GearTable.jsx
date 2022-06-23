@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { readItems } from "../../api/itemsAPI";
 import { useAppState } from "../../contexts/appState";
 import Item from "./Item";
 
 function GearTable() {
-  const { items, selectedItems, selectionActions } = useAppState();
+  const { items, itemsActions, selectedItems, selectionActions } =
+    useAppState();
 
   const isAllSelected =
     items.length !== 0 && items.length === selectedItems.length;
@@ -15,6 +17,13 @@ function GearTable() {
       selectionActions.selectAll(items);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      const data = await readItems();
+      itemsActions.setItems(data);
+    })();
+  }, []);
 
   return (
     <div className="paper">
