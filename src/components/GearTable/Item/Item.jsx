@@ -1,31 +1,54 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
+import { deleteItem } from "../../../api/itemsAPI";
+import { useAppState } from "../../../contexts/appState";
 
-function Item({ checked, item, onDelete, toggleCheckbox }) {
+function Item({ item }) {
+  const { itemsActions, selectionActions, selectedItems } = useAppState();
+
+  const handleDelete = async () => {
+    await deleteItem(item.id).then((resp) => {
+      console.log("deleteItem resp: ", resp);
+      itemsActions.deleteItem(item.id);
+    });
+  };
+
+  const handleSelect = () => {
+    selectionActions.toggleItem(item.id);
+  };
+
+  const isItemSelected = (itemId) => {
+    const itemIndex = selectedItems.findIndex(
+      (selectedItem) => selectedItem === itemId
+    );
+    return itemIndex >= 0;
+  };
+
   return (
     <tr>
       <td>
-        <input type="checkbox" onChange={toggleCheckbox} checked={checked} />
+        <input
+          type="checkbox"
+          checked={isItemSelected(item.id)}
+          onChange={handleSelect}
+        />
       </td>
       <td>{item.name}</td>
       <td>{item.brand}</td>
       <td className="alignRight">
-        <FaTimes onClick={() => onDelete(item.id)} />
+        <FaTimes onClick={handleDelete} />
       </td>
     </tr>
   );
 }
 
 Item.propTypes = {
-  checked: PropTypes.bool.isRequired,
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     brand: PropTypes.string,
   }).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  toggleCheckbox: PropTypes.func.isRequired,
 };
 
 export default Item;

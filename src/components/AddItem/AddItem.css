@@ -2,6 +2,10 @@
   padding: 16px 0;
 }
 
+form {
+  margin-bottom: 24px;
+}
+
 input {
   display: block;
   border-radius: var(--borderRadius);

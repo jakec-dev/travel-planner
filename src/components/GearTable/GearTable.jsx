@@ -1,30 +1,29 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect } from "react";
+import { readItems } from "../../api/itemsAPI";
+import { useAppState } from "../../contexts/appState";
 import Item from "./Item";
 
-function GearTable({
-  items,
-  onDelete,
-  selectedItems,
-  setSelectedItems,
-  toggleCheckbox,
-}) {
+function GearTable() {
+  const { items, itemsActions, selectedItems, selectionActions } =
+    useAppState();
+
   const isAllSelected =
-    items.length === selectedItems.length && items.length !== 0;
+    items.length !== 0 && items.length === selectedItems.length;
 
   const handleSelectAll = () => {
     if (isAllSelected) {
-      setSelectedItems([]);
+      selectionActions.clearAll();
     } else {
-      setSelectedItems(items);
+      selectionActions.selectAll(items);
     }
   };
 
-  const isChecked = (item) => {
-    if (selectedItems.find((selectedItem) => selectedItem.id === item.id))
-      return true;
-    return false;
-  };
+  useEffect(() => {
+    (async () => {
+      const data = await readItems();
+      itemsActions.setItems(data);
+    })();
+  }, []);
 
   return (
     <div className="paper">
@@ -34,8 +33,8 @@ function GearTable({
             <th>
               <input
                 type="checkbox"
-                onChange={handleSelectAll}
                 checked={isAllSelected}
+                onChange={handleSelectAll}
               />
             </th>
             <th>Name</th>
@@ -45,37 +44,12 @@ function GearTable({
         </thead>
         <tbody>
           {items.map((item) => (
-            <Item
-              key={item.id}
-              checked={isChecked(item)}
-              item={item}
-              onDelete={onDelete}
-              toggleCheckbox={() => toggleCheckbox(item)}
-            />
+            <Item key={item.id} item={item} />
           ))}
         </tbody>
       </table>
     </div>
   );
 }
-
-GearTable.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      brand: PropTypes.string,
-    })
-  ).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  selectedItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      brand: PropTypes.string,
-    })
-  ).isRequired,
-  setSelectedItems: PropTypes.func.isRequired,
-  toggleCheckbox: PropTypes.func.isRequired,
-};
 
 export default GearTable;
