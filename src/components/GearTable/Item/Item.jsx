@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
 import { deleteItem } from "../../../api/itemsAPI";
@@ -19,12 +19,15 @@ function Item({ item }) {
     selectionActions.toggleItem(item.id);
   };
 
-  const isItemSelected = (itemId) => {
-    const itemIndex = selectedItems.findIndex(
-      (selectedItem) => selectedItem === itemId
-    );
-    return itemIndex >= 0;
-  };
+  const isItemSelected = useCallback(
+    (itemId) => {
+      const itemIndex = selectedItems.findIndex(
+        (selectedItem) => selectedItem === itemId
+      );
+      return itemIndex >= 0;
+    },
+    [selectedItems]
+  );
 
   return (
     <tr>
