@@ -1,5 +1,4 @@
-const serverURL = "http://localhost:5000";
-// const serverURL = "https://jakecdev-travel-planner-server.herokuapp.com";
+const serverURL = process.env.API_URL;
 
 const createItem = async (newItem) => {
   const data = await fetch(`${serverURL}/items`, {
