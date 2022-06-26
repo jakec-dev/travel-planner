@@ -1,5 +1,4 @@
 import React from "react";
-import { FaSync } from "react-icons/fa";
 import AddItem from "./components/AddItem";
 import { ItemsStateProvider } from "./contexts/itemsState";
 import GearTable from "./components/GearTable";
@@ -10,9 +9,9 @@ import "./App.css";
 
 function App() {
   return (
-    <ItemsStateProvider>
-      <main className="pageContainer">
-        <Header />
+    <main className="pageContainer">
+      <Header />
+      <ItemsStateProvider>
         <div className="gearTableAndInspector">
           <GearTable />
           <ItemInspector />
@@ -20,11 +19,8 @@ function App() {
         <div className="addItem">
           <AddItem />
         </div>
-        <div className="addItem">
-          <FaSync />
-        </div>
-      </main>
-    </ItemsStateProvider>
+      </ItemsStateProvider>
+    </main>
   );
 }
 
