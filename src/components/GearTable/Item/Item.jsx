@@ -11,6 +11,7 @@ function Item({ item }) {
     await deleteItem(item.id).then((resp) => {
       console.log("deleteItem resp: ", resp);
       itemsActions.deleteItem(item.id);
+      selectionActions.toggleItem(item.id);
     });
   };
 
