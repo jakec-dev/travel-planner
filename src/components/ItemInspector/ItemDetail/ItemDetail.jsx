@@ -2,18 +2,29 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FaEdit } from "react-icons/fa";
 import TextInput from "./TextInput";
+import { updateItem } from "../../../api/itemsAPI";
 import { useAppState } from "../../../contexts/appState";
 import "./ItemDetail.css";
 
 function ItemDetail({ itemId }) {
-  const { items } = useAppState();
+  const { items, itemsActions } = useAppState();
   const item = items.find((i) => i.id === itemId);
   const [editName, setEditName] = useState(false);
   const [editBrand, setEditBrand] = useState(false);
+
+  const handleSave = (setEditField) => async (field, value) => {
+    const modifiedItem = { ...item, [field]: value };
+    await updateItem(modifiedItem).then((resp) => {
+      itemsActions.updateItem(modifiedItem);
+      setEditField(false);
+      console.log("updateItem resp: ", resp);
+    });
+  };
+
   return (
     <>
       {editName ? (
-        <TextInput item={item} field="name" setIsEditable={setEditName} />
+        <TextInput field="name" item={item} onSave={handleSave(setEditName)} />
       ) : (
         <div className="itemDetail_Header">
           <h2>{item.name}</h2>
@@ -21,7 +32,11 @@ function ItemDetail({ itemId }) {
         </div>
       )}
       {editBrand ? (
-        <TextInput item={item} field="brand" setIsEditable={setEditBrand} />
+        <TextInput
+          field="brand"
+          item={item}
+          onSave={handleSave(setEditBrand)}
+        />
       ) : (
         <div className="itemDetail_Textfield">
           <p>Brand: {item.brand}</p>
