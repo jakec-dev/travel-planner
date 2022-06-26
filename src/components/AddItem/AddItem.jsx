@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { createItem } from "../../api/itemsAPI";
-import { useAppState } from "../../contexts/appState";
+import { useItemsState } from "../../contexts/itemsState";
 import "./AddItem.css";
 
 function AddItem() {
-  const { items, itemsActions } = useAppState();
+  const { items, itemsActions } = useItemsState();
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
 

@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { FaEdit } from "react-icons/fa";
 import TextInput from "./TextInput";
 import { updateItem } from "../../../api/itemsAPI";
-import { useAppState } from "../../../contexts/appState";
+import { useItemsState } from "../../../contexts/itemsState";
 import "./ItemDetail.css";
 
 function ItemDetail({ itemId }) {
-  const { items, itemsActions } = useAppState();
+  const { items, itemsActions } = useItemsState();
   const item = items.find((i) => i.id === itemId);
   const [editName, setEditName] = useState(false);
   const [editBrand, setEditBrand] = useState(false);

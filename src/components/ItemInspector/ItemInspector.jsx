@@ -1,10 +1,10 @@
 import React from "react";
-import { useAppState } from "../../contexts/appState";
+import { useItemsState } from "../../contexts/itemsState";
 import ItemDetail from "./ItemDetail";
 import "./ItemInspector.css";
 
 function ItemInspector() {
-  const { selectedItems } = useAppState();
+  const { selectedItems } = useItemsState();
   return (
     <aside id="itemInspector">
       {selectedItems.length < 1 && <h2>Select an item</h2>}

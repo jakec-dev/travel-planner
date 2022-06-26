@@ -1,7 +1,7 @@
 import React from "react";
 import { FaSync } from "react-icons/fa";
 import AddItem from "./components/AddItem";
-import { AppStateProvider } from "./contexts/appState";
+import { ItemsStateProvider } from "./contexts/itemsState";
 import GearTable from "./components/GearTable";
 import Header from "./components/Header";
 import ItemInspector from "./components/ItemInspector";
@@ -10,7 +10,7 @@ import "./App.css";
 
 function App() {
   return (
-    <AppStateProvider>
+    <ItemsStateProvider>
       <main className="pageContainer">
         <Header />
         <div className="gearTableAndInspector">
@@ -24,7 +24,7 @@ function App() {
           <FaSync />
         </div>
       </main>
-    </AppStateProvider>
+    </ItemsStateProvider>
   );
 }
 
