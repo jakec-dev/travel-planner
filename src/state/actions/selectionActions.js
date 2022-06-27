@@ -7,6 +7,13 @@ const itemsActions = (dispatch) => {
     });
   };
 
+  const deselectItem = (itemId) => {
+    dispatch({
+      type: SELECTION_ACTION_TYPES.DESELECT_ITEM,
+      payload: itemId,
+    });
+  };
+
   const selectAll = (items) => {
     dispatch({
       type: SELECTION_ACTION_TYPES.SELECT_ALL,
@@ -21,7 +28,7 @@ const itemsActions = (dispatch) => {
     });
   };
 
-  return { clearAll, selectAll, toggleItem };
+  return { clearAll, deselectItem, selectAll, toggleItem };
 };
 
 export default itemsActions;

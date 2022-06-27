@@ -8,6 +8,15 @@ export const selectionReducer = (state = selectionInitialState, action) => {
     case SELECTION_ACTION_TYPES.CLEAR_ALL:
       return { ...state, selectedItems: selectionInitialState };
 
+    case SELECTION_ACTION_TYPES.DESELECT_ITEM: {
+      return {
+        ...state,
+        selectedItems: state.selectedItems.filter(
+          (selectedItem) => selectedItem !== action.payload
+        ),
+      };
+    }
+
     case SELECTION_ACTION_TYPES.SELECT_ALL: {
       return { ...state, selectedItems: action.payload.map((item) => item.id) };
     }
