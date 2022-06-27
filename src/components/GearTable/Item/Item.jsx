@@ -11,7 +11,7 @@ function Item({ item }) {
     await deleteItem(item.id).then((resp) => {
       console.log("deleteItem resp: ", resp);
       itemsActions.deleteItem(item.id);
-      selectionActions.toggleItem(item.id);
+      selectionActions.deselectItem(item.id);
     });
   };
 
@@ -19,22 +19,19 @@ function Item({ item }) {
     selectionActions.toggleItem(item.id);
   };
 
-  const isItemSelected = useCallback(
-    (itemId) => {
-      const itemIndex = selectedItems.findIndex(
-        (selectedItem) => selectedItem === itemId
-      );
-      return itemIndex >= 0;
-    },
-    [selectedItems]
-  );
+  const isItemSelected = useCallback(() => {
+    const itemIndex = selectedItems.findIndex(
+      (selectedItem) => selectedItem === item.id
+    );
+    return itemIndex >= 0;
+  }, [selectedItems]);
 
   return (
     <tr>
       <td>
         <input
           type="checkbox"
-          checked={isItemSelected(item.id)}
+          checked={isItemSelected()}
           onChange={handleSelect}
         />
       </td>
