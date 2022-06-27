@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
 import { deleteItem } from "../../../api/itemsAPI";
-import { useAppState } from "../../../contexts/appState";
+import { useItemsState } from "../../../contexts/itemsState";
 
 function Item({ item }) {
-  const { itemsActions, selectionActions, selectedItems } = useAppState();
+  const { itemsActions, selectionActions, selectedItems } = useItemsState();
 
   const handleDelete = async () => {
     await deleteItem(item.id).then((resp) => {
@@ -19,12 +19,15 @@ function Item({ item }) {
     selectionActions.toggleItem(item.id);
   };
 
-  const isItemSelected = (itemId) => {
-    const itemIndex = selectedItems.findIndex(
-      (selectedItem) => selectedItem === itemId
-    );
-    return itemIndex >= 0;
-  };
+  const isItemSelected = useCallback(
+    (itemId) => {
+      const itemIndex = selectedItems.findIndex(
+        (selectedItem) => selectedItem === itemId
+      );
+      return itemIndex >= 0;
+    },
+    [selectedItems]
+  );
 
   return (
     <tr>

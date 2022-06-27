@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { readItems } from "../../api/itemsAPI";
-import { useAppState } from "../../contexts/appState";
+import { useItemsState } from "../../contexts/itemsState";
 import Item from "./Item";
 
 function GearTable() {
   const { items, itemsActions, selectedItems, selectionActions } =
-    useAppState();
+    useItemsState();
 
   const isAllSelected =
     items.length !== 0 && items.length === selectedItems.length;
