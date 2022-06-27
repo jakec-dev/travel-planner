@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
 import { deleteItem } from "../../../api/itemsAPI";
@@ -19,19 +19,18 @@ function Item({ item }) {
     selectionActions.toggleItem(item.id);
   };
 
-  const isItemSelected = useCallback(() => {
-    const itemIndex = selectedItems.findIndex(
-      (selectedItem) => selectedItem === item.id
-    );
-    return itemIndex >= 0;
-  }, [selectedItems]);
+  const isItemSelected = useMemo(
+    () =>
+      selectedItems.findIndex((selectedItem) => selectedItem === item.id) >= 0,
+    [selectedItems]
+  );
 
   return (
     <tr>
       <td>
         <input
           type="checkbox"
-          checked={isItemSelected()}
+          checked={isItemSelected}
           onChange={handleSelect}
         />
       </td>
