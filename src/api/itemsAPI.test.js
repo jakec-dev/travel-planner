@@ -25,6 +25,10 @@ describe("createItem()", () => {
     const resp = await createItem(newItem);
     expect(resp).toMatchObject(newItem);
   });
+  it("should throw if an error response is received", async () => {
+    fetch.mockResponseOnce(JSON.stringify({ status: "error" }));
+    await expect(createItem()).rejects.toThrow();
+  });
 });
 
 describe("deleteItem()", () => {
@@ -39,6 +43,10 @@ describe("deleteItem()", () => {
     const itemId = 3;
     const resp = await deleteItem(itemId);
     expect(resp).toMatchObject(items[2]);
+  });
+  it("should throw if an error response is received", async () => {
+    fetch.mockResponseOnce(JSON.stringify({ status: "error" }));
+    await expect(deleteItem()).rejects.toThrow();
   });
 });
 
@@ -55,6 +63,10 @@ describe("readItem()", () => {
     const resp = await readItem(itemId);
     expect(resp).toMatchObject(items[2]);
   });
+  it("should throw if an error response is received", async () => {
+    fetch.mockResponseOnce(JSON.stringify({ status: "error" }));
+    await expect(readItem()).rejects.toThrow();
+  });
 });
 
 describe("readItems()", () => {
@@ -68,6 +80,10 @@ describe("readItems()", () => {
     );
     const resp = await readItems();
     expect(resp).toMatchObject(items);
+  });
+  it("should throw if an error response is received", async () => {
+    fetch.mockResponseOnce(JSON.stringify({ status: "error" }));
+    await expect(readItems()).rejects.toThrow();
   });
 });
 
@@ -83,5 +99,9 @@ describe("updateItem()", () => {
     );
     const resp = await updateItem(modifiedItem);
     expect(resp).toMatchObject(modifiedItem);
+  });
+  it("should throw if an error response is received", async () => {
+    fetch.mockResponseOnce(JSON.stringify({ status: "error" }));
+    await expect(updateItem()).rejects.toThrow();
   });
 });
