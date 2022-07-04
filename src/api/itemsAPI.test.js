@@ -26,8 +26,10 @@ describe("createItem()", () => {
     expect(resp).toMatchObject(newItem);
   });
   it("should throw if an error response is received", async () => {
-    fetch.mockResponseOnce(JSON.stringify({ status: "error" }));
-    await expect(createItem()).rejects.toThrow();
+    fetch.mockResponseOnce(
+      JSON.stringify({ status: "error", message: "test error message" })
+    );
+    await expect(createItem()).rejects.toThrowError("test error message");
   });
 });
 
@@ -45,8 +47,10 @@ describe("deleteItem()", () => {
     expect(resp).toMatchObject(items[2]);
   });
   it("should throw if an error response is received", async () => {
-    fetch.mockResponseOnce(JSON.stringify({ status: "error" }));
-    await expect(deleteItem()).rejects.toThrow();
+    fetch.mockResponseOnce(
+      JSON.stringify({ status: "error", message: "test error message" })
+    );
+    await expect(deleteItem()).rejects.toThrowError("test error message");
   });
 });
 
@@ -64,8 +68,10 @@ describe("readItem()", () => {
     expect(resp).toMatchObject(items[2]);
   });
   it("should throw if an error response is received", async () => {
-    fetch.mockResponseOnce(JSON.stringify({ status: "error" }));
-    await expect(readItem()).rejects.toThrow();
+    fetch.mockResponseOnce(
+      JSON.stringify({ status: "error", message: "test error message" })
+    );
+    await expect(readItem()).rejects.toThrowError("test error message");
   });
 });
 
@@ -82,8 +88,10 @@ describe("readItems()", () => {
     expect(resp).toMatchObject(items);
   });
   it("should throw if an error response is received", async () => {
-    fetch.mockResponseOnce(JSON.stringify({ status: "error" }));
-    await expect(readItems()).rejects.toThrow();
+    fetch.mockResponseOnce(
+      JSON.stringify({ status: "error", message: "test error message" })
+    );
+    await expect(readItems()).rejects.toThrowError("test error message");
   });
 });
 
@@ -101,7 +109,9 @@ describe("updateItem()", () => {
     expect(resp).toMatchObject(modifiedItem);
   });
   it("should throw if an error response is received", async () => {
-    fetch.mockResponseOnce(JSON.stringify({ status: "error" }));
-    await expect(updateItem()).rejects.toThrow();
+    fetch.mockResponseOnce(
+      JSON.stringify({ status: "error", message: "test error message" })
+    );
+    await expect(updateItem()).rejects.toThrowError("test error message");
   });
 });
