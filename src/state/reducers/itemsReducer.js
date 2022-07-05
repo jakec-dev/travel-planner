@@ -1,6 +1,6 @@
 import * as ITEMS_ACTION_TYPES from "../actions/itemsActionTypes";
 
-export const itemsInitialState = [];
+export const itemsInitialState = { items: [] };
 
 // eslint-disable-next-line default-param-last
 export const itemsReducer = (state = itemsInitialState, action) => {
