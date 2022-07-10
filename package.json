@@ -13,7 +13,9 @@
     "start": "node server.js",
     "test": "yarn node --experimental-vm-modules $(yarn bin jest) --config ./jest.config.json",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
-    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix"
+    "lint:fix": "eslint  --fix \"src/**/*.{js,jsx}\"",
+    "format": "prettier --check \"src/**/*.{js,jsx}\"",
+    "format:write": "prettier --write \"src/**/*.{js,jsx}\""
   },
   "dependencies": {
     "@csstools/normalize.css": "^12.0.0",
