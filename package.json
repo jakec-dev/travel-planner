@@ -7,7 +7,6 @@
   "author": "Jake Clayton <jake@jakec.dev>",
   "license": "MIT",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "webpack serve --env development",
     "build": "webpack",

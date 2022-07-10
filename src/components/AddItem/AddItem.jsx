@@ -4,7 +4,7 @@ import { useItemsState } from "../../contexts/itemsState";
 import "./AddItem.css";
 
 function AddItem() {
-  const { items, itemsActions } = useItemsState();
+  const { _items, itemsActions } = useItemsState();
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
 
@@ -13,10 +13,9 @@ function AddItem() {
     if (!name) {
       return;
     }
-    const newItem = { id: items.length + 1, name, brand };
+    const newItem = { name, brand };
     await createItem(newItem).then((resp) => {
-      console.log("createItem resp: ", resp);
-      itemsActions.addItem(newItem);
+      itemsActions.addItem(resp);
       setName("");
       setBrand("");
     });

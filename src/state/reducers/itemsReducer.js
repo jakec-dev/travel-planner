@@ -1,6 +1,6 @@
 import * as ITEMS_ACTION_TYPES from "../actions/itemsActionTypes";
 
-export const itemsInitialState = { items: [] };
+export const itemsInitialState = [];
 
 // eslint-disable-next-line default-param-last
 export const itemsReducer = (state = itemsInitialState, action) => {
@@ -12,24 +12,19 @@ export const itemsReducer = (state = itemsInitialState, action) => {
       return { ...state, items: itemsInitialState };
 
     case ITEMS_ACTION_TYPES.DELETE_ITEM:
-      return {
-        ...state,
-        items: state.items.filter((item) => item.id !== action.payload),
-      };
+      const itemsAfterDelete = state.items.filter(
+        (item) => item.id !== action.payload
+      );
+      return { ...state, items: itemsAfterDelete };
 
     case ITEMS_ACTION_TYPES.SET_ITEMS:
-      return {
-        ...state,
-        items: action.payload,
-      };
+      return { ...state, items: action.payload };
 
     case ITEMS_ACTION_TYPES.UPDATE_ITEM:
-      return {
-        ...state,
-        items: state.items.map((item) =>
-          item.id === action.payload.id ? action.payload : item
-        ),
-      };
+      const itemsAfterUpdate = state.items.map((item) =>
+        item.id === action.payload.id ? action.payload : item
+      );
+      return { ...state, items: itemsAfterUpdate };
 
     default:
       return state;
