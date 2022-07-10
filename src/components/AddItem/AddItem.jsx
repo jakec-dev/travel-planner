@@ -4,7 +4,7 @@ import { useItemsState } from "../../contexts/itemsState";
 import "./AddItem.css";
 
 function AddItem() {
-  const { _items, itemsActions } = useItemsState();
+  const { itemsActions } = useItemsState();
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
 

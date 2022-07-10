@@ -8,8 +8,7 @@ function Item({ item }) {
   const { itemsActions, selectionActions, selectedItems } = useItemsState();
 
   const handleDelete = async () => {
-    await deleteItem(item.id).then((resp) => {
-      console.log("deleteItem resp: ", resp);
+    await deleteItem(item.id).then(() => {
       itemsActions.deleteItem(item.id);
       selectionActions.deselectItem(item.id);
     });

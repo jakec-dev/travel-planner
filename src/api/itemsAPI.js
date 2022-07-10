@@ -10,10 +10,8 @@ const createItem = async (newItem) => {
     if (resp.status === "error") {
       throw Error(resp.message);
     }
-    console.log("RESP: " + JSON.stringify(resp.data));
     return resp.data;
   } catch (err) {
-    console.log("hit err");
     throw Error(err);
   }
 };

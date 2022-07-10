@@ -12,19 +12,21 @@ export const itemsReducer = (state = itemsInitialState, action) => {
       return { ...state, items: itemsInitialState };
 
     case ITEMS_ACTION_TYPES.DELETE_ITEM:
-      const itemsAfterDelete = state.items.filter(
-        (item) => item.id !== action.payload
-      );
-      return { ...state, items: itemsAfterDelete };
+      return {
+        ...state,
+        items: state.items.filter((item) => item.id !== action.payload),
+      };
 
     case ITEMS_ACTION_TYPES.SET_ITEMS:
       return { ...state, items: action.payload };
 
     case ITEMS_ACTION_TYPES.UPDATE_ITEM:
-      const itemsAfterUpdate = state.items.map((item) =>
-        item.id === action.payload.id ? action.payload : item
-      );
-      return { ...state, items: itemsAfterUpdate };
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === action.payload.id ? action.payload : item
+        ),
+      };
 
     default:
       return state;

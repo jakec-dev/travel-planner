@@ -14,10 +14,9 @@ function ItemDetail({ itemId }) {
 
   const handleSave = (setEditField) => async (field, value) => {
     const modifiedItem = { ...item, [field]: value };
-    await updateItem(modifiedItem).then((resp) => {
+    await updateItem(modifiedItem).then(() => {
       itemsActions.updateItem(modifiedItem);
       setEditField(false);
-      console.log("updateItem resp: ", resp);
     });
   };
 
