@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1657585611293" clover="3.2.0">
-  <project timestamp="1657585611293" name="All files">
-    <metrics statements="56" coveredstatements="50" conditionals="19" coveredconditionals="13" methods="13" coveredmethods="11" elements="88" coveredelements="74" complexity="0" loc="56" ncloc="56" packages="3" files="3" classes="3"/>
+<coverage generated="1657589833896" clover="3.2.0">
+  <project timestamp="1657589833896" name="All files">
+    <metrics statements="59" coveredstatements="51" conditionals="19" coveredconditionals="13" methods="16" coveredmethods="12" elements="94" coveredelements="76" complexity="0" loc="59" ncloc="59" packages="3" files="4" classes="4"/>
     <package name="api">
       <metrics statements="40" coveredstatements="40" conditionals="10" coveredconditionals="10" methods="10" coveredmethods="10"/>
       <file name="itemsAPI.js" path="/Users/jclayton/projects/travel-planner/src/api/itemsAPI.js">
@@ -60,7 +60,13 @@
       </file>
     </package>
     <package name="state.reducers">
-      <metrics statements="11" coveredstatements="5" conditionals="9" coveredconditionals="3" methods="3" coveredmethods="1"/>
+      <metrics statements="14" coveredstatements="6" conditionals="9" coveredconditionals="3" methods="6" coveredmethods="2"/>
+      <file name="combineReducers.js" path="/Users/jclayton/projects/travel-planner/src/state/reducers/combineReducers.js">
+        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+      </file>
       <file name="itemsReducer.js" path="/Users/jclayton/projects/travel-planner/src/state/reducers/itemsReducer.js">
         <metrics statements="11" coveredstatements="5" conditionals="9" coveredconditionals="3" methods="3" coveredmethods="1"/>
         <line num="3" count="1" type="stmt"/>
