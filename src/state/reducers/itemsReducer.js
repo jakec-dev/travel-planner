@@ -3,7 +3,10 @@ import * as ITEMS_ACTION_TYPES from "../actions/itemsActionTypes";
 export const itemsInitialState = [];
 
 // eslint-disable-next-line default-param-last
-export const itemsReducer = (state = itemsInitialState, action) => {
+export const itemsReducer = (state = { items: itemsInitialState }, action) => {
+  if (!Object.prototype.hasOwnProperty.call(state, "items")) {
+    throw new Error("Initial state is incorrect format");
+  }
   switch (action.type) {
     case ITEMS_ACTION_TYPES.ADD_ITEM:
       return { ...state, items: [...state.items, action.payload] };
