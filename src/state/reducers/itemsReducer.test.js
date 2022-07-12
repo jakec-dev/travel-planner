@@ -6,7 +6,7 @@ import * as ITEMS_ACTION_TYPES from "../actions/itemsActionTypes";
 
 describe("function setup", () => {
   it("should return initial state if no action.type provided", () => {
-    const initialState = { items: [{ id: 1, name: "test" }] };
+    const initialState = [{ id: 1, name: "test" }];
     const state = itemsReducer(initialState, { type: undefined });
     expect(state).toMatchObject(initialState);
   });
@@ -15,7 +15,7 @@ describe("function setup", () => {
     expect(state).toMatchObject(defaultInitialState);
   });
   it("should throw error if no action is provided", () => {
-    const initialState = { items: [{ id: 1, name: "test" }] };
+    const initialState = [{ id: 1, name: "test" }];
     expect(() => itemsReducer(initialState)).toThrow();
   });
 });
@@ -23,7 +23,6 @@ describe("function setup", () => {
 describe("ADD_ITEM", () => {
   it("should add a new item when there are no items created yet", () => {
     const newItem = {
-      id: 1,
       name: "test name",
       brand: "test brand",
     };
@@ -31,7 +30,7 @@ describe("ADD_ITEM", () => {
       type: ITEMS_ACTION_TYPES.ADD_ITEM,
       payload: newItem,
     };
-    const state = itemsReducer(undefined, action);
+    const state = itemsReducer({ items: [] }, action);
     expect(state).toMatchObject({ items: [newItem] });
   });
 });

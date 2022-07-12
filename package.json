@@ -12,6 +12,7 @@
     "build": "webpack",
     "start": "node server.js",
     "test": "yarn node --experimental-vm-modules $(yarn bin jest) --config ./jest.config.json",
+    "test:coverage": "yarn test --coverage",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
     "lint:fix": "eslint  --fix \"src/**/*.{js,jsx}\"",
     "format": "prettier --check \"src/**/*.{js,jsx}\"",
@@ -27,10 +28,11 @@
     "react-icons": "^4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.5",
+    "@babel/core": "^7.18.6",
     "@babel/eslint-parser": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-react": "^7.17.12",
+    "babel-jest": "^28.1.2",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "dotenv-webpack": "^7.1.0",
