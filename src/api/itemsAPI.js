@@ -1,8 +1,8 @@
-const serverURL = process.env.API_URL;
+const SERVER_URL = process.env.API_URL;
 
 const createItem = async (newItem) => {
   try {
-    const resp = await fetch(`${serverURL}/items`, {
+    const resp = await fetch(`${SERVER_URL}/items`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newItem),
@@ -18,7 +18,7 @@ const createItem = async (newItem) => {
 
 const deleteItem = async (id) => {
   try {
-    const resp = await fetch(`${serverURL}/items/${id}`, {
+    const resp = await fetch(`${SERVER_URL}/items/${id}`, {
       method: "DELETE",
     }).then((res) => res.json());
     if (resp.status === "error") {
@@ -32,7 +32,7 @@ const deleteItem = async (id) => {
 
 const readItem = async (itemId) => {
   try {
-    const resp = await fetch(`${serverURL}/items/${itemId}`).then((res) =>
+    const resp = await fetch(`${SERVER_URL}/items/${itemId}`).then((res) =>
       res.json()
     );
     if (resp.status === "error") {
@@ -46,7 +46,7 @@ const readItem = async (itemId) => {
 
 const readItems = async () => {
   try {
-    const resp = await fetch(`${serverURL}/items`).then((res) => res.json());
+    const resp = await fetch(`${SERVER_URL}/items`).then((res) => res.json());
     if (resp.status === "error") {
       throw Error(resp.message);
     }
@@ -58,7 +58,7 @@ const readItems = async () => {
 
 const updateItem = async (modifiedItem) => {
   try {
-    const resp = await fetch(`${serverURL}/items`, {
+    const resp = await fetch(`${SERVER_URL}/items`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(modifiedItem),
