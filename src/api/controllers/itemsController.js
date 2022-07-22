@@ -7,9 +7,9 @@ import {
 } from "../services/itemsService";
 import {
   validateExistingItem,
-  validateItemId,
   validateNewItem,
 } from "../validation/itemsValidation";
+import { validateNumber } from "../validation/dataValidation";
 
 const get = async () => {
   try {
@@ -50,7 +50,7 @@ const update = async (modifiedItem) => {
 };
 
 const getById = async (itemId) => {
-  validateItemId(itemId);
+  validateNumber(itemId);
   try {
     const resp = await getItemWithId(itemId);
     if (resp.status === "error") {
@@ -63,7 +63,7 @@ const getById = async (itemId) => {
 };
 
 const deleteById = async (itemId) => {
-  validateItemId(itemId);
+  validateNumber(itemId);
   try {
     const resp = await deleteItemWithId(itemId);
     if (resp.status === "error") {

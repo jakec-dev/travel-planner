@@ -1,6 +1,7 @@
 import { get, add, update, getById, deleteById } from "./itemsController";
 import * as itemsService from "../services/itemsService";
 import * as itemsValidation from "../validation/itemsValidation";
+import * as dataValidation from "../validation/dataValidation";
 
 describe("itemsController.js", () => {
   beforeEach(() => {
@@ -42,7 +43,7 @@ describe("itemsController.js", () => {
     });
   });
 
-  describe("add(newItem)", () => {
+  describe("add()", () => {
     let addItemSpy;
     let validateNewItemSpy;
     beforeEach(() => {
@@ -93,7 +94,7 @@ describe("itemsController.js", () => {
     });
   });
 
-  describe("update(modifiedItem)", () => {
+  describe("update()", () => {
     let updateItemSpy;
     let validateExistingItemSpy;
     beforeEach(() => {
@@ -162,13 +163,13 @@ describe("itemsController.js", () => {
     });
   });
 
-  describe("getById(itemId)", () => {
+  describe("getById()", () => {
     let getItemWithIdSpy;
-    let validateItemIdSpy;
+    let validateNumberSpy;
     beforeEach(() => {
       getItemWithIdSpy = jest.spyOn(itemsService, "getItemWithId");
-      validateItemIdSpy = jest
-        .spyOn(itemsValidation, "validateItemId")
+      validateNumberSpy = jest
+        .spyOn(dataValidation, "validateNumber")
         .mockImplementation(() => {});
     });
     afterEach(() => {
@@ -200,7 +201,7 @@ describe("itemsController.js", () => {
         data: item,
       }));
       await getById(item);
-      expect(validateItemIdSpy).toHaveBeenCalledTimes(1);
+      expect(validateNumberSpy).toHaveBeenCalledTimes(1);
     });
     it("should throw an error if response status is error", async () => {
       const item = {
@@ -227,13 +228,13 @@ describe("itemsController.js", () => {
     });
   });
 
-  describe("deleteById(itemId)", () => {
+  describe("deleteById()", () => {
     let deleteItemWithIdSpy;
-    let validateItemIdSpy;
+    let validateNumberSpy;
     beforeEach(() => {
       deleteItemWithIdSpy = jest.spyOn(itemsService, "deleteItemWithId");
-      validateItemIdSpy = jest
-        .spyOn(itemsValidation, "validateItemId")
+      validateNumberSpy = jest
+        .spyOn(dataValidation, "validateNumber")
         .mockImplementation(() => {});
     });
     afterEach(() => {
@@ -257,7 +258,7 @@ describe("itemsController.js", () => {
         data: itemId,
       }));
       await deleteById(itemId);
-      expect(validateItemIdSpy).toHaveBeenCalledTimes(1);
+      expect(validateNumberSpy).toHaveBeenCalledTimes(1);
     });
     it("should throw an error if response status is error", async () => {
       const itemId = 4;
