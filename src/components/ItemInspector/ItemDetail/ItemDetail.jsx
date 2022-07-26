@@ -5,6 +5,7 @@ import TextInput from "./TextInput";
 import { updateItem } from "../../../api/itemsAPI";
 import { useItemsState } from "../../../contexts/itemsState";
 import "./ItemDetail.css";
+import { validateExistingItem } from "../../../api/validation/itemsValidation";
 
 function ItemDetail({ itemId }) {
   const { items, itemsActions } = useItemsState();
@@ -14,10 +15,10 @@ function ItemDetail({ itemId }) {
 
   const handleSave = (setEditField) => async (field, value) => {
     const modifiedItem = { ...item, [field]: value };
-    await updateItem(modifiedItem).then(() => {
-      itemsActions.updateItem(modifiedItem);
-      setEditField(false);
-    });
+    validateExistingItem(modifiedItem);
+    const updatedItem = await updateItem(modifiedItem);
+    itemsActions.updateItem(updatedItem);
+    setEditField(false);
   };
 
   return (

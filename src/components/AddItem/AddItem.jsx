@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { createItem } from "../../api/itemsAPI";
+import { addItem } from "../../api/itemsAPI";
+import { validateNewItem } from "../../api/validation/itemsValidation";
 import { useItemsState } from "../../contexts/itemsState";
 import "./AddItem.css";
 
@@ -10,15 +11,12 @@ function AddItem() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name) {
-      return;
-    }
     const newItem = { name, brand };
-    await createItem(newItem).then((resp) => {
-      itemsActions.addItem(resp);
-      setName("");
-      setBrand("");
-    });
+    validateNewItem(newItem);
+    const createdItem = await addItem(newItem);
+    itemsActions.addItem(createdItem);
+    setName("");
+    setBrand("");
   };
 
   return (

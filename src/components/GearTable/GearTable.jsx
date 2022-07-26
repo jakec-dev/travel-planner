@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { readItems } from "../../api/itemsAPI";
+import { getItems } from "../../api/itemsAPI";
 import { useItemsState } from "../../contexts/itemsState";
 import Item from "./Item";
 
@@ -20,8 +20,8 @@ function GearTable() {
 
   useEffect(() => {
     (async () => {
-      const data = await readItems();
-      itemsActions.setItems(data);
+      const itemsInDatabase = await getItems();
+      itemsActions.setItems(itemsInDatabase);
     })();
   }, []);
 

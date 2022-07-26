@@ -1,17 +1,19 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
-import { deleteItem } from "../../../api/itemsAPI";
+import { deleteItemById } from "../../../api/itemsAPI";
 import { useItemsState } from "../../../contexts/itemsState";
+import { validateNumber } from "../../../api/validation/dataValidation";
 
 function Item({ item }) {
   const { itemsActions, selectionActions, selectedItems } = useItemsState();
 
   const handleDelete = async () => {
-    await deleteItem(item.id).then(() => {
-      itemsActions.deleteItem(item.id);
-      selectionActions.deselectItem(item.id);
-    });
+    const itemId = item.id;
+    validateNumber(itemId);
+    const deletedItemId = await deleteItemById(itemId);
+    itemsActions.deleteItem(deletedItemId);
+    selectionActions.deselectItem(deletedItemId);
   };
 
   const handleSelect = () => {
