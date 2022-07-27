@@ -11,7 +11,7 @@ function AddItem() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newItem = { name, brand };
+    const newItem = { name, brand: brand || undefined };
     validateNewItem(newItem);
     const createdItem = await addItem(newItem);
     itemsActions.addItem(createdItem);
