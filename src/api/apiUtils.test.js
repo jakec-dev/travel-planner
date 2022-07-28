@@ -1,3 +1,4 @@
+import fetchMock from "jest-fetch-mock";
 import { sendRequest } from "./apiUtils";
 
 const SERVER_URL = process.env.API_URL;
@@ -5,6 +6,7 @@ const SERVER_URL = process.env.API_URL;
 describe("apiUtils.js", () => {
   describe("sendRequest()", () => {
     beforeEach(() => {
+      fetchMock.doMock();
       fetch.resetMocks();
     });
     it("should send a fetch request to the endpoint specified in the first parameter", async () => {
