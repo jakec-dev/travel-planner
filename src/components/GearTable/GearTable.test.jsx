@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { render, cleanup, waitFor, screen } from "../../../test-utils";
 import GearTable from "./GearTable";
 
-describe("GearTable", () => {
+describe("<GearTable />", () => {
   beforeEach(() => {
     fetchMock.doMock();
     fetch.resetMocks();
@@ -26,8 +26,8 @@ describe("GearTable", () => {
     render(<GearTable />);
     await waitFor(() => {
       expect(screen.getAllByRole("row").length).toEqual(3);
-      expect(screen.getByText(items[0].name)).toBeInTheDocument();
-      expect(screen.getByText(items[1].name)).toBeInTheDocument();
+      expect(screen.queryByText(items[0].name)).toBeInTheDocument();
+      expect(screen.queryByText(items[1].name)).toBeInTheDocument();
     });
   });
 });

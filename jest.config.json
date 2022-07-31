@@ -1,5 +1,8 @@
 {
   "testRegex": "((\\.|/*.)(test))\\.jsx?$",
   "setupFiles": ["./setupJest.js"],
-  "testEnvironment": "jsdom"
+  "testEnvironment": "jsdom",
+  "moduleNameMapper": {
+    "\\.(css|less)$": "<rootDir>/test-utils/styleMock.js"
+  }
 }

@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import { render, cleanup, screen } from "../../../../test-utils";
 import Item from "./Item";
 
-describe("GearTable", () => {
+describe("<Item />", () => {
   afterEach(() => {
     cleanup();
   });
@@ -16,8 +16,8 @@ describe("GearTable", () => {
         </tbody>
       </table>
     );
-    expect(screen.getByText(item.name)).toBeInTheDocument();
-    expect(screen.getByText(item.brand)).toBeInTheDocument();
+    expect(screen.queryByText(item.name)).toBeInTheDocument();
+    expect(screen.queryByText(item.brand)).toBeInTheDocument();
   });
   it("renders an empty string in brand field if no brand is provided", () => {
     const item = { id: 1, name: "test name" };
