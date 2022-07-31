@@ -1,7 +1,7 @@
 import React from "react";
 import fetchMock from "jest-fetch-mock";
 import "@testing-library/jest-dom";
-import { render, cleanup, waitFor } from "../../../test-utils";
+import { render, cleanup, waitFor, screen } from "../../../test-utils";
 import GearTable from "./GearTable";
 
 describe("GearTable", () => {
@@ -23,14 +23,11 @@ describe("GearTable", () => {
         data: items,
       })
     );
-    const { getByText, getAllByRole } = render(<GearTable />);
-    await waitFor(
-      () => {
-        expect(getAllByRole("row").length).toEqual(3);
-        expect(getByText("test name 1")).toBeInTheDocument();
-        expect(getByText("test name 2")).toBeInTheDocument();
-      },
-      { timeout: 4000 }
-    );
+    render(<GearTable />);
+    await waitFor(() => {
+      expect(screen.getAllByRole("row").length).toEqual(3);
+      expect(screen.getByText(items[0].name)).toBeInTheDocument();
+      expect(screen.getByText(items[1].name)).toBeInTheDocument();
+    });
   });
 });

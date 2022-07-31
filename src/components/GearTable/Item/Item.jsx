@@ -36,7 +36,7 @@ function Item({ item }) {
         />
       </td>
       <td>{item.name}</td>
-      <td>{item.brand}</td>
+      <td data-testid="itemBrand">{item.brand}</td>
       <td className="alignRight">
         <FaTimes onClick={handleDelete} />
       </td>
