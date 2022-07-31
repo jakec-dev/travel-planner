@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
+import "./Item.css";
 import { deleteItemById } from "../../../api/itemsAPI";
 import { useItemsState } from "../../../contexts/itemsState";
 import { validateNumber } from "../../../api/validation/dataValidation";
@@ -38,7 +39,9 @@ function Item({ item }) {
       <td>{item.name}</td>
       <td data-testid="itemBrand">{item.brand}</td>
       <td className="alignRight">
-        <FaTimes onClick={handleDelete} />
+        <button className="unstyledButton" type="button" onClick={handleDelete}>
+          <FaTimes />
+        </button>
       </td>
     </tr>
   );

@@ -42,4 +42,15 @@ describe("<Item />", () => {
     expect(screen.queryByText(item.id)).not.toBeInTheDocument();
     expect(screen.queryByText(String(item.id))).not.toBeInTheDocument();
   });
+  it("renders a button to delete the item", () => {
+    const item = { id: 1, name: "test name", brand: "test brand" };
+    render(
+      <table>
+        <tbody>
+          <Item item={item} />
+        </tbody>
+      </table>
+    );
+    expect(screen.getByRole("button")).toBeInTheDocument("");
+  });
 });
