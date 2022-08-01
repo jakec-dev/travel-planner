@@ -37,7 +37,12 @@ function Item({ item }) {
       <td>{item.name}</td>
       <td data-testid="itemBrand">{item.brand}</td>
       <td className="alignRight">
-        <button className="unstyledButton" type="button" onClick={handleDelete}>
+        <button
+          data-testid={`delItemBtn${item.id}`}
+          className="unstyledButton"
+          type="button"
+          onClick={handleDelete}
+        >
           <FaTimes />
         </button>
       </td>
