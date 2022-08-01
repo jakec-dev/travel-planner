@@ -5,7 +5,7 @@ import TextInput from "./TextInput";
 import { updateItem } from "../../../api/itemsAPI";
 import { useItemsState } from "../../../contexts/itemsState";
 import "./ItemDetail.css";
-import { validateExistingItem } from "../../../api/validation/itemsValidation";
+import { existingItemSchema } from "../../../api/validation/itemsSchema";
 
 function ItemDetail({ itemId }) {
   const { items, itemsActions } = useItemsState();
@@ -15,10 +15,14 @@ function ItemDetail({ itemId }) {
 
   const handleSave = (setEditField) => async (field, value) => {
     const modifiedItem = { ...item, [field]: value };
-    validateExistingItem(modifiedItem);
-    const updatedItem = await updateItem(modifiedItem);
-    itemsActions.updateItem(updatedItem);
-    setEditField(false);
+    try {
+      existingItemSchema.validate(modifiedItem);
+      const updatedItem = await updateItem(modifiedItem);
+      itemsActions.updateItem(updatedItem);
+      setEditField(false);
+    } catch (err) {
+      throw new Error(err);
+    }
   };
 
   return (

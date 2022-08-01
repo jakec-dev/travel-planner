@@ -4,14 +4,12 @@ import { FaTimes } from "react-icons/fa";
 import "./Item.css";
 import { deleteItemById } from "../../../api/itemsAPI";
 import { useItemsState } from "../../../contexts/itemsState";
-import { validateNumber } from "../../../api/validation/dataValidation";
 
 function Item({ item }) {
   const { itemsActions, selectionActions, selectedItems } = useItemsState();
 
   const handleDelete = async () => {
     const itemId = item.id;
-    validateNumber(itemId);
     const deletedItemId = await deleteItemById(itemId);
     itemsActions.deleteItem(deletedItemId);
     selectionActions.deselectItem(deletedItemId);
