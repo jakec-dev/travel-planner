@@ -1,0 +1,81 @@
+import React from "react";
+import fetchMock from "jest-fetch-mock";
+import "@testing-library/jest-dom";
+import { render, cleanup, waitFor, screen } from "../utils";
+import GearTable from "../../src/components/GearTable";
+import Item from "../../src/components/GearTable/Item";
+
+describe("<GearTable />", () => {
+  beforeEach(() => {
+    fetchMock.doMock();
+    fetch.resetMocks();
+  });
+  afterEach(() => {
+    cleanup();
+  });
+  it("should render a list of all items", async () => {
+    const items = [
+      { id: 1, name: "test name 1", brand: "test brand 1" },
+      { id: 2, name: "test name 2", brand: "test brand 2" },
+    ];
+    await fetch.mockResponseOnce(
+      JSON.stringify({
+        status: "success",
+        data: items,
+      })
+    );
+    render(<GearTable />);
+    await waitFor(() => {
+      expect(screen.getAllByRole("row").length).toEqual(3);
+      expect(
+        screen.queryByText(items[0].name, { selector: "td" })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText(items[1].brand, { selector: "td" })
+      ).toBeInTheDocument();
+    });
+  });
+
+  describe("<Item />", () => {
+    it("should render the item name and brand", () => {
+      const item = { id: 1, name: "test name", brand: "test brand" };
+      render(
+        <table>
+          <tbody>
+            <Item item={item} />
+          </tbody>
+        </table>
+      );
+      expect(
+        screen.queryByText(item.name, { selector: "td" })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText(item.brand, { selector: "td" })
+      ).toBeInTheDocument();
+    });
+    it("should render an empty string if optional fields are not provided", () => {
+      // no 'brand' field
+      const item = { id: 1, name: "test name" };
+      render(
+        <table>
+          <tbody>
+            <Item item={item} />
+          </tbody>
+        </table>
+      );
+      expect(screen.getByTestId("itemBrand")).toHaveTextContent("");
+    });
+    it("should not render the item ID", () => {
+      const item = { id: 123, name: "test name", brand: "test brand" };
+      render(
+        <table>
+          <tbody>
+            <Item item={item} />
+          </tbody>
+        </table>
+      );
+      expect(screen.queryByText(item.id)).not.toBeInTheDocument();
+      expect(screen.queryByText(String(item.id))).not.toBeInTheDocument();
+    });
+  });
+});

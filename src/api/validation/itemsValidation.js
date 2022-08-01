@@ -10,6 +10,7 @@ const validateNewItem = (newItem) => {
   validateObjectHasKeys(newItem, ["name"], "Item");
   const { name } = newItem;
   validateNonEmptyString(name, "Item name must be a non-empty string");
+  return true;
 };
 
 const validateExistingItem = (existingItem) => {
@@ -18,6 +19,7 @@ const validateExistingItem = (existingItem) => {
   const { id, name } = existingItem;
   validateNumber(id, "Item ID must be a number");
   validateNonEmptyString(name, "Item name must be a non-empty string");
+  return true;
 };
 
 export { validateNewItem, validateExistingItem };

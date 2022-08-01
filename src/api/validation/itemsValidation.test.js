@@ -45,6 +45,11 @@ describe("itemsValidation.js", () => {
         "Item name must be a non-empty string"
       );
     });
+    it("should return true if validation passes", () => {
+      const newItem = { name: "test name", brand: "test brand" };
+      const result = validateNewItem(newItem);
+      expect(result).toEqual(true);
+    });
   });
 
   describe("validateExistingItem()", () => {
@@ -102,6 +107,11 @@ describe("itemsValidation.js", () => {
         existingItem.name,
         "Item name must be a non-empty string"
       );
+    });
+    it("should return true if validation passes", () => {
+      const existingItem = { id: 3, name: "test name", brand: "test brand" };
+      const result = validateExistingItem(existingItem);
+      expect(result).toEqual(true);
     });
   });
 });

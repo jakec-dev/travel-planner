@@ -3,6 +3,6 @@
   "setupFiles": ["./setupJest.js"],
   "testEnvironment": "jsdom",
   "moduleNameMapper": {
-    "\\.(css|less)$": "<rootDir>/test-utils/styleMock.js"
+    "\\.(css|less)$": "<rootDir>/test/utils/styleMock.js"
   }
 }

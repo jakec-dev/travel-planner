@@ -9,8 +9,8 @@ const errorMessage = "test error message";
 
 describe("dataValidation.js", () => {
   describe("validateNumber()", () => {
-    it("should not throw any errors if value is a number", () => {
-      expect(() => validateNumber(7, "test error message")).not.toThrow();
+    it("should return true if value is a number", () => {
+      expect(validateNumber(7, errorMessage)).toEqual(true);
     });
     it("should throw an error if value is not a number", () => {
       const invalidDataTypes = [
@@ -30,10 +30,8 @@ describe("dataValidation.js", () => {
   });
 
   describe("validateNonEmptyString()", () => {
-    it("should not throw any errors if value is a non-empty string", () => {
-      expect(() =>
-        validateNonEmptyString("some name", errorMessage)
-      ).not.toThrow();
+    it("should return true if value is a non-empty string", () => {
+      expect(validateNonEmptyString("some name", errorMessage)).toEqual(true);
     });
     it("should throw an error if value is not a non-empty string", () => {
       const invalidDataTypes = [
@@ -54,10 +52,8 @@ describe("dataValidation.js", () => {
   });
 
   describe("validateObject()", () => {
-    it("should not throw any errors if value is an object", () => {
-      expect(() =>
-        validateObject({ key: "value" }, errorMessage)
-      ).not.toThrow();
+    it("should return true if value is an object", () => {
+      expect(validateObject({ key: "value" }, errorMessage)).toEqual(true);
     });
     it("should throw an error if value is not an object", () => {
       const invalidDataTypes = ["string", 4, true, ["array"], undefined, null];
@@ -71,23 +67,23 @@ describe("dataValidation.js", () => {
 
   describe("validateObjectHasKeys()", () => {
     const objectName = "Test";
-    it("should not throw any errors if object contains all keys listed in second argument array", () => {
-      expect(() =>
+    it("should return true if object contains all keys listed in second argument array", () => {
+      expect(
         validateObjectHasKeys(
           { foo: "value", bar: "value" },
           ["foo", "bar"],
           objectName
         )
-      ).not.toThrow();
+      ).toEqual(true);
     });
-    it("should not throw any errors if object contains all keys listed in second argument array plus extra keys", () => {
-      expect(() =>
+    it("should return true if object contains all keys listed in second argument array plus extra keys", () => {
+      expect(
         validateObjectHasKeys(
           { foo: "value", bar: 5, optionalKey: ["test"] },
           ["foo", "bar"],
           objectName
         )
-      ).not.toThrow();
+      ).toEqual(true);
     });
     it("should throw an error if object contains no keys listed in second argument array", () => {
       expect(() =>
