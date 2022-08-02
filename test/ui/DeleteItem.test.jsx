@@ -32,7 +32,9 @@ describe("<GearTable />", () => {
     let deleteButton;
     let deleteItemName;
     await waitFor(() => {
-      deleteButton = screen.getByTestId(`delItemBtn${itemIdToDelete}`);
+      deleteButton = screen.getByRole("button", {
+        name: `Delete Item ${itemIdToDelete}`,
+      });
       deleteItemName = screen.queryByText(initialItems[1].name, {
         selector: "td",
       });

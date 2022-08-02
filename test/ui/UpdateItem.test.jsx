@@ -1,89 +1,217 @@
 import React from "react";
+import fetchMock from "jest-fetch-mock";
+import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import { render, cleanup, screen } from "@testing-library/react";
+import { render, cleanup, screen, waitFor } from "../utils";
+import GearTable from "../../src/components/GearTable";
 import ItemInspector from "../../src/components/ItemInspector";
 
-/*
- * TO DO:
- * This entire test suite needs to be rewritten. Use actual state instead of mocked, just mock the fetch instead
- */
-
-let mockItems = [];
-let mockSelectedItems = [];
-jest.mock("../../src/contexts/itemsState", () => ({
-  useItemsState: () => ({
-    items: mockItems,
-    selectedItems: mockSelectedItems,
-  }),
-}));
+const initialItems = [
+  { id: 1, name: "First item name", brand: "First item brand" },
+  { id: 2, name: "Second item name", brand: "Second item brand" },
+  { id: 3, name: "Third item name", brand: "Third item brand" },
+];
 
 describe("<ItemInspector />", () => {
+  beforeEach(() => {
+    fetchMock.doMock();
+    fetch.resetMocks();
+  });
   afterEach(() => {
     cleanup();
   });
-  it("asks the user to select an item if none are selected", () => {
+  it("should notify the user to select an item if none are selected", () => {
     render(<ItemInspector />);
     expect(screen.queryByText("Select an item")).toBeInTheDocument();
   });
-  it("renders the item if one item is selected", () => {
-    const item = { id: 123, name: "test name", brand: "test brand" };
-    mockItems = [item];
-    mockSelectedItems = [item.id];
-    render(<ItemInspector />);
-    expect(screen.queryByText(item.name, { exact: false })).toBeInTheDocument();
-    expect(
-      screen.queryByText(item.brand, { exact: false })
-    ).toBeInTheDocument();
+  it("should render the item in detail view if one item is selected", async () => {
+    const selectedItem = initialItems[1];
+    await fetch.mockResponseOnce(
+      JSON.stringify({ status: "success", data: initialItems })
+    );
+    render(
+      <div>
+        <ItemInspector />
+        <GearTable />
+      </div>
+    );
+    let selectSecondItemCheckbox;
+    await waitFor(() => {
+      selectSecondItemCheckbox = screen.getByTestId(
+        `selItem${selectedItem.id}`
+      );
+      expect(selectSecondItemCheckbox).toBeInTheDocument();
+    });
+    await userEvent.click(selectSecondItemCheckbox);
+    expect(screen.getByTestId("itemDetailName")).toHaveTextContent(
+      selectedItem.name
+    );
   });
-  it("renders the number of items selected if more than 1", () => {
-    const items = [
-      { id: 123, name: "test name", brand: "test brand" },
-      { id: 321, name: "test name 2", brand: "test brand 2" },
-      { id: 456, name: "test name 3", brand: "test brand 3" },
-    ];
-    mockItems = items;
-    mockSelectedItems = [items[0].id, items[1].id];
-    render(<ItemInspector />);
+  it("should render the number of items selected if more than 1", async () => {
+    const selectedItems = [initialItems[1], initialItems[2]];
+    await fetch.mockResponseOnce(
+      JSON.stringify({ status: "success", data: initialItems })
+    );
+    render(
+      <div>
+        <ItemInspector />
+        <GearTable />
+      </div>
+    );
+    let selectSecondItemCheckbox;
+    let selectThirdItemCheckbox;
+    await waitFor(() => {
+      selectSecondItemCheckbox = screen.getByTestId(
+        `selItem${selectedItems[0].id}`
+      );
+      selectThirdItemCheckbox = screen.getByTestId(
+        `selItem${selectedItems[1].id}`
+      );
+      expect(selectSecondItemCheckbox).toBeInTheDocument();
+      expect(selectThirdItemCheckbox).toBeInTheDocument();
+    });
+    await userEvent.click(selectSecondItemCheckbox);
+    await userEvent.click(selectThirdItemCheckbox);
     expect(
-      screen.queryByText(`${mockSelectedItems.length} Items Selected`)
+      screen.queryByText(`${selectedItems.length} Items Selected`)
     ).toBeInTheDocument();
   });
 
   describe("<ItemDetail />", () => {
-    afterEach(() => {
-      cleanup();
+    const selectedItem = initialItems[1];
+    beforeEach(async () => {
+      await fetch.mockResponseOnce(
+        JSON.stringify({ status: "success", data: initialItems })
+      );
+      render(
+        <div>
+          <ItemInspector />
+          <GearTable />
+        </div>
+      );
+      let selectSecondItemCheckbox;
+      await waitFor(() => {
+        selectSecondItemCheckbox = screen.getByTestId(
+          `selItem${selectedItem.id}`
+        );
+      });
+      await userEvent.click(selectSecondItemCheckbox);
     });
-    it("renders the item name and brand", () => {
-      expect(true).toEqual(true);
+    it("should render the item name and brand", () => {
+      expect(screen.getByTestId("itemDetailName")).toHaveTextContent(
+        selectedItem.name
+      );
+      expect(screen.getByTestId("itemDetailBrand")).toHaveTextContent(
+        selectedItem.brand
+      );
     });
-    it("renders buttons to edit each item field", () => {
-      expect(true).toEqual(true);
+    it("should render buttons to edit each item field", () => {
+      expect(
+        screen.queryByRole("button", { name: "Edit Name" })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: "Edit Brand" })
+      ).toBeInTheDocument();
     });
     describe("When an edit button is clicked", () => {
-      it("converts the field to a text input", () => {
-        expect(true).toEqual(true);
+      let editNameBtn;
+      beforeEach(async () => {
+        editNameBtn = screen.getByRole("button", { name: "Edit Name" });
+        await userEvent.click(editNameBtn);
       });
-      it("removes the button to edit the field", () => {
-        expect(true).toEqual(true);
+      it("shoould convert the field to a text input", async () => {
+        expect(
+          screen.queryByDisplayValue(selectedItem.name)
+        ).toBeInTheDocument();
+        expect(screen.queryByTestId("itemDetailName")).not.toBeInTheDocument();
       });
-      it("renders a button to save the changes", () => {
-        expect(true).toEqual(true);
+      it("should remove the button to edit the field", async () => {
+        expect(editNameBtn).not.toBeInTheDocument();
       });
-      it("renders a button to cancel the changes", () => {
-        expect(true).toEqual(true);
+      it("should render buttons to save or cancel the changes", () => {
+        expect(
+          screen.queryByRole("button", { name: "Save Edits" })
+        ).toBeInTheDocument();
+        expect(
+          screen.queryByRole("button", { name: "Cancel Edit" })
+        ).toBeInTheDocument();
       });
       describe("When the save button is clicked", () => {
-        it("converts the field back to uneditable text", () => {
-          expect(true).toEqual(true);
+        const modifiedName = "Modified name";
+        beforeEach(async () => {
+          await fetch.mockResponseOnce(
+            JSON.stringify({
+              status: "success",
+              data: { ...selectedItem, name: modifiedName },
+            })
+          );
+          const nameField = screen.getByDisplayValue(selectedItem.name);
+          await userEvent.type(nameField, modifiedName);
+          const saveBtn = screen.getByRole("button", { name: "Save Edits" });
+          await userEvent.click(saveBtn);
         });
-        it("removes the buttons to save or cancel the changes", () => {
-          expect(true).toEqual(true);
+        it("should convert the field back to uneditable text", () => {
+          expect(screen.queryByTestId("itemDetailName")).toBeInTheDocument();
+          expect(
+            screen.queryByDisplayValue(modifiedName)
+          ).not.toBeInTheDocument();
         });
-        it("renders a button to edit the changes", () => {
-          expect(true).toEqual(true);
+        it("should remove the buttons to save or cancel the changes", () => {
+          expect(
+            screen.queryByRole("button", { name: "Save Edits" })
+          ).not.toBeInTheDocument();
+          expect(
+            screen.queryByRole("button", { name: "Cancel Edit" })
+          ).not.toBeInTheDocument();
         });
-        it("displays thet updated value", () => {
-          expect(true).toEqual(true);
+        it("should render a button to edit the field again", () => {
+          expect(
+            screen.queryByRole("button", { name: "Edit Name" })
+          ).toBeInTheDocument();
+        });
+        it("should display the updated value", () => {
+          expect(
+            screen.queryByText(modifiedName, { selector: "td" })
+          ).toBeInTheDocument();
+          expect(
+            screen.queryByText(selectedItem.name, { selector: "td" })
+          ).not.toBeInTheDocument();
+        });
+      });
+      describe("When the cancel button is clicked", () => {
+        const modifiedName = "Modified name";
+        beforeEach(async () => {
+          const nameField = screen.getByDisplayValue(selectedItem.name);
+          await userEvent.type(nameField, modifiedName);
+          const saveBtn = screen.getByRole("button", { name: "Cancel Edit" });
+          await userEvent.click(saveBtn);
+        });
+        it("should convert the field back to uneditable text", () => {
+          expect(screen.queryByTestId("itemDetailName")).toBeInTheDocument();
+          expect(
+            screen.queryByDisplayValue(modifiedName)
+          ).not.toBeInTheDocument();
+        });
+        it("should remove the buttons to save or cancel the changes", () => {
+          expect(
+            screen.queryByRole("button", { name: "Save Edits" })
+          ).not.toBeInTheDocument();
+          expect(
+            screen.queryByRole("button", { name: "Cancel Edit" })
+          ).not.toBeInTheDocument();
+        });
+        it("should render a button to edit the field again", () => {
+          expect(
+            screen.queryByRole("button", { name: "Edit Name" })
+          ).toBeInTheDocument();
+        });
+        it("should display the original value", () => {
+          expect(
+            screen.queryByText(modifiedName, { selector: "td" })
+          ).not.toBeInTheDocument();
+          expect(
+            screen.queryByText(selectedItem.name, { selector: "td" })
+          ).toBeInTheDocument();
         });
       });
     });

@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
-import "./Item.css";
 import { deleteItemById } from "../../../api/itemsAPI";
 import { useItemsState } from "../../../contexts/itemsState";
 
@@ -30,17 +29,18 @@ function Item({ item }) {
       <td>
         <input
           type="checkbox"
-          checked={isItemSelected}
           onChange={handleSelect}
+          checked={isItemSelected}
+          data-testid={`selItem${item.id}`}
         />
       </td>
       <td>{item.name}</td>
       <td data-testid="itemBrand">{item.brand}</td>
       <td className="alignRight">
         <button
-          data-testid={`delItemBtn${item.id}`}
-          className="unstyledButton"
           type="button"
+          aria-label={`Delete Item ${item.id}`}
+          className="unstyledButton"
           onClick={handleDelete}
         >
           <FaTimes />

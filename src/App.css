@@ -95,3 +95,8 @@ th {
   max-width: 960px;
   width: fit-content;
 }
+
+.unstyledButton {
+  all: unset;
+  cursor: pointer;
+}

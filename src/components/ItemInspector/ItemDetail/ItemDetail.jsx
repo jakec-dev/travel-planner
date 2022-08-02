@@ -28,23 +28,43 @@ function ItemDetail({ itemId }) {
   return (
     <>
       {editName ? (
-        <TextInput field="name" item={item} onSave={handleSave(setEditName)} />
+        <TextInput
+          field="name"
+          item={item}
+          handleSave={handleSave(setEditName)}
+          handleCancel={() => setEditName(false)}
+        />
       ) : (
         <div className="itemDetail_Header">
-          <h2>{item.name}</h2>
-          <FaEdit onClick={() => setEditName(true)} />
+          <h2 data-testid="itemDetailName">{item.name}</h2>
+          <button
+            type="button"
+            aria-label="Edit Name"
+            onClick={() => setEditName(true)}
+            className="unstyledButton"
+          >
+            <FaEdit />
+          </button>
         </div>
       )}
       {editBrand ? (
         <TextInput
           field="brand"
           item={item}
-          onSave={handleSave(setEditBrand)}
+          handleSave={handleSave(setEditBrand)}
+          handleCancel={() => setEditBrand(false)}
         />
       ) : (
         <div className="itemDetail_Textfield">
-          <p>Brand: {item.brand}</p>
-          <FaEdit onClick={() => setEditBrand(true)} />
+          <p data-testid="itemDetailBrand">Brand: {item.brand}</p>
+          <button
+            type="button"
+            aria-label="Edit Brand"
+            onClick={() => setEditBrand(true)}
+            className="unstyledButton"
+          >
+            <FaEdit />
+          </button>
         </div>
       )}
     </>
