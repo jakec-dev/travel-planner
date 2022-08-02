@@ -11,9 +11,6 @@ export const itemsReducer = (state = { items: itemsInitialState }, action) => {
     case ITEMS_ACTION_TYPES.ADD_ITEM:
       return { ...state, items: [...state.items, action.payload] };
 
-    case ITEMS_ACTION_TYPES.CLEAR_ITEMS:
-      return { ...state, items: itemsInitialState };
-
     case ITEMS_ACTION_TYPES.DELETE_ITEM:
       return {
         ...state,

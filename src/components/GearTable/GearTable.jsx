@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { getItems } from "../../api/itemsAPI";
 import { useItemsState } from "../../contexts/itemsState";
 import Item from "./Item";
@@ -7,8 +7,10 @@ function GearTable() {
   const { items, itemsActions, selectedItems, selectionActions } =
     useItemsState();
 
-  const isAllSelected =
-    items.length !== 0 && items.length === selectedItems.length;
+  const isAllSelected = useMemo(
+    () => items.length !== 0 && items.length === selectedItems.length,
+    [items, selectedItems]
+  );
 
   const handleSelectAll = () => {
     if (isAllSelected) {
@@ -33,8 +35,8 @@ function GearTable() {
             <th>
               <input
                 type="checkbox"
-                checked={isAllSelected}
                 onChange={handleSelectAll}
+                checked={isAllSelected}
               />
             </th>
             <th>Name</th>

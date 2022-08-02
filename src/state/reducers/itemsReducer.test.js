@@ -48,22 +48,6 @@ describe("ADD_ITEM", () => {
   });
 });
 
-describe("CLEAR_ITEMS", () => {
-  it("should remove all items", () => {
-    const initialState = {
-      items: [
-        { id: 1, name: "item 1", brand: "brand 1" },
-        { id: 2, name: "item 2", brand: "brand 2" },
-      ],
-    };
-    const action = {
-      type: ITEMS_ACTION_TYPES.CLEAR_ITEMS,
-    };
-    const state = itemsReducer(initialState, action);
-    expect(state).toMatchObject({ items: [] });
-  });
-});
-
 describe("DELETE_ITEM", () => {
   it("should remove the item from existing items", () => {
     const itemId = 2;

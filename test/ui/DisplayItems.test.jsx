@@ -1,5 +1,6 @@
 import React from "react";
 import fetchMock from "jest-fetch-mock";
+import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { render, cleanup, waitFor, screen } from "../utils";
 import GearTable from "../../src/components/GearTable";
@@ -33,6 +34,37 @@ describe("<GearTable />", () => {
       expect(
         screen.queryByText(items[1].brand, { selector: "td" })
       ).toBeInTheDocument();
+    });
+  });
+
+  it("should toggle all item selection when the select-all checkbox is checked", async () => {
+    const items = [
+      { id: 1, name: "test name 1", brand: "test brand 1" },
+      { id: 2, name: "test name 2", brand: "test brand 2" },
+      { id: 3, name: "test name 3", brand: "test brand 3" },
+    ];
+    await fetch.mockResponseOnce(
+      JSON.stringify({
+        status: "success",
+        data: items,
+      })
+    );
+    render(<GearTable />);
+    const selectAllCheckbox = screen.getByRole("checkbox");
+    await userEvent.click(selectAllCheckbox);
+    await waitFor(() => {
+      expect(selectAllCheckbox).toBeChecked();
+    });
+    const allCheckboxes = screen.getAllByRole("checkbox");
+    screen.debug();
+    allCheckboxes.forEach((checkbox) => {
+      expect(checkbox).toBeChecked();
+    });
+    await userEvent.click(selectAllCheckbox);
+    allCheckboxes.forEach((checkbox) => {
+      waitFor(() => {
+        expect(checkbox).toBeChecked();
+      });
     });
   });
 
