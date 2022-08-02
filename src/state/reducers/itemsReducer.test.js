@@ -50,14 +50,16 @@ describe("ADD_ITEM", () => {
 
 describe("CLEAR_ITEMS", () => {
   it("should remove all items", () => {
-    const existingItems = [
-      { id: 1, name: "item 1", brand: "brand 1" },
-      { id: 2, name: "item 2", brand: "brand 2" },
-    ];
+    const initialState = {
+      items: [
+        { id: 1, name: "item 1", brand: "brand 1" },
+        { id: 2, name: "item 2", brand: "brand 2" },
+      ],
+    };
     const action = {
       type: ITEMS_ACTION_TYPES.CLEAR_ITEMS,
     };
-    const state = itemsReducer({ items: existingItems }, action);
+    const state = itemsReducer(initialState, action);
     expect(state).toMatchObject({ items: [] });
   });
 });
