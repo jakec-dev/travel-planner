@@ -1,5 +1,3 @@
-[Launch app](https://jakecdev-travel-planner.herokuapp.com/)
-
 <div id="top"></div>
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
