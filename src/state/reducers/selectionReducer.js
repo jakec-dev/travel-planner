@@ -2,8 +2,14 @@ import * as SELECTION_ACTION_TYPES from "../actions/selectionActionTypes";
 
 export const selectionInitialState = [];
 
-// eslint-disable-next-line default-param-last
-export const selectionReducer = (state = selectionInitialState, action) => {
+export const selectionReducer = (
+  // eslint-disable-next-line default-param-last
+  state = { selectedItems: selectionInitialState },
+  action
+) => {
+  if (!Object.prototype.hasOwnProperty.call(state, "selectedItems")) {
+    throw new Error("Initial state is incorrect format");
+  }
   switch (action.type) {
     case SELECTION_ACTION_TYPES.CLEAR_ALL:
       return { ...state, selectedItems: selectionInitialState };

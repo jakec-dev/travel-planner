@@ -1,75 +1,24 @@
-const serverURL = process.env.API_URL;
+import * as apiUtils from "./apiUtils";
 
-const createItem = async (newItem) => {
-  try {
-    const resp = await fetch(`${serverURL}/items`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newItem),
-    }).then((res) => res.json());
-    if (resp.status === "error") {
-      throw Error(resp.message);
-    }
-    return resp.data;
-  } catch (err) {
-    throw Error(err);
-  }
-};
+const getItems = () => apiUtils.sendRequest("/items");
 
-const deleteItem = async (id) => {
-  try {
-    const resp = await fetch(`${serverURL}/items/${id}`, {
-      method: "DELETE",
-    }).then((res) => res.json());
-    if (resp.status === "error") {
-      throw Error(resp.message);
-    }
-    return resp.data;
-  } catch (err) {
-    throw Error(err);
-  }
-};
+const addItem = (newItem) =>
+  apiUtils.sendRequest("/items", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newItem),
+  });
 
-const readItem = async (itemId) => {
-  try {
-    const resp = await fetch(`${serverURL}/items/${itemId}`).then((res) =>
-      res.json()
-    );
-    if (resp.status === "error") {
-      throw Error(resp.message);
-    }
-    return resp.data;
-  } catch (err) {
-    throw Error(err);
-  }
-};
+const updateItem = (modifiedItem) =>
+  apiUtils.sendRequest("/items", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(modifiedItem),
+  });
 
-const readItems = async () => {
-  try {
-    const resp = await fetch(`${serverURL}/items`).then((res) => res.json());
-    if (resp.status === "error") {
-      throw Error(resp.message);
-    }
-    return resp.data;
-  } catch (err) {
-    throw Error(err);
-  }
-};
+const getItemById = (itemId) => apiUtils.sendRequest(`/items/${itemId}`);
 
-const updateItem = async (modifiedItem) => {
-  try {
-    const resp = await fetch(`${serverURL}/items`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(modifiedItem),
-    }).then((res) => res.json());
-    if (resp.status === "error") {
-      throw Error(resp.message);
-    }
-    return resp.data;
-  } catch (err) {
-    throw Error(err);
-  }
-};
+const deleteItemById = (itemId) =>
+  apiUtils.sendRequest(`/items/${itemId}`, { method: "DELETE" });
 
-export { createItem, deleteItem, readItem, readItems, updateItem };
+export { getItems, addItem, updateItem, getItemById, deleteItemById };

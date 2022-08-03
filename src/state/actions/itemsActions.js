@@ -8,12 +8,6 @@ const itemsActions = (dispatch) => {
     });
   };
 
-  const clearItems = () => {
-    dispatch({
-      type: ITEMS_ACTION_TYPES.CLEAR_ITEMS,
-    });
-  };
-
   const deleteItem = (itemId) => {
     dispatch({
       type: ITEMS_ACTION_TYPES.DELETE_ITEM,
@@ -35,7 +29,7 @@ const itemsActions = (dispatch) => {
     });
   };
 
-  return { addItem, clearItems, deleteItem, setItems, updateItem };
+  return { addItem, deleteItem, setItems, updateItem };
 };
 
 export default itemsActions;

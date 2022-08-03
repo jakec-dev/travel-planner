@@ -1,52 +1,75 @@
 import React, { useState } from "react";
-import { createItem } from "../../api/itemsAPI";
+import { addItem } from "../../api/itemsAPI";
+import { newItemSchema } from "../../api/validation/itemsSchema";
 import { useItemsState } from "../../contexts/itemsState";
 import "./AddItem.css";
 
 function AddItem() {
-  const { items, itemsActions } = useItemsState();
+  const { itemsActions } = useItemsState();
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
+  const [submitErrorMessage, setSubmitErrorMessage] = useState("");
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name) {
-      return;
-    }
-    const newItem = { id: items.length + 1, name, brand };
-    await createItem(newItem).then((resp) => {
-      console.log("createItem resp: ", resp);
-      itemsActions.addItem(newItem);
+    const newItem = { name, brand: brand || undefined };
+    try {
+      await newItemSchema.validate(newItem);
+      const createdItem = await addItem(newItem);
+      itemsActions.addItem(createdItem);
       setName("");
       setBrand("");
-    });
+      setSubmitErrorMessage("");
+    } catch (err) {
+      setSubmitErrorMessage(err.message);
+    }
+  };
+
+  const handleNameChange = async (e) => {
+    const nameValue = e.target.value;
+    setName(nameValue);
+    const newItem = { name: nameValue, brand: brand || undefined };
+    const isValid = await newItemSchema.isValid(newItem);
+    setSubmitDisabled(!isValid);
+  };
+
+  const handleBrandChange = async (e) => {
+    const brandValue = e.target.value;
+    setBrand(brandValue);
+    const newItem = { name, brand: brandValue };
+    const isValid = await newItemSchema.isValid(newItem);
+    setSubmitDisabled(!isValid);
   };
 
   return (
     <div className="paper">
       <h2>Add Item</h2>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="itemName" className="textInput">
           Item name
           <input
             id="itemName"
-            type="text"
             placeholder="Add item name"
+            type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleNameChange}
           />
         </label>
         <label htmlFor="itemBrand" className="textInput">
           Brand
           <input
             id="itemBrand"
-            type="text"
             placeholder="Add item brand"
+            type="text"
             value={brand}
-            onChange={(e) => setBrand(e.target.value)}
+            onChange={handleBrandChange}
           />
         </label>
-        <button type="submit">Add Item</button>
+        <button type="submit" disabled={submitDisabled}>
+          Add Item
+        </button>
+        {submitErrorMessage && <p>{submitErrorMessage}</p>}
       </form>
     </div>
   );

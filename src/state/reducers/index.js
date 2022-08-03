@@ -1,14 +1,6 @@
 import { itemsInitialState, itemsReducer } from "./itemsReducer";
 import { selectionInitialState, selectionReducer } from "./selectionReducer";
-
-const combineReducers = (reducers) => (state, action) =>
-  Object.keys(reducers).reduce(
-    (acc, prop) => ({
-      ...acc,
-      ...reducers[prop]({ [prop]: acc[prop] }, action),
-    }),
-    state
-  );
+import combineReducers from "./combineReducers";
 
 const initialState = {
   items: itemsInitialState,
