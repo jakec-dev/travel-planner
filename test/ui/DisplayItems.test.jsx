@@ -14,6 +14,7 @@ describe("<GearTable />", () => {
   afterEach(() => {
     cleanup();
   });
+
   it("should render a list of all items", async () => {
     const items = [
       { id: 1, name: "test name 1", brand: "test brand 1" },
@@ -65,6 +66,17 @@ describe("<GearTable />", () => {
     });
   });
 
+  it("should render error message if server request fails", async () => {
+    const errorMessage = "Test error message";
+    await fetch.mockReject(new Error(errorMessage));
+    render(<GearTable />);
+    await waitFor(() => {
+      expect(
+        screen.queryByText(errorMessage, { exact: false })
+      ).toBeInTheDocument();
+    });
+  });
+
   describe("<Item />", () => {
     it("should render the item name and brand", () => {
       const item = { id: 1, name: "test name", brand: "test brand" };
@@ -82,6 +94,7 @@ describe("<GearTable />", () => {
         screen.queryByText(item.brand, { selector: "td" })
       ).toBeInTheDocument();
     });
+
     it("should render an empty string if optional fields are not provided", () => {
       // no 'brand' field
       const item = { id: 1, name: "test name" };
@@ -94,6 +107,7 @@ describe("<GearTable />", () => {
       );
       expect(screen.getByTestId("itemBrand")).toHaveTextContent("");
     });
+
     it("should not render the item ID", () => {
       const item = { id: 123, name: "test name", brand: "test brand" };
       render(

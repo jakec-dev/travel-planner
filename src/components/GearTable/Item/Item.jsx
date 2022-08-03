@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
 import { deleteItemById } from "../../../api/itemsAPI";
@@ -6,12 +6,17 @@ import { useItemsState } from "../../../contexts/itemsState";
 
 function Item({ item }) {
   const { itemsActions, selectionActions, selectedItems } = useItemsState();
+  const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
 
   const handleDelete = async () => {
-    const itemId = item.id;
-    const deletedItemId = await deleteItemById(itemId);
-    itemsActions.deleteItem(deletedItemId);
-    selectionActions.deselectItem(deletedItemId);
+    try {
+      const itemId = item.id;
+      const deletedItemId = await deleteItemById(itemId);
+      itemsActions.deleteItem(deletedItemId);
+      selectionActions.deselectItem(deletedItemId);
+    } catch (err) {
+      setDeleteErrorMessage(err.message);
+    }
   };
 
   const handleSelect = () => {
@@ -45,6 +50,7 @@ function Item({ item }) {
         >
           <FaTimes />
         </button>
+        {deleteErrorMessage && <p>{deleteErrorMessage}</p>}
       </td>
     </tr>
   );

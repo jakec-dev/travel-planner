@@ -7,6 +7,7 @@ function GearTable() {
   const { items, itemsActions, selectedItems, selectionActions } =
     useItemsState();
   const [isAllSelected, setIsAllSelected] = useState(false);
+  const [getItemsErrorMessage, setGetItemsErrorMessage] = useState("");
 
   const handleSelectAll = () => {
     if (isAllSelected) {
@@ -19,8 +20,12 @@ function GearTable() {
 
   useEffect(() => {
     (async () => {
-      const itemsInDatabase = await getItems();
-      itemsActions.setItems(itemsInDatabase);
+      try {
+        const itemsInDatabase = await getItems();
+        itemsActions.setItems(itemsInDatabase);
+      } catch (err) {
+        setGetItemsErrorMessage(err.message);
+      }
     })();
   }, []);
 
@@ -32,27 +37,31 @@ function GearTable() {
 
   return (
     <div className="paper">
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                onChange={handleSelectAll}
-                checked={isAllSelected}
-              />
-            </th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th className="alignRight">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <Item key={item.id} item={item} />
-          ))}
-        </tbody>
-      </table>
+      {getItemsErrorMessage ? (
+        <p>{getItemsErrorMessage}</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  checked={isAllSelected}
+                />
+              </th>
+              <th>Name</th>
+              <th>Brand</th>
+              <th className="alignRight">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <Item key={item.id} item={item} />
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

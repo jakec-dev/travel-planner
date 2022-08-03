@@ -14,6 +14,7 @@ describe("<GearTable />", () => {
   afterEach(() => {
     cleanup();
   });
+
   it("should remove the item when the delete button is clicked", async () => {
     const initialItems = [
       { id: 1, name: "First item" },
@@ -44,6 +45,35 @@ describe("<GearTable />", () => {
     await userEvent.click(deleteButton);
     await waitFor(() => {
       expect(deleteItemName).not.toBeInTheDocument();
+    });
+  });
+
+  it("should render error message if server request fails", async () => {
+    const errorMessage = "Test error message";
+    const initialItems = [
+      { id: 1, name: "First item" },
+      { id: 2, name: "Second item" },
+      { id: 3, name: "Third item" },
+    ];
+    const itemIdToDelete = initialItems[1].id;
+    await fetch
+      .mockResponseOnce(
+        JSON.stringify({ status: "success", data: initialItems })
+      )
+      .mockReject(new Error(errorMessage));
+    render(<GearTable />);
+    let deleteButton;
+    await waitFor(() => {
+      deleteButton = screen.getByRole("button", {
+        name: `Delete Item ${itemIdToDelete}`,
+      });
+      expect(deleteButton).toBeInTheDocument();
+    });
+    await userEvent.click(deleteButton);
+    await waitFor(() => {
+      expect(
+        screen.queryByText(errorMessage, { exact: false })
+      ).toBeInTheDocument();
     });
   });
 
