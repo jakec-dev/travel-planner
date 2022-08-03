@@ -38,6 +38,22 @@ describe("<GearTable />", () => {
     });
   });
 
+  it("should render empty table if no items exist in database", async () => {
+    await fetch.mockResponseOnce(
+      JSON.stringify({
+        status: "success",
+        data: null,
+      })
+    );
+    render(<GearTable />);
+    const tableNameHeader = screen.queryByRole("columnheader", {
+      name: "Name",
+    });
+    const tableRows = screen.queryAllByRole("row");
+    expect(tableNameHeader).toBeInTheDocument();
+    expect(tableRows.length).toEqual(1); // only the header row
+  });
+
   it("should toggle all item selection when the select-all checkbox is checked", async () => {
     const items = [
       { id: 1, name: "test name 1", brand: "test brand 1" },

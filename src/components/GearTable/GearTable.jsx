@@ -57,10 +57,13 @@ function GearTable() {
               <th className="alignRight">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {items.length > 0 &&
-              items.map((item) => <Item key={item.id} item={item} />)}
-          </tbody>
+          {items && (
+            <tbody>
+              {items.map((item) => (
+                <Item key={item.id} item={item} />
+              ))}
+            </tbody>
+          )}
         </table>
       )}
     </div>
