@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { getItems } from "../../api/itemsAPI";
 import { useItemsState } from "../../contexts/itemsState";
 import Item from "./Item";
@@ -6,11 +6,7 @@ import Item from "./Item";
 function GearTable() {
   const { items, itemsActions, selectedItems, selectionActions } =
     useItemsState();
-
-  const isAllSelected = useMemo(
-    () => items.length !== 0 && items.length === selectedItems.length,
-    [items, selectedItems]
-  );
+  const [isAllSelected, setIsAllSelected] = useState(false);
 
   const handleSelectAll = () => {
     if (isAllSelected) {
@@ -18,6 +14,7 @@ function GearTable() {
     } else {
       selectionActions.selectAll(items);
     }
+    setIsAllSelected((prev) => !prev);
   };
 
   useEffect(() => {
@@ -26,6 +23,12 @@ function GearTable() {
       itemsActions.setItems(itemsInDatabase);
     })();
   }, []);
+
+  useEffect(() => {
+    setIsAllSelected(
+      items.length !== 0 && items.length === selectedItems.length
+    );
+  }, [items, selectedItems]);
 
   return (
     <div className="paper">

@@ -120,13 +120,22 @@ describe("<ItemInspector />", () => {
         await userEvent.click(editNameBtn);
       });
       it("shoould convert the field to a text input", async () => {
+        const editBrandBtn = screen.getByRole("button", { name: "Edit Brand" });
+        await userEvent.click(editBrandBtn);
         expect(
           screen.queryByDisplayValue(selectedItem.name)
         ).toBeInTheDocument();
         expect(screen.queryByTestId("itemDetailName")).not.toBeInTheDocument();
+        expect(
+          screen.queryByDisplayValue(selectedItem.brand)
+        ).toBeInTheDocument();
+        expect(screen.queryByTestId("itemDetailBrand")).not.toBeInTheDocument();
       });
       it("should remove the button to edit the field", async () => {
+        const editBrandBtn = screen.getByRole("button", { name: "Edit Brand" });
+        await userEvent.click(editBrandBtn);
         expect(editNameBtn).not.toBeInTheDocument();
+        expect(editBrandBtn).not.toBeInTheDocument();
       });
       it("should render buttons to save or cancel the changes", () => {
         expect(
@@ -138,7 +147,7 @@ describe("<ItemInspector />", () => {
       });
       describe("When the save button is clicked", () => {
         const modifiedName = "Modified name";
-        beforeEach(async () => {
+        it("should convert the field back to uneditable text", async () => {
           await fetch.mockResponseOnce(
             JSON.stringify({
               status: "success",
@@ -149,14 +158,22 @@ describe("<ItemInspector />", () => {
           await userEvent.type(nameField, modifiedName);
           const saveBtn = screen.getByRole("button", { name: "Save Edits" });
           await userEvent.click(saveBtn);
-        });
-        it("should convert the field back to uneditable text", () => {
           expect(screen.queryByTestId("itemDetailName")).toBeInTheDocument();
           expect(
             screen.queryByDisplayValue(modifiedName)
           ).not.toBeInTheDocument();
         });
-        it("should remove the buttons to save or cancel the changes", () => {
+        it("should remove the buttons to save or cancel the changes", async () => {
+          await fetch.mockResponseOnce(
+            JSON.stringify({
+              status: "success",
+              data: { ...selectedItem, name: modifiedName },
+            })
+          );
+          const nameField = screen.getByDisplayValue(selectedItem.name);
+          await userEvent.type(nameField, modifiedName);
+          const saveBtn = screen.getByRole("button", { name: "Save Edits" });
+          await userEvent.click(saveBtn);
           expect(
             screen.queryByRole("button", { name: "Save Edits" })
           ).not.toBeInTheDocument();
@@ -164,12 +181,32 @@ describe("<ItemInspector />", () => {
             screen.queryByRole("button", { name: "Cancel Edit" })
           ).not.toBeInTheDocument();
         });
-        it("should render a button to edit the field again", () => {
+        it("should render a button to edit the field again", async () => {
+          await fetch.mockResponseOnce(
+            JSON.stringify({
+              status: "success",
+              data: { ...selectedItem, name: modifiedName },
+            })
+          );
+          const nameField = screen.getByDisplayValue(selectedItem.name);
+          await userEvent.type(nameField, modifiedName);
+          const saveBtn = screen.getByRole("button", { name: "Save Edits" });
+          await userEvent.click(saveBtn);
           expect(
             screen.queryByRole("button", { name: "Edit Name" })
           ).toBeInTheDocument();
         });
-        it("should display the updated value", () => {
+        it("should display the updated value", async () => {
+          await fetch.mockResponseOnce(
+            JSON.stringify({
+              status: "success",
+              data: { ...selectedItem, name: modifiedName },
+            })
+          );
+          const nameField = screen.getByDisplayValue(selectedItem.name);
+          await userEvent.type(nameField, modifiedName);
+          const saveBtn = screen.getByRole("button", { name: "Save Edits" });
+          await userEvent.click(saveBtn);
           expect(
             screen.queryByText(modifiedName, { selector: "td" })
           ).toBeInTheDocument();
@@ -177,14 +214,27 @@ describe("<ItemInspector />", () => {
             screen.queryByText(selectedItem.name, { selector: "td" })
           ).not.toBeInTheDocument();
         });
+        it("should render error message if server request fails", async () => {
+          const errorMessage = "Test error message";
+          await fetch.mockReject(new Error(errorMessage));
+          const nameField = screen.getByDisplayValue(selectedItem.name);
+          await userEvent.type(nameField, modifiedName);
+          const saveBtn = screen.getByRole("button", { name: "Save Edits" });
+          await userEvent.click(saveBtn);
+          await waitFor(() => {
+            expect(
+              screen.queryByText(errorMessage, { exact: false })
+            ).toBeInTheDocument();
+          });
+        });
       });
       describe("When the cancel button is clicked", () => {
         const modifiedName = "Modified name";
         beforeEach(async () => {
           const nameField = screen.getByDisplayValue(selectedItem.name);
           await userEvent.type(nameField, modifiedName);
-          const saveBtn = screen.getByRole("button", { name: "Cancel Edit" });
-          await userEvent.click(saveBtn);
+          const cancelBtn = screen.getByRole("button", { name: "Cancel Edit" });
+          await userEvent.click(cancelBtn);
         });
         it("should convert the field back to uneditable text", () => {
           expect(screen.queryByTestId("itemDetailName")).toBeInTheDocument();

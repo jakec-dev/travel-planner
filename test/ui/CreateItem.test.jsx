@@ -84,32 +84,29 @@ describe("<AddItem />", () => {
         ).toBeInTheDocument();
       });
     });
-    // it("should throw an error if server request fails", async () => {
-    //   const errorMessage = "Test error message";
-    //   const initialItems = [{ id: 1, name: "Initial item" }];
-    //   const newItem = {
-    //     name: "New item name",
-    //     brand: "New item brand",
-    //   };
-    //   await fetch
-    //     .mockResponseOnce(
-    //       JSON.stringify({ status: "success", data: initialItems })
-    //     )
-    //     .mockReject(new Error(errorMessage));
-    //   render(
-    //     <div>
-    //       <GearTable />
-    //       <AddItem />
-    //     </div>
-    //   );
-    //   const nameField = screen.getByLabelText("Item name");
-    //   const brandField = screen.getByLabelText("Brand");
-    //   const submitButton = screen.getByText("Add Item", { selector: "button" });
-    //   await userEvent.type(nameField, newItem.name);
-    //   await userEvent.type(brandField, newItem.brand);
-    //   expect(async () => userEvent.click(submitButton)).toThrowError(
-    //     errorMessage
-    //   );
-    // });
+    it("should render error message if server request fails", async () => {
+      const errorMessage = "Test error message";
+      const newItem = {
+        name: "New item name",
+      };
+      await fetch
+        .mockResponseOnce(JSON.stringify({ status: "success", data: [] }))
+        .mockReject(new Error(errorMessage));
+      render(
+        <div>
+          <GearTable />
+          <AddItem />
+        </div>
+      );
+      const nameField = screen.getByLabelText("Item name");
+      await userEvent.type(nameField, newItem.name);
+      const submitButton = screen.getByText("Add Item", { selector: "button" });
+      await userEvent.click(submitButton);
+      await waitFor(() => {
+        expect(
+          screen.queryByText(errorMessage, { exact: false })
+        ).toBeInTheDocument();
+      });
+    });
   });
 });

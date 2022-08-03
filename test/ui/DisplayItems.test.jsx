@@ -56,15 +56,12 @@ describe("<GearTable />", () => {
       expect(selectAllCheckbox).toBeChecked();
     });
     const allCheckboxes = screen.getAllByRole("checkbox");
-    screen.debug();
     allCheckboxes.forEach((checkbox) => {
       expect(checkbox).toBeChecked();
     });
     await userEvent.click(selectAllCheckbox);
     allCheckboxes.forEach((checkbox) => {
-      waitFor(() => {
-        expect(checkbox).toBeChecked();
-      });
+      expect(checkbox).not.toBeChecked();
     });
   });
 

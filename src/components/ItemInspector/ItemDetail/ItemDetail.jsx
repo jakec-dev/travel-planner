@@ -12,6 +12,7 @@ function ItemDetail({ itemId }) {
   const item = items.find((i) => i.id === itemId);
   const [editName, setEditName] = useState(false);
   const [editBrand, setEditBrand] = useState(false);
+  const [saveErrorMessage, setSaveErrorMessage] = useState("");
 
   const handleSave = (setEditField) => async (field, value) => {
     const modifiedItem = { ...item, [field]: value };
@@ -20,9 +21,14 @@ function ItemDetail({ itemId }) {
       const updatedItem = await updateItem(modifiedItem);
       itemsActions.updateItem(updatedItem);
       setEditField(false);
+      setSaveErrorMessage("");
     } catch (err) {
-      throw new Error(err);
+      setSaveErrorMessage(err.message);
     }
+  };
+
+  const handleCancel = (setEditField) => () => {
+    setEditField(false);
   };
 
   return (
@@ -32,7 +38,7 @@ function ItemDetail({ itemId }) {
           field="name"
           item={item}
           handleSave={handleSave(setEditName)}
-          handleCancel={() => setEditName(false)}
+          handleCancel={handleCancel(setEditName)}
         />
       ) : (
         <div className="itemDetail_Header">
@@ -52,7 +58,7 @@ function ItemDetail({ itemId }) {
           field="brand"
           item={item}
           handleSave={handleSave(setEditBrand)}
-          handleCancel={() => setEditBrand(false)}
+          handleCancel={handleCancel(setEditBrand)}
         />
       ) : (
         <div className="itemDetail_Textfield">
@@ -67,6 +73,7 @@ function ItemDetail({ itemId }) {
           </button>
         </div>
       )}
+      {saveErrorMessage && <p>{saveErrorMessage}</p>}
     </>
   );
 }

@@ -8,6 +8,7 @@ function AddItem() {
   const { itemsActions } = useItemsState();
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
+  const [submitErrorMessage, setSubmitErrorMessage] = useState("");
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
   const handleSubmit = async (e) => {
@@ -19,8 +20,9 @@ function AddItem() {
       itemsActions.addItem(createdItem);
       setName("");
       setBrand("");
+      setSubmitErrorMessage("");
     } catch (err) {
-      throw new Error(err);
+      setSubmitErrorMessage(err.message);
     }
   };
 
@@ -67,6 +69,7 @@ function AddItem() {
         <button type="submit" disabled={submitDisabled}>
           Add Item
         </button>
+        {submitErrorMessage && <p>{submitErrorMessage}</p>}
       </form>
     </div>
   );
