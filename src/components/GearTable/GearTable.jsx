@@ -22,7 +22,9 @@ function GearTable() {
     (async () => {
       try {
         const itemsInDatabase = await getItems();
-        itemsActions.setItems(itemsInDatabase);
+        if (itemsInDatabase) {
+          itemsActions.setItems(itemsInDatabase);
+        }
       } catch (err) {
         setGetItemsErrorMessage(err.message);
       }
@@ -56,9 +58,8 @@ function GearTable() {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
-              <Item key={item.id} item={item} />
-            ))}
+            {items.length > 0 &&
+              items.map((item) => <Item key={item.id} item={item} />)}
           </tbody>
         </table>
       )}
