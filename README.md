@@ -297,7 +297,7 @@ Jake Clayton
 [linkedin-shield]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://linkedin.com/in/jakeclayton
 [app-screenshot]: images/app.png
-[real-all-items-screenshot]: images/read-all-items.png
+[read-all-items-screenshot]: images/read-all-items.png
 [read-item-screenshot]: images/read-item.png
 [add-item-screenshot]: images/add-item.png
 [update-item-screenshot]: images/update-item.png
