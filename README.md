@@ -1,5 +1,3 @@
-[Launch app](https://jakecdev-travel-planner.herokuapp.com/)
-
 <div id="top"></div>
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
@@ -27,11 +25,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <!-- <a href="https://github.com/jakec-dev/travel-planner">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a> -->
-
-<h3 align="center">Travel Planner</h3>
+  <h3 align="center">Travel Planner</h3>
 
   <p align="center">
     A web-based app for planning gear to bring for hiking/bikepacking/moto-camping trips.
@@ -45,6 +39,10 @@
     ·
     <a href="https://github.com/jakec-dev/travel-planner/issues">Request Feature</a>
   </p>
+
+  <a href="https://github.com/jakec-dev/travel-planner">
+    <img src="images/app.png" />
+  </a>
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -104,14 +102,12 @@ Travel Planner is a web-based application for planning your next adventure. Curr
 
 ### Built With
 
-- [![Node.js][node.js]][node-url]
-- [![Express.js][express.js]][express-url]
-- [![MySQL][mysql]][mysql-url]
+- [![React.js][react.js]][react-url]
+- [![Webpack][webpack]][webpack-url]
+- [![Babel][babel]][babel-url]
 - [![ESLint][eslint]][eslint-url]
 - [![Prettier][prettier]][prettier-url]
-- [![Mocha][mocha]][mocha-url]
-- [![Chai][chai]][chai-url]
-- [![Swagger][swagger]][swagger-url]
+- [![Jest][jest]][jest-url]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -138,12 +134,9 @@ You will need the following software installed in your environment to run this a
    ```sh
    yarn install
    ```
-3. Create an `.env` file in the project root directory and enter your database configuration settings
+3. Build the app
    ```sh
-   DB_HOST=database.example.com
-   DB_DATABASE=database-name
-   DB_USER=username
-   DB_PASSWORD=password
+   yarn build
    ```
 4. Start the server
    ```sh
@@ -156,187 +149,45 @@ You will need the following software installed in your environment to run this a
 
 ## Usage
 
-This API is designed to be used in conjunction with the Travel Planner App. It provides the following functionality:
+The app provides the following functionality:
 
-### Create an Item
+### View All Items
 
-Send a POST request to `/items`. The request body should contain the new item, for example:
+Navigate to https://localhost:8080 to see your gear list.
 
-```json
-{
-  "name": "New item name",
-  "brand": "New item brand (optional)"
-}
-```
+[![Read all items][read-all-items-screenshot]][read-all-items-screenshot]
 
-JavaScript/React example:
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-```js
-const SERVER_URL = "https://api.example.com";
+### Get Detailed Information About an Item
 
-const createItem = async (newItem) => {
-  try {
-    const resp = await fetch(`${SERVER_URL}/items`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newItem),
-    }).then((res) => res.json());
-    if (resp.status === "error") {
-      throw Error(resp.message);
-    }
-    return resp.data;
-  } catch (err) {
-    throw Error(err);
-  }
-};
+Click the checkbox next to the item you wish to inspect in your gear list. You should see the item displayed in the sidebar.
 
-const result = createItem({
-  name: "New item name",
-  brand: "New item brand",
-})
-  .then((resp) => resp)
-  .catch((err) => console.log(err));
-```
+[![Read an item][read-item-screenshot]][read-item-screenshot]
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Add an Item
+
+Enter the item `Item name` and `Brand` (optional) in the `Add Item` form, then click the `Add Item` button.
+
+[![Add an item][add-item-screenshot]][add-item-screenshot]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Update an Item
 
-Send a PUT request to `/items`. The request body should contain the modified item. The modified item will entirely replace the original item, rather than merge fields, so be sure to merge any existing fields before sending the request. For example:
+Select the item to modify from your gear list, then click the Edit icon next to the field you wish to update in the sidebar. Make your desired changes, then click the Save icon to save the changes or the Cancel icon to cancel the changes. You should now see the item has been updated in your gear list.
 
-```json
-{
-  "id": 3,
-  "name": "Original item name",
-  "brand": "Updated item brand"
-}
-```
-
-JavaScript/React example:
-
-```js
-const SERVER_URL = "https://api.example.com";
-
-const updateItem = async (modifiedItem) => {
-  try {
-    const resp = await fetch(`${SERVER_URL}/items`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(modifiedItem),
-    }).then((res) => res.json());
-    if (resp.status === "error") {
-      throw Error(resp.message);
-    }
-    return resp.data;
-  } catch (err) {
-    throw Error(err);
-  }
-};
-
-const result = updateItem({
-  id: 3,
-  name: "Original item name",
-  brand: "Updated item brand",
-})
-  .then((resp) => resp)
-  .catch((err) => console.log(err));
-```
+[![Update an item][update-item-screenshot]][update-item-screenshot]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Delete an Item
 
-Send a DELETE request to `/items/:id`, where `:id` is the ID of the item to be deleted. No request body is required.
+Click the Delete icon next to the item you wish to delete from your gear list. This action is permanent and the current version of this app does not prompt you for confirmation, so please ensure you really wish to delete the item before clicking the icon.
 
-JavaScript/React example:
-
-```js
-const SERVER_URL = "https://api.example.com";
-
-const deleteItem = async (id) => {
-  try {
-    const resp = await fetch(`${SERVER_URL}/items/${id}`, {
-      method: "DELETE",
-    }).then((res) => res.json());
-    if (resp.status === "error") {
-      throw Error(resp.message);
-    }
-    return resp.data;
-  } catch (err) {
-    throw Error(err);
-  }
-};
-
-const result = deleteItem(4)
-  .then((resp) => resp)
-  .catch((err) => console.log(err));
-```
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-### Fetch a Specific Item
-
-Send a GET request to `/items/:id`, where `:id` is the ID of the item to be fetched. No request body is required.
-
-JavaScript/React example:
-
-```js
-const SERVER_URL = "https://api.example.com";
-
-const fetchItem = async (itemId) => {
-  try {
-    const resp = await fetch(`${SERVER_URL}/items/${itemId}`).then((res) =>
-      res.json()
-    );
-    if (resp.status === "error") {
-      throw Error(resp.message);
-    }
-    return resp.data;
-  } catch (err) {
-    throw Error(err);
-  }
-};
-
-const result = fetchItem(2)
-  .then((resp) => resp)
-  .catch((err) => console.log(err));
-```
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-### Fetch All Items
-
-Send a GET request to `/items`. No request body is required.
-
-JavaScript/React example:
-
-```js
-const SERVER_URL = "https://api.example.com";
-
-const fetchAllItems = async (itemId) => {
-  try {
-    const resp = await fetch(`${SERVER_URL}/items`).then((res) => res.json());
-    if (resp.status === "error") {
-      throw Error(resp.message);
-    }
-    return resp.data;
-  } catch (err) {
-    throw Error(err);
-  }
-};
-
-const result = fetchAllItems()
-  .then((resp) => resp)
-  .catch((err) => console.log(err));
-```
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-### Access API Documentation
-
-Navigate to `/api-docs` in a web browser.
-
-[![API Docs][api-docs-screenshot]](https://github.com/jakec-dev/travel-planner)
+[![Delete an item][delete-item-screenshot]][delete-item-screenshot]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -346,9 +197,9 @@ Navigate to `/api-docs` in a web browser.
 
 ### Version 1
 
-- [x] Create database connection
-- [x] Add route, controller, service and data layers for items
-- [x] Add API documentation
+- [x] Display all items on page
+- [x] Add ability to create, read, update and delete an item
+- [x] Use the [Travel Planner Server](https://github.com/jakec-dev/travel-planner-server)'s API to persist data
 - [x] Write unit and integration tests
 - [x] Write project documentation
 
@@ -375,10 +226,11 @@ Don't forget to give the project a star! Thanks again!
 
 ### Testing
 
-This project uses Mocha, Chai, and Sinon for testing, and Istanbul for test coverage reports
+This project uses Jest and React Testing Library for testing, and Jest for test coverage reports
 
 ```sh
 yarn test
+yarn test:coverage
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -444,21 +296,24 @@ Jake Clayton
 [license-url]: https://github.com/jakec-dev/travel-planner/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://linkedin.com/in/jakeclayton
-[api-docs-screenshot]: images/api-docs.png
+[app-screenshot]: images/app.png
+[read-all-items-screenshot]: images/read-all-items.png
+[read-item-screenshot]: images/read-item.png
+[add-item-screenshot]: images/add-item.png
+[update-item-screenshot]: images/update-item.png
+[delete-item-screenshot]: images/delete-item.png
 [node.js]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
 [node-url]: https://nodejs.org
-[express.js]: https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white
-[express-url]: https://express.js
-[mysql]: https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white
-[mysql-url]: https://www.mysql.com
+[react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[react-url]: https://reactjs.org/
+[webpack]: https://img.shields.io/badge/Webpack-8DD6F9?style=for-the-badge&logo=Webpack&logoColor=white
+[webpack-url]: https://webpack.js.org/
+[babel]: https://img.shields.io/badge/Babel-F9DC3E?style=for-the-badge&logo=babel&logoColor=white
+[babel-url]: https://babeljs.io/
 [eslint]: https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white
 [eslint-url]: https://eslint.org
 [prettier]: https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E
 [prettier-url]: https://prettier.io/
-[mocha]: https://img.shields.io/badge/Mocha-8D6748?style=for-the-badge&logo=Mocha&logoColor=white
-[mocha-url]: https://mochajs.org
-[chai]: https://img.shields.io/badge/chai-A30701?style=for-the-badge&logo=chai&logoColor=white
-[chai-url]: https://www.chaijs.com/
-[swagger]: https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white
-[swagger-url]: https://swagger.io
+[jest]: https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white
+[jest-url]: https://jestjs.io/
 [yarn-url]: https://yarnpkg.com/
