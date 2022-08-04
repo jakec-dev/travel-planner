@@ -25,11 +25,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <!-- <a href="https://github.com/jakec-dev/travel-planner">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a> -->
-
-<h3 align="center">Travel Planner</h3>
+  <h3 align="center">Travel Planner</h3>
 
   <p align="center">
     A web-based app for planning gear to bring for hiking/bikepacking/moto-camping trips.
@@ -43,6 +39,10 @@
     ·
     <a href="https://github.com/jakec-dev/travel-planner/issues">Request Feature</a>
   </p>
+
+  <a href="https://github.com/jakec-dev/travel-planner">
+    <img src="images/app.png" />
+  </a>
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -151,6 +151,22 @@ You will need the following software installed in your environment to run this a
 
 The app provides the following functionality:
 
+### View All Items
+
+Navigate to https://localhost:8080 to see your gear list.
+
+[![Read all items][read-all-items-screenshot]][read-all-items-screenshot]
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Get Detailed Information About an Item
+
+Click the checkbox next to the item you wish to inspect in your gear list. You should see the item displayed in the sidebar.
+
+[![Read an item][read-item-screenshot]][read-item-screenshot]
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ### Add an Item
 
 Enter the item `Item name` and `Brand` (optional) in the `Add Item` form, then click the `Add Item` button.
@@ -161,7 +177,7 @@ Enter the item `Item name` and `Brand` (optional) in the `Add Item` form, then c
 
 ### Update an Item
 
-Send a PUT request to `/items`. The request body should contain the modified item. The modified item will entirely replace the original item, rather than merge fields, so be sure to merge any existing fields before sending the request. For example:
+Select the item to modify from your gear list, then click the Edit icon next to the field you wish to update in the sidebar. Make your desired changes, then click the Save icon to save the changes or the Cancel icon to cancel the changes. You should now see the item has been updated in your gear list.
 
 [![Update an item][update-item-screenshot]][update-item-screenshot]
 
@@ -169,25 +185,9 @@ Send a PUT request to `/items`. The request body should contain the modified ite
 
 ### Delete an Item
 
-Send a DELETE request to `/items/:id`, where `:id` is the ID of the item to be deleted. No request body is required.
+Click the Delete icon next to the item you wish to delete from your gear list. This action is permanent and the current version of this app does not prompt you for confirmation, so please ensure you really wish to delete the item before clicking the icon.
 
 [![Delete an item][delete-item-screenshot]][delete-item-screenshot]
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-### Get Detailed Information About an Item
-
-Send a GET request to `/items/:id`, where `:id` is the ID of the item to be fetched. No request body is required.
-
-[![Read an item][read-item-screenshot]][read-item-screenshot]
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-### View All Items
-
-Send a GET request to `/items`. No request body is required.
-
-[![Read all items][read-all-items-screenshot]][read-all-items-screenshot]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -296,7 +296,7 @@ Jake Clayton
 [license-url]: https://github.com/jakec-dev/travel-planner/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://linkedin.com/in/jakeclayton
-[app-screenshot]: images/app-screenshot.png
+[app-screenshot]: images/app.png
 [real-all-items-screenshot]: images/read-all-items.png
 [read-item-screenshot]: images/read-item.png
 [add-item-screenshot]: images/add-item.png
