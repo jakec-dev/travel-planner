@@ -1,81 +1,73 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import { getItems } from "../../api/itemsAPI";
+import { useItemsState } from "../../contexts/itemsState";
 import Item from "./Item";
 
-function GearTable({
-  items,
-  onDelete,
-  selectedItems,
-  setSelectedItems,
-  toggleCheckbox,
-}) {
-  const isAllSelected =
-    items.length === selectedItems.length && items.length !== 0;
+function GearTable() {
+  const { items, itemsActions, selectedItems, selectionActions } =
+    useItemsState();
+  const [isAllSelected, setIsAllSelected] = useState(false);
+  const [getItemsErrorMessage, setGetItemsErrorMessage] = useState("");
 
   const handleSelectAll = () => {
     if (isAllSelected) {
-      setSelectedItems([]);
+      selectionActions.clearAll();
     } else {
-      setSelectedItems(items);
+      selectionActions.selectAll(items);
     }
+    setIsAllSelected((prev) => !prev);
   };
 
-  const isChecked = (item) => {
-    if (selectedItems.find((selectedItem) => selectedItem.id === item.id))
-      return true;
-    return false;
-  };
+  useEffect(() => {
+    (async () => {
+      try {
+        const itemsInDatabase = await getItems();
+        if (itemsInDatabase) {
+          itemsActions.setItems(itemsInDatabase);
+        }
+      } catch (err) {
+        setGetItemsErrorMessage(err.message);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    setIsAllSelected(
+      items.length !== 0 && items.length === selectedItems.length
+    );
+  }, [items, selectedItems]);
 
   return (
     <div className="paper">
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                onChange={handleSelectAll}
-                checked={isAllSelected}
-              />
-            </th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th className="alignRight">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <Item
-              key={item.id}
-              checked={isChecked(item)}
-              item={item}
-              onDelete={onDelete}
-              toggleCheckbox={() => toggleCheckbox(item)}
-            />
-          ))}
-        </tbody>
-      </table>
+      {getItemsErrorMessage ? (
+        <p>{getItemsErrorMessage}</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  checked={isAllSelected}
+                />
+              </th>
+              <th>Name</th>
+              <th>Brand</th>
+              <th className="alignRight">Actions</th>
+            </tr>
+          </thead>
+          {items && (
+            <tbody>
+              {items.map((item) => (
+                <Item key={item.id} item={item} />
+              ))}
+            </tbody>
+          )}
+        </table>
+      )}
     </div>
   );
 }
-
-GearTable.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      brand: PropTypes.string,
-    })
-  ).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  selectedItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      brand: PropTypes.string,
-    })
-  ).isRequired,
-  setSelectedItems: PropTypes.func.isRequired,
-  toggleCheckbox: PropTypes.func.isRequired,
-};
 
 export default GearTable;

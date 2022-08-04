@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { FaSave } from "react-icons/fa";
+import { FaSave, FaTimes } from "react-icons/fa";
 
-function TextInput({ field, onSave, item, setIsEditable }) {
+function TextInput({ field, item, handleSave, handleCancel }) {
   const [value, setValue] = useState(item[field]);
-
-  const handleClick = () => {
-    onSave({ ...item, [field]: value });
-    setIsEditable(false);
-  };
-
   return (
     <div className="itemDetail_Textfield">
       <input value={value} onChange={(e) => setValue(e.target.value)} />
-      <FaSave onClick={handleClick} />
+      <button
+        type="button"
+        aria-label="Save Edits"
+        onClick={() => handleSave(field, value)}
+        className="unstyledButton"
+      >
+        <FaSave />
+      </button>
+      <button
+        type="button"
+        aria-label="Cancel Edit"
+        onClick={handleCancel}
+        className="unstyledButton"
+      >
+        <FaTimes />
+      </button>
     </div>
   );
 }
@@ -25,8 +34,8 @@ TextInput.propTypes = {
     name: PropTypes.string.isRequired,
     brand: PropTypes.string,
   }).isRequired,
-  onSave: PropTypes.func.isRequired,
-  setIsEditable: PropTypes.func.isRequired,
+  handleSave: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func.isRequired,
 };
 
 export default TextInput;
