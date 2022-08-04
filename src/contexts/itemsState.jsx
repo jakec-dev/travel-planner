@@ -16,8 +16,6 @@ ItemsStateProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function useItemsState() {
-  return useContext(Context);
-}
+const useItemsState = () => useContext(Context);
 
 export { ItemsStateProvider, useItemsState };

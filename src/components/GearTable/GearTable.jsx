@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
-import { readItems } from "../../api/itemsAPI";
+import React, { useEffect, useState } from "react";
+import { getItems } from "../../api/itemsAPI";
 import { useItemsState } from "../../contexts/itemsState";
 import Item from "./Item";
 
 function GearTable() {
   const { items, itemsActions, selectedItems, selectionActions } =
     useItemsState();
-
-  const isAllSelected =
-    items.length !== 0 && items.length === selectedItems.length;
+  const [isAllSelected, setIsAllSelected] = useState(false);
+  const [getItemsErrorMessage, setGetItemsErrorMessage] = useState("");
 
   const handleSelectAll = () => {
     if (isAllSelected) {
@@ -16,38 +15,57 @@ function GearTable() {
     } else {
       selectionActions.selectAll(items);
     }
+    setIsAllSelected((prev) => !prev);
   };
 
   useEffect(() => {
     (async () => {
-      const data = await readItems();
-      itemsActions.setItems(data);
+      try {
+        const itemsInDatabase = await getItems();
+        if (itemsInDatabase) {
+          itemsActions.setItems(itemsInDatabase);
+        }
+      } catch (err) {
+        setGetItemsErrorMessage(err.message);
+      }
     })();
   }, []);
 
+  useEffect(() => {
+    setIsAllSelected(
+      items.length !== 0 && items.length === selectedItems.length
+    );
+  }, [items, selectedItems]);
+
   return (
     <div className="paper">
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                checked={isAllSelected}
-                onChange={handleSelectAll}
-              />
-            </th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th className="alignRight">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <Item key={item.id} item={item} />
-          ))}
-        </tbody>
-      </table>
+      {getItemsErrorMessage ? (
+        <p>{getItemsErrorMessage}</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  checked={isAllSelected}
+                />
+              </th>
+              <th>Name</th>
+              <th>Brand</th>
+              <th className="alignRight">Actions</th>
+            </tr>
+          </thead>
+          {items && (
+            <tbody>
+              {items.map((item) => (
+                <Item key={item.id} item={item} />
+              ))}
+            </tbody>
+          )}
+        </table>
+      )}
     </div>
   );
 }
