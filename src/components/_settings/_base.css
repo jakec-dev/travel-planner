@@ -15,12 +15,6 @@ body {
 }
 
 /* ALL BELOW TO BE RESTRUCTURED */
-h1 {
-  font-size: 6rem;
-  font-weight: 300;
-  letter-spacing: 0.09375rem;
-}
-
 table {
   width: 100%;
   min-width: 650px;

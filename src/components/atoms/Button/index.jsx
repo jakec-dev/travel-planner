@@ -44,10 +44,10 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  ariaLabel: "",
-  className: "",
+  ariaLabel: undefined,
+  className: undefined,
   disabled: false,
-  onClick: () => {},
+  onClick: undefined,
   theme: ButtonTheme.DEFAULT,
   type: ButtonType.BUTTON,
 };

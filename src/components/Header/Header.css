@@ -1,5 +1,6 @@
-.title {
-  font-family: "Permanent Marker", cursive;
-  text-align: center;
-  text-transform: uppercase;
+@import "../_settings/_variables.css";
+
+.logo {
+  color: var(--brand);
+  font-family: var(--logo-font-family);
 }
