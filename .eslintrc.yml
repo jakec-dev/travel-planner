@@ -19,6 +19,13 @@ overrides:
       - "plugin:jest/recommended"
     env:
       jest: true
+rules:
+  jsx-a11y/label-has-associated-control:
+    - 2
+    - controlComponents:
+        - "Input"
+      labelComponents:
+        - "Label"
 env:
   browser: true
   node: true

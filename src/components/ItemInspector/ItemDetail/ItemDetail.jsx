@@ -45,7 +45,7 @@ function ItemDetail({ itemId }) {
         <div className="itemDetail_Header">
           <h2 data-testid="itemDetailName">{item.name}</h2>
           <Button
-            aria-label="Edit Name"
+            ariaLabel="Edit Name"
             onClick={() => setEditName(true)}
             theme="unstyled"
           >
@@ -64,7 +64,7 @@ function ItemDetail({ itemId }) {
         <div className="itemDetail_Textfield">
           <p data-testid="itemDetailBrand">Brand: {item.brand}</p>
           <Button
-            aria-label="Edit Brand"
+            ariaLabel="Edit Brand"
             onClick={() => setEditBrand(true)}
             theme="unstyled"
           >

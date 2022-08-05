@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { addItem } from "../../api/itemsAPI";
-import { newItemSchema } from "../../api/validation/itemsSchema";
-import { useItemsState } from "../../contexts/itemsState";
-import Button from "../atoms/Button";
-import "./AddItem.css";
+import { addItem } from "../../../api/itemsAPI";
+import { newItemSchema } from "../../../api/validation/itemsSchema";
+import { useItemsState } from "../../../contexts/itemsState";
+import Button from "../../atoms/Button";
+import Input from "../../atoms/Input";
+import Label from "../../atoms/Label";
+import Typography from "../../atoms/Typography";
 
 function AddItem() {
   const { itemsActions } = useItemsState();
@@ -45,28 +47,28 @@ function AddItem() {
 
   return (
     <div className="paper">
-      <h2>Add Item</h2>
+      <Typography variant="h2">Add Item</Typography>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="itemName" className="textInput">
+        <Label htmlFor="itemName">
           Item name
-          <input
+          <Input
             id="itemName"
+            onChange={handleNameChange}
             placeholder="Add item name"
             type="text"
             value={name}
-            onChange={handleNameChange}
           />
-        </label>
-        <label htmlFor="itemBrand" className="textInput">
+        </Label>
+        <Label htmlFor="itemBrand">
           Brand
-          <input
+          <Input
             id="itemBrand"
+            onChange={handleBrandChange}
             placeholder="Add item brand"
             type="text"
             value={brand}
-            onChange={handleBrandChange}
           />
-        </label>
+        </Label>
         <Button type="submit" disabled={submitDisabled}>
           Add Item
         </Button>

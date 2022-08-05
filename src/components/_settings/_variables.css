@@ -22,4 +22,9 @@
   --base-font-family: "Open Sans", sans-serif;
   --logo-font-family: "Permanent Marker", cursive;
   --base-font-lineheight: 1.5em;
+
+  /*
+  * Layout
+  */
+  --border-radius: 4px;
 }

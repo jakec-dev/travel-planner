@@ -1,5 +1,5 @@
 import React from "react";
-import AddItem from "./components/AddItem";
+import AddItem from "./components/molecules/AddItem";
 import { ItemsStateProvider } from "./contexts/itemsState";
 import GearTable from "./components/GearTable";
 import Header from "./components/Header";

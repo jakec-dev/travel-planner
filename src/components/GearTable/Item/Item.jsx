@@ -36,8 +36,8 @@ function Item({ item }) {
       <td>
         <Input
           checked={isItemSelected}
-          data-testid={`selItem${item.id}`}
           onChange={handleSelect}
+          testId={`selItem${item.id}`}
           type="checkbox"
         />
       </td>

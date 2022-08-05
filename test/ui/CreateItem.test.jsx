@@ -3,7 +3,7 @@ import fetchMock from "jest-fetch-mock";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { render, cleanup, screen, waitFor } from "../utils";
-import AddItem from "../../src/components/AddItem";
+import AddItem from "../../src/components/molecules/AddItem";
 import GearTable from "../../src/components/GearTable";
 
 describe("<AddItem />", () => {
