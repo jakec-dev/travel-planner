@@ -1,8 +1,24 @@
+@import "./_variables.css";
+
+html,
+body {
+  color: var(--color-type-body);
+  font-family: var(--base-font-family);
+  font-weight: 300;
+  line-height: var(--base-font-lineheight);
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ALL BELOW TO BE RESTRUCTURED */
 h1 {
   font-size: 6rem;
   font-weight: 300;
   letter-spacing: 0.09375rem;
-  /* color: var(--color-text); */
 }
 
 table {
@@ -28,15 +44,6 @@ th {
 .pageContainer {
   margin: 0 auto;
   width: 1080px;
-}
-.showAddItem {
-  /* background-color: var(--color-primary); */
-  /* color: var(--color-textOnPrimary); */
-  padding: 8px 22px;
-}
-
-.showAddItem:hover {
-  /* background-color: var(--color-primaryDark); */
 }
 
 .gearTableAndInspector {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { addItem } from "../../api/itemsAPI";
 import { newItemSchema } from "../../api/validation/itemsSchema";
 import { useItemsState } from "../../contexts/itemsState";
+import Button from "../atoms/Button";
 import "./AddItem.css";
 
 function AddItem() {
@@ -66,9 +67,9 @@ function AddItem() {
             onChange={handleBrandChange}
           />
         </label>
-        <button type="submit" disabled={submitDisabled}>
+        <Button type="submit" disabled={submitDisabled}>
           Add Item
-        </button>
+        </Button>
         {submitErrorMessage && <p>{submitErrorMessage}</p>}
       </form>
     </div>

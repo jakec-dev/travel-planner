@@ -4,8 +4,7 @@ import { ItemsStateProvider } from "./contexts/itemsState";
 import GearTable from "./components/GearTable";
 import Header from "./components/Header";
 import ItemInspector from "./components/ItemInspector";
-import "@csstools/normalize.css";
-import "./App.css";
+import "./bootstrap";
 
 function App() {
   return (

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
 import { deleteItemById } from "../../../api/itemsAPI";
 import { useItemsState } from "../../../contexts/itemsState";
+import Button from "../../atoms/Button";
 
 function Item({ item }) {
   const { itemsActions, selectionActions, selectedItems } = useItemsState();
@@ -42,14 +43,13 @@ function Item({ item }) {
       <td>{item.name}</td>
       <td data-testid="itemBrand">{item.brand}</td>
       <td className="alignRight">
-        <button
-          type="button"
-          aria-label={`Delete Item ${item.id}`}
-          className="unstyledButton"
+        <Button
+          ariaLabel={`Delete Item ${item.id}`}
+          theme="unstyled"
           onClick={handleDelete}
         >
           <FaTimes />
-        </button>
+        </Button>
         {deleteErrorMessage && <p>{deleteErrorMessage}</p>}
       </td>
     </tr>

@@ -6,6 +6,7 @@ import { updateItem } from "../../../api/itemsAPI";
 import { useItemsState } from "../../../contexts/itemsState";
 import "./ItemDetail.css";
 import { existingItemSchema } from "../../../api/validation/itemsSchema";
+import Button from "../../atoms/Button";
 
 function ItemDetail({ itemId }) {
   const { items, itemsActions } = useItemsState();
@@ -43,14 +44,13 @@ function ItemDetail({ itemId }) {
       ) : (
         <div className="itemDetail_Header">
           <h2 data-testid="itemDetailName">{item.name}</h2>
-          <button
-            type="button"
+          <Button
             aria-label="Edit Name"
             onClick={() => setEditName(true)}
-            className="unstyledButton"
+            theme="unstyled"
           >
             <FaEdit />
-          </button>
+          </Button>
         </div>
       )}
       {editBrand ? (
@@ -63,14 +63,13 @@ function ItemDetail({ itemId }) {
       ) : (
         <div className="itemDetail_Textfield">
           <p data-testid="itemDetailBrand">Brand: {item.brand}</p>
-          <button
-            type="button"
+          <Button
             aria-label="Edit Brand"
             onClick={() => setEditBrand(true)}
-            className="unstyledButton"
+            theme="unstyled"
           >
             <FaEdit />
-          </button>
+          </Button>
         </div>
       )}
       {saveErrorMessage && <p>{saveErrorMessage}</p>}
