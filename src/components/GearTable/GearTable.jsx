@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getItems } from "../../api/itemsAPI";
 import { useItemsState } from "../../contexts/itemsState";
+import Card from "../atoms/Card";
 import Item from "./Item";
 
 function GearTable() {
@@ -38,7 +39,7 @@ function GearTable() {
   }, [items, selectedItems]);
 
   return (
-    <div className="paper">
+    <Card>
       {getItemsErrorMessage ? (
         <p>{getItemsErrorMessage}</p>
       ) : (
@@ -66,7 +67,7 @@ function GearTable() {
           )}
         </table>
       )}
-    </div>
+    </Card>
   );
 }
 

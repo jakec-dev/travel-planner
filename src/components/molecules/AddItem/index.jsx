@@ -3,6 +3,7 @@ import { addItem } from "../../../api/itemsAPI";
 import { newItemSchema } from "../../../api/validation/itemsSchema";
 import { useItemsState } from "../../../contexts/itemsState";
 import Button from "../../atoms/Button";
+import Card from "../../atoms/Card";
 import Input from "../../atoms/Input";
 import Label from "../../atoms/Label";
 import Typography from "../../atoms/Typography";
@@ -46,7 +47,7 @@ function AddItem() {
   };
 
   return (
-    <div className="paper">
+    <Card>
       <Typography variant="h2">Add Item</Typography>
       <form onSubmit={handleSubmit}>
         <Label htmlFor="itemName">
@@ -74,7 +75,7 @@ function AddItem() {
         </Button>
         {submitErrorMessage && <p>{submitErrorMessage}</p>}
       </form>
-    </div>
+    </Card>
   );
 }
 
