@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getItems } from "../../api/itemsAPI";
 import { useItemsState } from "../../contexts/itemsState";
 import Card from "../atoms/Card";
+import Checkbox from "../atoms/Checkbox";
 import Item from "./Item";
 
 function GearTable() {
@@ -47,11 +48,7 @@ function GearTable() {
           <thead>
             <tr>
               <th>
-                <input
-                  type="checkbox"
-                  onChange={handleSelectAll}
-                  checked={isAllSelected}
-                />
+                <Checkbox checked={isAllSelected} onChange={handleSelectAll} />
               </th>
               <th>Name</th>
               <th>Brand</th>

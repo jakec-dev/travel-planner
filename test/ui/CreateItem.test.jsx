@@ -12,7 +12,7 @@ describe("<AddItem />", () => {
   });
   it("should render input fields for name and brand", () => {
     render(<AddItem />);
-    expect(screen.getByLabelText("Item name")).toBeInTheDocument();
+    expect(screen.getByLabelText("Item Name")).toBeInTheDocument();
     expect(screen.getByLabelText("Brand")).toBeInTheDocument();
   });
   it("should initially render a disabled submit button", () => {
@@ -22,14 +22,14 @@ describe("<AddItem />", () => {
   });
   it("should enable the submit button when a valid item is provided", async () => {
     render(<AddItem />);
-    const nameField = screen.getByLabelText("Item name");
+    const nameField = screen.getByLabelText("Item Name");
     const submitButton = screen.getByText("Add Item", { selector: "button" });
     await userEvent.type(nameField, "A valid item name");
     expect(submitButton).not.toBeDisabled();
   });
   it("should disable the submit button when an invalid item is provided", async () => {
     render(<AddItem />);
-    const nameField = screen.getByLabelText("Item name");
+    const nameField = screen.getByLabelText("Item Name");
     const submitButton = screen.getByText("Add Item", { selector: "button" });
     await userEvent.type(nameField, "A valid item name");
     expect(submitButton).not.toBeDisabled();
@@ -66,7 +66,7 @@ describe("<AddItem />", () => {
           <AddItem />
         </div>
       );
-      const nameField = screen.getByLabelText("Item name");
+      const nameField = screen.getByLabelText("Item Name");
       const brandField = screen.getByLabelText("Brand");
       const submitButton = screen.getByText("Add Item", { selector: "button" });
       await userEvent.type(nameField, newItem.name);
@@ -98,7 +98,7 @@ describe("<AddItem />", () => {
           <AddItem />
         </div>
       );
-      const nameField = screen.getByLabelText("Item name");
+      const nameField = screen.getByLabelText("Item Name");
       await userEvent.type(nameField, newItem.name);
       const submitButton = screen.getByText("Add Item", { selector: "button" });
       await userEvent.click(submitButton);

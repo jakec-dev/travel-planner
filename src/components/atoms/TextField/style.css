@@ -1,6 +1,6 @@
 @import "../../_settings/_variables.css";
 
-.text {
+.input {
   border-color: rgba(0, 0, 0, 0.23);
   border-radius: var(--border-radius);
   border-width: 1px;
@@ -10,4 +10,8 @@
   line-height: 1.4375em;
   margin-top: 4px;
   padding: 16.5px 14px;
+}
+
+.label {
+  padding: 16px 0;
 }

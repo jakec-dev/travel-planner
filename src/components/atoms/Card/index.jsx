@@ -4,9 +4,13 @@ import classnames from "classnames";
 import "./style.css";
 
 function Card(props) {
-  const { children, className } = props;
+  const { children, className, ...otherDivProps } = props;
   const styles = classnames("card", className);
-  return <div className={styles}>{children}</div>;
+  return (
+    <div className={styles} {...otherDivProps}>
+      {children}
+    </div>
+  );
 }
 
 Card.propTypes = {

@@ -4,7 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import { deleteItemById } from "../../../api/itemsAPI";
 import { useItemsState } from "../../../contexts/itemsState";
 import Button from "../../atoms/Button";
-import Input from "../../atoms/Input";
+import Checkbox from "../../atoms/Checkbox";
 
 function Item({ item }) {
   const { itemsActions, selectionActions, selectedItems } = useItemsState();
@@ -34,20 +34,19 @@ function Item({ item }) {
   return (
     <tr>
       <td>
-        <Input
+        <Checkbox
           checked={isItemSelected}
+          data-testid={`selItem${item.id}`}
           onChange={handleSelect}
-          testId={`selItem${item.id}`}
-          type="checkbox"
         />
       </td>
       <td>{item.name}</td>
       <td data-testid="itemBrand">{item.brand}</td>
       <td className="alignRight">
         <Button
-          ariaLabel={`Delete Item ${item.id}`}
-          theme="unstyled"
+          aria-label={`Delete Item ${item.id}`}
           onClick={handleDelete}
+          theme="unstyled"
         >
           <FaTimes />
         </Button>

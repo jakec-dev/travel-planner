@@ -4,9 +4,8 @@ import { newItemSchema } from "../../../api/validation/itemsSchema";
 import { useItemsState } from "../../../contexts/itemsState";
 import Button from "../../atoms/Button";
 import Card from "../../atoms/Card";
-import Input from "../../atoms/Input";
-import Label from "../../atoms/Label";
 import Typography from "../../atoms/Typography";
+import TextField from "../../atoms/TextField";
 
 function AddItem() {
   const { itemsActions } = useItemsState();
@@ -50,26 +49,20 @@ function AddItem() {
     <Card>
       <Typography variant="h2">Add Item</Typography>
       <form onSubmit={handleSubmit}>
-        <Label htmlFor="itemName">
-          Item name
-          <Input
-            id="itemName"
-            onChange={handleNameChange}
-            placeholder="Add item name"
-            type="text"
-            value={name}
-          />
-        </Label>
-        <Label htmlFor="itemBrand">
-          Brand
-          <Input
-            id="itemBrand"
-            onChange={handleBrandChange}
-            placeholder="Add item brand"
-            type="text"
-            value={brand}
-          />
-        </Label>
+        <TextField
+          id="itemName"
+          label="Item Name"
+          onChange={handleNameChange}
+          placeholder="Add item name"
+          value={name}
+        />
+        <TextField
+          id="itemBrand"
+          label="Brand"
+          onChange={handleBrandChange}
+          placeholder="Add item brand"
+          value={brand}
+        />
         <Button type="submit" disabled={submitDisabled}>
           Add Item
         </Button>

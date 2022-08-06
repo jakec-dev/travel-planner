@@ -26,6 +26,9 @@ rules:
         - "Input"
       labelComponents:
         - "Label"
+  react/jsx-props-no-spreading:
+    - 2
+    - html: "ignore"
 env:
   browser: true
   node: true

@@ -2,21 +2,21 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FaSave, FaTimes } from "react-icons/fa";
 import Button from "../../../atoms/Button";
-import Input from "../../../atoms/Input";
+import TextField from "../../../atoms/TextField";
 
 function TextInput({ field, item, handleSave, handleCancel }) {
   const [value, setValue] = useState(item[field]);
   return (
     <div className="itemDetail_Textfield">
-      <Input value={value} onChange={(e) => setValue(e.target.value)} />
+      <TextField value={value} onChange={(e) => setValue(e.target.value)} />
       <Button
-        ariaLabel="Save Edits"
+        aria-label="Save Edits"
         onClick={() => handleSave(field, value)}
         theme="unstyled"
       >
         <FaSave />
       </Button>
-      <Button ariaLabel="Cancel Edit" onClick={handleCancel} theme="unstyled">
+      <Button aria-label="Cancel Edit" onClick={handleCancel} theme="unstyled">
         <FaTimes />
       </Button>
     </div>
