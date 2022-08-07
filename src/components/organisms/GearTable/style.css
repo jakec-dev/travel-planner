@@ -13,3 +13,8 @@
 .gearTable th {
   text-align: left;
 }
+
+.gearTable th:last-of-type,
+.gearTable td:last-of-type {
+  text-align: right;
+}

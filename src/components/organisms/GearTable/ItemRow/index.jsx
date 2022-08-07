@@ -43,7 +43,7 @@ function ItemRow(props) {
       </td>
       <td>{item.name}</td>
       <td data-testid="itemBrand">{item.brand}</td>
-      <td className="alignRight">
+      <td>
         <IconButton
           Icon={FaTimes}
           label={`Delete Item ${item.id}`}

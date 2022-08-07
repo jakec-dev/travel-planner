@@ -53,7 +53,7 @@ function GearTable() {
               </th>
               <th>Name</th>
               <th>Brand</th>
-              <th className="alignRight">Actions</th>
+              <th>Actions</th>
             </tr>
           </thead>
           {items && (
