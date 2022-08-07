@@ -20,12 +20,6 @@ overrides:
     env:
       jest: true
 rules:
-  jsx-a11y/label-has-associated-control:
-    - 2
-    - controlComponents:
-        - "Input"
-      labelComponents:
-        - "Label"
   react/jsx-props-no-spreading:
     - 2
     - html: "ignore"
