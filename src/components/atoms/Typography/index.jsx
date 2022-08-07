@@ -14,11 +14,16 @@ export const TypographyVariant = {
 };
 
 function Typography(props) {
-  const { className, children, variant } = props;
+  const { className, children, variant, ...otherVariantProps } = props;
   const styles = classnames("typography", variant, className);
   const VariantComponent = variant;
 
-  return <VariantComponent className={styles}>{children}</VariantComponent>;
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <VariantComponent className={styles} {...otherVariantProps}>
+      {children}
+    </VariantComponent>
+  );
 }
 
 Typography.propTypes = {

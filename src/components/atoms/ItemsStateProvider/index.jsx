@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useMemo, useReducer } from "react";
 import PropTypes from "prop-types";
-import { reducer, initialState } from "../state/reducers";
-import useActions from "../state/actions";
+import { reducer, initialState } from "../../../state/reducers";
+import useActions from "../../../state/actions";
 
 const Context = createContext();
 
-function ItemsStateProvider({ children }) {
+function ItemsStateProvider(props) {
+  const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
   const actions = useActions(dispatch);
   const value = useMemo(() => ({ ...state, ...actions }), [state]);
@@ -16,6 +17,6 @@ ItemsStateProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const useItemsState = () => useContext(Context);
+export const useItemsState = () => useContext(Context);
 
-export { ItemsStateProvider, useItemsState };
+export default ItemsStateProvider;

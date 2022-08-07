@@ -3,8 +3,8 @@ import fetchMock from "jest-fetch-mock";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { render, cleanup, screen, waitFor } from "../utils";
-import GearTable from "../../src/components/GearTable";
-import ItemInspector from "../../src/components/ItemInspector";
+import GearTable from "../../src/components/organisms/GearTable";
+import ItemInspector from "../../src/components/organisms/ItemInspector";
 
 const initialItems = [
   { id: 1, name: "First item name", brand: "First item brand" },

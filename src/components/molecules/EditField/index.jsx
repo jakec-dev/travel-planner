@@ -1,29 +1,27 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FaSave, FaTimes } from "react-icons/fa";
-import Button from "../../../atoms/Button";
-import TextField from "../../../atoms/TextField";
+import TextField from "../../atoms/TextField";
+import IconButton from "../../atoms/IconButton";
+import Container from "../../atoms/Container";
 
-function TextInput({ field, item, handleSave, handleCancel }) {
+function EditField(props) {
+  const { field, item, handleSave, handleCancel } = props;
   const [value, setValue] = useState(item[field]);
   return (
-    <div className="itemDetail_Textfield">
+    <Container flex="spread">
       <TextField value={value} onChange={(e) => setValue(e.target.value)} />
-      <Button
-        aria-label="Save Edits"
+      <IconButton
+        Icon={FaSave}
+        label="Save Edits"
         onClick={() => handleSave(field, value)}
-        theme="unstyled"
-      >
-        <FaSave />
-      </Button>
-      <Button aria-label="Cancel Edit" onClick={handleCancel} theme="unstyled">
-        <FaTimes />
-      </Button>
-    </div>
+      />
+      <IconButton Icon={FaTimes} label="Cancel Edit" onClick={handleCancel} />
+    </Container>
   );
 }
 
-TextInput.propTypes = {
+EditField.propTypes = {
   field: PropTypes.string.isRequired,
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -34,4 +32,4 @@ TextInput.propTypes = {
   handleCancel: PropTypes.func.isRequired,
 };
 
-export default TextInput;
+export default EditField;

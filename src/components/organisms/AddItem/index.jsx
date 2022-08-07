@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { addItem } from "../../../api/itemsAPI";
 import { newItemSchema } from "../../../api/validation/itemsSchema";
-import { useItemsState } from "../../../contexts/itemsState";
+import { useItemsState } from "../../atoms/ItemsStateProvider";
 import Button from "../../atoms/Button";
 import Card from "../../atoms/Card";
 import Typography from "../../atoms/Typography";

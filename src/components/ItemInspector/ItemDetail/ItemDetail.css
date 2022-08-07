@@ -1,7 +1,0 @@
-.itemDetail_Header,
-.itemDetail_Textfield {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}

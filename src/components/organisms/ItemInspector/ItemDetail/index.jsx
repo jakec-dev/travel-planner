@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FaEdit } from "react-icons/fa";
-import TextInput from "./TextInput";
-import { updateItem } from "../../../api/itemsAPI";
-import { useItemsState } from "../../../contexts/itemsState";
-import "./ItemDetail.css";
-import { existingItemSchema } from "../../../api/validation/itemsSchema";
-import Button from "../../atoms/Button";
+import EditField from "../../../molecules/EditField";
+import { updateItem } from "../../../../api/itemsAPI";
+import { useItemsState } from "../../../atoms/ItemsStateProvider";
+import { existingItemSchema } from "../../../../api/validation/itemsSchema";
+import Typography from "../../../atoms/Typography";
+import IconButton from "../../../atoms/IconButton";
+import Container from "../../../atoms/Container";
 
-function ItemDetail({ itemId }) {
+function ItemDetail(props) {
+  const { itemId } = props;
   const { items, itemsActions } = useItemsState();
   const item = items.find((i) => i.id === itemId);
   const [editName, setEditName] = useState(false);
@@ -35,42 +37,42 @@ function ItemDetail({ itemId }) {
   return (
     <>
       {editName ? (
-        <TextInput
+        <EditField
           field="name"
           item={item}
           handleSave={handleSave(setEditName)}
           handleCancel={handleCancel(setEditName)}
         />
       ) : (
-        <div className="itemDetail_Header">
-          <h2 data-testid="itemDetailName">{item.name}</h2>
-          <Button
-            aria-label="Edit Name"
+        <Container flex="spread">
+          <Typography data-testid="itemDetailName" variant="h2">
+            {item.name}
+          </Typography>
+          <IconButton
+            Icon={FaEdit}
+            label="Edit Name"
             onClick={() => setEditName(true)}
-            theme="unstyled"
-          >
-            <FaEdit />
-          </Button>
-        </div>
+          />
+        </Container>
       )}
       {editBrand ? (
-        <TextInput
+        <EditField
           field="brand"
           item={item}
           handleSave={handleSave(setEditBrand)}
           handleCancel={handleCancel(setEditBrand)}
         />
       ) : (
-        <div className="itemDetail_Textfield">
-          <p data-testid="itemDetailBrand">Brand: {item.brand}</p>
-          <Button
-            aria-label="Edit Brand"
+        <Container flex="spread">
+          <Typography data-testid="itemDetailBrand">
+            Brand: {item.brand}
+          </Typography>
+          <IconButton
+            Icon={FaEdit}
+            label="Edit Brand"
             onClick={() => setEditBrand(true)}
-            theme="unstyled"
-          >
-            <FaEdit />
-          </Button>
-        </div>
+          />
+        </Container>
       )}
       {saveErrorMessage && <p>{saveErrorMessage}</p>}
     </>

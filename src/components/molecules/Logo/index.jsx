@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import Typography from "../../atoms/Typography";
 import "./style.css";
 
-function Logo({ variant }) {
+function Logo(props) {
+  const { variant } = props;
   return (
     <Typography className="logo" variant={variant}>
       Travel Planner

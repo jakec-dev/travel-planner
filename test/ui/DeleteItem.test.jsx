@@ -3,8 +3,8 @@ import fetchMock from "jest-fetch-mock";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { render, cleanup, screen, waitFor } from "../utils";
-import GearTable from "../../src/components/GearTable";
-import Item from "../../src/components/GearTable/Item";
+import GearTable from "../../src/components/organisms/GearTable";
+import ItemRow from "../../src/components/organisms/GearTable/ItemRow";
 
 describe("<GearTable />", () => {
   beforeEach(() => {
@@ -83,7 +83,7 @@ describe("<GearTable />", () => {
       render(
         <table>
           <tbody>
-            <Item item={item} />
+            <ItemRow item={item} />
           </tbody>
         </table>
       );

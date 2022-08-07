@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getItems } from "../../api/itemsAPI";
-import { useItemsState } from "../../contexts/itemsState";
-import Card from "../atoms/Card";
-import Checkbox from "../atoms/Checkbox";
-import Item from "./Item";
+import { getItems } from "../../../api/itemsAPI";
+import { useItemsState } from "../../atoms/ItemsStateProvider";
+import Card from "../../atoms/Card";
+import Checkbox from "../../atoms/Checkbox";
+import ItemRow from "./ItemRow";
+import "./style.css";
 
 function GearTable() {
   const { items, itemsActions, selectedItems, selectionActions } =
@@ -44,7 +45,7 @@ function GearTable() {
       {getItemsErrorMessage ? (
         <p>{getItemsErrorMessage}</p>
       ) : (
-        <table>
+        <table className="gearTable">
           <thead>
             <tr>
               <th>
@@ -58,7 +59,7 @@ function GearTable() {
           {items && (
             <tbody>
               {items.map((item) => (
-                <Item key={item.id} item={item} />
+                <ItemRow key={item.id} item={item} />
               ))}
             </tbody>
           )}

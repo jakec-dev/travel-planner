@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
-import { deleteItemById } from "../../../api/itemsAPI";
-import { useItemsState } from "../../../contexts/itemsState";
-import Button from "../../atoms/Button";
-import Checkbox from "../../atoms/Checkbox";
+import { deleteItemById } from "../../../../api/itemsAPI";
+import { useItemsState } from "../../../atoms/ItemsStateProvider";
+import Checkbox from "../../../atoms/Checkbox";
+import IconButton from "../../../atoms/IconButton";
 
-function Item({ item }) {
+function ItemRow(props) {
+  const { item } = props;
   const { itemsActions, selectionActions, selectedItems } = useItemsState();
   const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
 
@@ -43,20 +44,18 @@ function Item({ item }) {
       <td>{item.name}</td>
       <td data-testid="itemBrand">{item.brand}</td>
       <td className="alignRight">
-        <Button
-          aria-label={`Delete Item ${item.id}`}
+        <IconButton
+          Icon={FaTimes}
+          label={`Delete Item ${item.id}`}
           onClick={handleDelete}
-          theme="unstyled"
-        >
-          <FaTimes />
-        </Button>
+        />
         {deleteErrorMessage && <p>{deleteErrorMessage}</p>}
       </td>
     </tr>
   );
 }
 
-Item.propTypes = {
+ItemRow.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -64,4 +63,4 @@ Item.propTypes = {
   }).isRequired,
 };
 
-export default Item;
+export default ItemRow;

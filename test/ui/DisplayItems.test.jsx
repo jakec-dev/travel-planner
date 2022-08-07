@@ -3,8 +3,8 @@ import fetchMock from "jest-fetch-mock";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { render, cleanup, waitFor, screen } from "../utils";
-import GearTable from "../../src/components/GearTable";
-import Item from "../../src/components/GearTable/Item";
+import GearTable from "../../src/components/organisms/GearTable";
+import ItemRow from "../../src/components/organisms/GearTable/ItemRow";
 
 describe("<GearTable />", () => {
   beforeEach(() => {
@@ -93,13 +93,13 @@ describe("<GearTable />", () => {
     });
   });
 
-  describe("<Item />", () => {
+  describe("<ItemRow />", () => {
     it("should render the item name and brand", () => {
       const item = { id: 1, name: "test name", brand: "test brand" };
       render(
         <table>
           <tbody>
-            <Item item={item} />
+            <ItemRow item={item} />
           </tbody>
         </table>
       );
@@ -117,7 +117,7 @@ describe("<GearTable />", () => {
       render(
         <table>
           <tbody>
-            <Item item={item} />
+            <ItemRow item={item} />
           </tbody>
         </table>
       );
@@ -129,7 +129,7 @@ describe("<GearTable />", () => {
       render(
         <table>
           <tbody>
-            <Item item={item} />
+            <ItemRow item={item} />
           </tbody>
         </table>
       );

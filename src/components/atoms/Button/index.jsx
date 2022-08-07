@@ -9,20 +9,13 @@ export const ButtonType = {
   SUBMIT: "submit",
 };
 
-export const ButtonTheme = {
-  DEFAULT: "default",
-  UNSTYLED: "unstyled",
-};
-
 function Button(props) {
-  const { className, children, disabled, theme, type, ...otherButtonProps } =
-    props;
-  const styles = classnames("button", theme, { disabled }, className);
+  const { className, children, type, ...otherButtonProps } = props;
+  const styles = classnames(".btn", className);
 
   return (
     <button
       className={styles}
-      disabled={disabled}
       // eslint-disable-next-line react/button-has-type
       type={type}
       {...otherButtonProps}
@@ -35,15 +28,11 @@ function Button(props) {
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  disabled: PropTypes.bool,
-  theme: PropTypes.oneOf(Object.values(ButtonTheme)),
   type: PropTypes.oneOf(Object.values(ButtonType)),
 };
 
 Button.defaultProps = {
   className: undefined,
-  disabled: false,
-  theme: ButtonTheme.DEFAULT,
   type: ButtonType.BUTTON,
 };
 

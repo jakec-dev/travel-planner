@@ -1,0 +1,33 @@
+@import "../../_settings/_variables.css";
+
+/* Width */
+.container__width--full {
+  width: 100%;
+}
+.container__width--page {
+  width: 1080px;
+}
+
+/* Alignment */
+.container__align--center {
+  margin: 0 auto;
+}
+
+/* Flex */
+.container__flex {
+  display: flex;
+}
+.container__flex--spread {
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Margin */
+.container__mt--m {
+  margin-top: var(--spacing-medium);
+}
+
+/* Padding */
+.container__pa--m {
+  padding: var(--spacing-medium);
+}
