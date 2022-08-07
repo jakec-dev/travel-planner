@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import "./style.css";
@@ -41,7 +41,7 @@ const ContainerWidth = {
   PAGE: "page",
 };
 
-function Container(props) {
+const Container = forwardRef((props, ref) => {
   const { align, children, className, element, flex, mt, pa, width } = props;
   const ElementComponent = element;
   const styles = classnames(
@@ -54,8 +54,12 @@ function Container(props) {
     { "container__width--page": width === ContainerWidth.PAGE },
     className
   );
-  return <ElementComponent className={styles}>{children}</ElementComponent>;
-}
+  return (
+    <ElementComponent className={styles} ref={ref}>
+      {children}
+    </ElementComponent>
+  );
+});
 
 Container.propTypes = {
   align: PropTypes.oneOf(Object.values(ContainerAlignment)),

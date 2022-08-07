@@ -1,9 +1,9 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
-function Checkbox(props) {
+const Checkbox = forwardRef((props, ref) => {
   const { ...inputProps } = props;
 
-  return <input type="checkbox" {...inputProps} />;
-}
+  return <input ref={ref} type="checkbox" {...inputProps} />;
+});
 
 export default Checkbox;

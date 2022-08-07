@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import "./style.css";
@@ -9,13 +9,14 @@ export const ButtonType = {
   SUBMIT: "submit",
 };
 
-function Button(props) {
+const Button = forwardRef((props, ref) => {
   const { className, children, type, ...otherButtonProps } = props;
   const styles = classnames(".btn", className);
 
   return (
     <button
       className={styles}
+      ref={ref}
       // eslint-disable-next-line react/button-has-type
       type={type}
       {...otherButtonProps}
@@ -23,7 +24,7 @@ function Button(props) {
       {children}
     </button>
   );
-}
+});
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,

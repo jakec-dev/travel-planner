@@ -1,17 +1,17 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import "./style.css";
 
-function Card(props) {
+const Card = forwardRef((props, ref) => {
   const { children, className, ...otherDivProps } = props;
   const styles = classnames("card", className);
   return (
-    <div className={styles} {...otherDivProps}>
+    <div className={styles} ref={ref} {...otherDivProps}>
       {children}
     </div>
   );
-}
+});
 
 Card.propTypes = {
   children: PropTypes.node.isRequired,

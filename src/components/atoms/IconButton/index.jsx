@@ -1,9 +1,9 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import "./style.css";
 
-function IconButton(props) {
+const IconButton = forwardRef((props, ref) => {
   const { className, Icon, label, ...otherButtonProps } = props;
   const styles = classnames("btn__icon", className);
 
@@ -11,13 +11,14 @@ function IconButton(props) {
     <button
       aria-label={label}
       className={styles}
+      ref={ref}
       type="button"
       {...otherButtonProps}
     >
       <Icon />
     </button>
   );
-}
+});
 
 IconButton.propTypes = {
   className: PropTypes.string,

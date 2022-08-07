@@ -1,9 +1,9 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import "./style.css";
 
-function TextField(props) {
+const TextField = forwardRef((props, ref) => {
   const { className, id, label, labelProps, ...otherInputProps } = props;
   const inputStyles = classnames("input", className);
   const labelStyles = classnames("label", labelProps.className);
@@ -15,10 +15,16 @@ function TextField(props) {
           {label}
         </label>
       ) : null}
-      <input className={inputStyles} id={id} type="text" {...otherInputProps} />
+      <input
+        className={inputStyles}
+        id={id}
+        ref={ref}
+        type="text"
+        {...otherInputProps}
+      />
     </>
   );
-}
+});
 
 TextField.propTypes = {
   className: PropTypes.string,

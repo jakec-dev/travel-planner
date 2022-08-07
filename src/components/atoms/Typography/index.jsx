@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import "./style.css";
@@ -13,18 +13,18 @@ export const TypographyVariant = {
   BODY: "p",
 };
 
-function Typography(props) {
+const Typography = forwardRef((props, ref) => {
   const { className, children, variant, ...otherVariantProps } = props;
   const styles = classnames("typography", variant, className);
   const VariantComponent = variant;
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <VariantComponent className={styles} {...otherVariantProps}>
+    <VariantComponent className={styles} ref={ref} {...otherVariantProps}>
       {children}
     </VariantComponent>
   );
-}
+});
 
 Typography.propTypes = {
   children: PropTypes.node.isRequired,
