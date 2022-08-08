@@ -10,7 +10,7 @@ function EditField(props) {
   const [value, setValue] = useState(item[field]);
   return (
     <Container flex="spread">
-      <TextField value={value} onChange={(e) => setValue(e.target.value)} />
+      <TextField onChange={(e) => setValue(e.target.value)} value={value} />
       <IconButton
         Icon={FaSave}
         label="Save Edits"

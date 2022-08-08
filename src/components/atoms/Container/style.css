@@ -17,6 +17,10 @@
 .container__flex {
   display: flex;
 }
+.container__flex--default {
+  justify-content: normal;
+  align-items: normal;
+}
 .container__flex--spread {
   justify-content: space-between;
   align-items: center;

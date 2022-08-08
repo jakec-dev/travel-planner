@@ -9,9 +9,24 @@ export const ButtonType = {
   SUBMIT: "submit",
 };
 
+export const ButtonTheme = {
+  ERROR: "error",
+  INFO: "info",
+  PRIMARY: "primary",
+  SECONDARY: "secondary",
+  SUCCESS: "success",
+  WARN: "warn",
+};
+
 const Button = forwardRef((props, ref) => {
-  const { className, children, type, ...otherButtonProps } = props;
-  const styles = classnames(".btn", className);
+  const {
+    className,
+    label,
+    theme = "primary",
+    type = "button",
+    ...otherButtonProps
+  } = props;
+  const styles = classnames("btn", `btn__${theme}`, className);
 
   return (
     <button
@@ -21,19 +36,22 @@ const Button = forwardRef((props, ref) => {
       type={type}
       {...otherButtonProps}
     >
-      {children}
+      {label}
     </button>
   );
 });
 
 Button.propTypes = {
-  children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  label: PropTypes.string,
+  theme: PropTypes.oneOf(Object.values(ButtonTheme)),
   type: PropTypes.oneOf(Object.values(ButtonType)),
 };
 
 Button.defaultProps = {
   className: undefined,
+  label: "",
+  theme: ButtonType.PRIMARY,
   type: ButtonType.BUTTON,
 };
 

@@ -45,13 +45,12 @@ const Container = forwardRef((props, ref) => {
   const { align, children, className, element, flex, mt, pa, width } = props;
   const ElementComponent = element;
   const styles = classnames(
-    { "container__align--center": align === ContainerAlignment.CENTER },
+    { [`container__align--${align}`]: align },
     { container__flex: flex },
-    { "container__flex--spread": flex === ContainerFlex.SPREAD },
-    { "container__mt--m": mt === ContainerSpacingSizes.M },
-    { "container__pa--m": pa === ContainerSpacingSizes.M },
-    { "container__width--full": width === ContainerWidth.FULL },
-    { "container__width--page": width === ContainerWidth.PAGE },
+    { [`container__flex--${flex}`]: flex },
+    { [`container__mt--${mt}`]: mt },
+    { [`container__pa--${pa}`]: pa },
+    { [`container__width--${width}`]: width },
     className
   );
   return (

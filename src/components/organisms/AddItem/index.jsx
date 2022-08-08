@@ -63,9 +63,7 @@ function AddItem() {
           placeholder="Add item brand"
           value={brand}
         />
-        <Button type="submit" disabled={submitDisabled}>
-          Add Item
-        </Button>
+        <Button label="Add Item" type="submit" disabled={submitDisabled} />
         {submitErrorMessage && <p>{submitErrorMessage}</p>}
       </form>
     </Card>

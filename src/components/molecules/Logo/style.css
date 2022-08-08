@@ -1,6 +1,6 @@
 @import "../../_settings/_variables.css";
 
 .logo {
-  color: var(--brand);
+  color: var(--primary);
   font-family: var(--logo-font-family);
 }

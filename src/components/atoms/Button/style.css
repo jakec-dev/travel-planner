@@ -20,12 +20,10 @@
     border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
-
 .btn:active {
   box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
     0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
-
 .btn:disabled {
   color: var(--grey-2);
   background: color(var(--grey-4) tint(40%));
@@ -34,8 +32,27 @@
 }
 
 /* Theme */
-.btn--default {
-  background: var(--brand);
-  border: 0;
-  color: #ffff;
+.btn__primary {
+  background: var(--primary);
+  color: var(--grey-4);
+}
+.btn__secondary {
+  background: var(--secondary);
+  color: var(--grey-4);
+}
+.btn__error {
+  background: var(--error);
+  color: var(--grey-1);
+}
+.btn__info {
+  background: var(--info);
+  color: var(--grey-1);
+}
+.btn__success {
+  background: var(--success);
+  color: var(--grey-1);
+}
+.btn__warn {
+  background: var(--warn);
+  color: var(--grey-1);
 }
