@@ -7,6 +7,7 @@ parserOptions:
 extends:
   - "airbnb"
   - "prettier"
+  - "plugin:storybook/recommended"
 plugins:
   - "prettier"
 overrides:
