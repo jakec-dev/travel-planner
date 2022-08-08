@@ -6,6 +6,7 @@ import Button from "../../atoms/Button";
 import Card from "../../atoms/Card";
 import Typography from "../../atoms/Typography";
 import TextField from "../../atoms/TextField";
+import "./style.css";
 
 function AddItem() {
   const { itemsActions } = useItemsState();
@@ -63,7 +64,12 @@ function AddItem() {
           placeholder="Add item brand"
           value={brand}
         />
-        <Button label="Add Item" type="submit" disabled={submitDisabled} />
+        <Button
+          className="addItem__btn"
+          disabled={submitDisabled}
+          label="Add Item"
+          type="submit"
+        />
         {submitErrorMessage && <p>{submitErrorMessage}</p>}
       </form>
     </Card>

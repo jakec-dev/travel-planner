@@ -13,5 +13,6 @@
 }
 
 .label {
+  font-family: var(--base-font-family);
   padding: 16px 0;
 }

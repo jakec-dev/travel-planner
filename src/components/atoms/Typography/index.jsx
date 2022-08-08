@@ -10,12 +10,27 @@ export const TypographyVariant = {
   H4: "h4",
   H5: "h5",
   H6: "h6",
-  BODY: "p",
+  P: "p",
+};
+
+export const TypographyColor = {
+  ERROR: "error",
+  INFO: "info",
+  PRIMARY: "primary",
+  SECONDARY: "secondary",
+  SUCCESS: "success",
+  TEXT: "text",
+  WARN: "warn",
 };
 
 const Typography = forwardRef((props, ref) => {
-  const { className, children, variant, ...otherVariantProps } = props;
-  const styles = classnames("typography", variant, className);
+  const { children, className, color, variant, ...otherVariantProps } = props;
+  const styles = classnames(
+    "typography",
+    `color__${color}`,
+    `typography__${variant}`,
+    className
+  );
   const VariantComponent = variant;
 
   return (
@@ -29,12 +44,14 @@ const Typography = forwardRef((props, ref) => {
 Typography.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  color: PropTypes.oneOf(Object.values(TypographyColor)),
   variant: PropTypes.oneOf(Object.values(TypographyVariant)),
 };
 
 Typography.defaultProps = {
   className: undefined,
-  variant: TypographyVariant.BODY,
+  color: TypographyColor.TEXT,
+  variant: TypographyVariant.P,
 };
 
 export default Typography;

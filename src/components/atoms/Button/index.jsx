@@ -9,7 +9,7 @@ export const ButtonType = {
   SUBMIT: "submit",
 };
 
-export const ButtonTheme = {
+export const ButtonColor = {
   ERROR: "error",
   INFO: "info",
   PRIMARY: "primary",
@@ -19,18 +19,13 @@ export const ButtonTheme = {
 };
 
 const Button = forwardRef((props, ref) => {
-  const {
-    className,
-    label,
-    theme = "primary",
-    type = "button",
-    ...otherButtonProps
-  } = props;
-  const styles = classnames("btn", `btn__${theme}`, className);
+  const { className, color, label, onClick, type, ...otherButtonProps } = props;
+  const styles = classnames("btn", `btn__${color}`, className);
 
   return (
     <button
       className={styles}
+      onClick={onClick}
       ref={ref}
       // eslint-disable-next-line react/button-has-type
       type={type}
@@ -43,15 +38,17 @@ const Button = forwardRef((props, ref) => {
 
 Button.propTypes = {
   className: PropTypes.string,
+  color: PropTypes.oneOf(Object.values(ButtonColor)),
   label: PropTypes.string,
-  theme: PropTypes.oneOf(Object.values(ButtonTheme)),
+  onClick: PropTypes.func,
   type: PropTypes.oneOf(Object.values(ButtonType)),
 };
 
 Button.defaultProps = {
-  className: undefined,
+  className: "",
   label: "",
-  theme: ButtonType.PRIMARY,
+  onClick: () => {},
+  color: ButtonColor.PRIMARY,
   type: ButtonType.BUTTON,
 };
 
