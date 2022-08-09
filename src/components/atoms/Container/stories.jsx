@@ -34,7 +34,7 @@ FlexSpread.args = {
 
 export const Margins = Template.bind({});
 Margins.args = {
-  mt: "m",
+  ma: "m",
 };
 
 export const Padding = Template.bind({});

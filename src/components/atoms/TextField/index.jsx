@@ -5,8 +5,8 @@ import "./style.css";
 
 const TextField = forwardRef((props, ref) => {
   const { className, id, label, labelProps, ...otherInputProps } = props;
-  const inputStyles = classnames("input", className);
-  const labelStyles = classnames("label", labelProps.className);
+  const inputStyles = classnames("textField__input", className);
+  const labelStyles = classnames("textField__label", labelProps.className);
 
   return (
     <>
