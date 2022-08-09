@@ -4,6 +4,9 @@ import Button from ".";
 export default {
   title: "Button",
   component: Button,
+  argTypes: {
+    onClick: { action: "onClick" },
+  },
 };
 
 function Template(args) {
