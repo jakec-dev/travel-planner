@@ -1,26 +1,26 @@
 import React from "react";
-import AddItem from "./components/AddItem";
-import { ItemsStateProvider } from "./contexts/itemsState";
-import GearTable from "./components/GearTable";
-import Header from "./components/Header";
-import ItemInspector from "./components/ItemInspector";
-import "@csstools/normalize.css";
-import "./App.css";
+import AddItem from "./components/organisms/AddItem";
+import ItemsStateProvider from "./components/atoms/ItemsStateProvider";
+import GearTable from "./components/organisms/GearTable";
+import Logo from "./components/molecules/Logo";
+import ItemInspector from "./components/organisms/ItemInspector";
+import Container from "./components/atoms/Container";
+import "./bootstrap";
 
 function App() {
   return (
-    <main className="pageContainer">
-      <Header />
+    <Container align="center" element="main" width="page">
+      <Logo />
       <ItemsStateProvider>
-        <div className="gearTableAndInspector">
+        <Container flex="default">
           <GearTable />
           <ItemInspector />
-        </div>
-        <div className="addItem">
+        </Container>
+        <Container mt="m" width="full">
           <AddItem />
-        </div>
+        </Container>
       </ItemsStateProvider>
-    </main>
+    </Container>
   );
 }
 

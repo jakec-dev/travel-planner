@@ -1,0 +1,17 @@
+@import "../../_settings/_variables.css";
+
+.input {
+  border-color: rgba(0, 0, 0, 0.23);
+  border-radius: var(--border-radius);
+  border-width: 1px;
+  display: block;
+  font-size: 1rem;
+  letter-spacing: 0.00938em;
+  line-height: 1.4375em;
+  margin-top: 4px;
+  padding: 16.5px 14px;
+}
+
+.label {
+  padding: 16px 0;
+}
