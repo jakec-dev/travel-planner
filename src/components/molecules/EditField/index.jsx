@@ -6,11 +6,11 @@ import IconButton from "../../atoms/IconButton";
 import Container from "../../atoms/Container";
 
 function EditField(props) {
-  const { field, item, handleSave, handleCancel } = props;
+  const { handleCancel, handleSave, field, item } = props;
   const [value, setValue] = useState(item[field]);
   return (
     <Container flex="spread">
-      <TextField value={value} onChange={(e) => setValue(e.target.value)} />
+      <TextField onChange={(e) => setValue(e.target.value)} value={value} />
       <IconButton
         Icon={FaSave}
         label="Save Edits"
@@ -23,13 +23,13 @@ function EditField(props) {
 
 EditField.propTypes = {
   field: PropTypes.string.isRequired,
+  handleCancel: PropTypes.func.isRequired,
+  handleSave: PropTypes.func.isRequired,
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     brand: PropTypes.string,
   }).isRequired,
-  handleSave: PropTypes.func.isRequired,
-  handleCancel: PropTypes.func.isRequired,
 };
 
 export default EditField;

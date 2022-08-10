@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { addItem } from "../../../api/itemsAPI";
 import { newItemSchema } from "../../../api/validation/itemsSchema";
-import { useItemsState } from "../../atoms/ItemsStateProvider";
+import { useItemsState } from "../../../state/contexts/ItemsStateProvider";
 import Button from "../../atoms/Button";
 import Card from "../../atoms/Card";
 import Typography from "../../atoms/Typography";
 import TextField from "../../atoms/TextField";
+import "./style.css";
 
 function AddItem() {
   const { itemsActions } = useItemsState();
@@ -63,9 +64,12 @@ function AddItem() {
           placeholder="Add item brand"
           value={brand}
         />
-        <Button type="submit" disabled={submitDisabled}>
-          Add Item
-        </Button>
+        <Button
+          className="addItem__btn"
+          disabled={submitDisabled}
+          label="Add Item"
+          type="submit"
+        />
         {submitErrorMessage && <p>{submitErrorMessage}</p>}
       </form>
     </Card>

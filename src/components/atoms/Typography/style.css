@@ -1,10 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Permanent+Marker&display=swap");
 @import "../../_settings/_variables.css";
 
+.typography {
+  font-family: var(--base-font-family);
+}
+
 /* Variant */
-.h1 {
+.typography__h1 {
   font-size: 6rem;
   font-weight: 300;
   letter-spacing: 0.09375rem;
   text-align: center;
   text-transform: uppercase;
+}
+
+/* Color */
+.color__error {
+  color: var(--error);
+}
+.color__info {
+  color: var(--info);
+}
+.color__primary {
+  color: var(--primary);
+}
+.color__secondary {
+  color: var(--secondary);
+}
+.color__success {
+  color: var(--success);
+}
+.color__text {
+  color: var(--grey-1);
+}
+.color__warn {
+  color: var(--warn);
 }

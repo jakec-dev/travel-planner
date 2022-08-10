@@ -9,31 +9,46 @@ export const ButtonType = {
   SUBMIT: "submit",
 };
 
+export const ButtonColor = {
+  ERROR: "error",
+  INFO: "info",
+  PRIMARY: "primary",
+  SECONDARY: "secondary",
+  SUCCESS: "success",
+  WARN: "warn",
+};
+
 const Button = forwardRef((props, ref) => {
-  const { className, children, type, ...otherButtonProps } = props;
-  const styles = classnames(".btn", className);
+  const { className, color, label, onClick, type, ...otherButtonProps } = props;
+  const styles = classnames("btn", `btn__${color}`, className);
 
   return (
     <button
       className={styles}
+      onClick={onClick}
       ref={ref}
       // eslint-disable-next-line react/button-has-type
       type={type}
       {...otherButtonProps}
     >
-      {children}
+      {label}
     </button>
   );
 });
 
 Button.propTypes = {
-  children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  color: PropTypes.oneOf(Object.values(ButtonColor)),
+  label: PropTypes.string,
+  onClick: PropTypes.func,
   type: PropTypes.oneOf(Object.values(ButtonType)),
 };
 
 Button.defaultProps = {
-  className: undefined,
+  className: "",
+  label: "",
+  onClick: () => {},
+  color: ButtonColor.PRIMARY,
   type: ButtonType.BUTTON,
 };
 

@@ -7,6 +7,7 @@ parserOptions:
 extends:
   - "airbnb"
   - "prettier"
+  - "plugin:storybook/recommended"
 plugins:
   - "prettier"
 overrides:
@@ -19,6 +20,10 @@ overrides:
       - "plugin:jest/recommended"
     env:
       jest: true
+  - files:
+      - "**/stories.jsx"
+    rules:
+      react/jsx-props-no-spreading: 0
 rules:
   react/jsx-props-no-spreading:
     - 2

@@ -1,6 +1,6 @@
 import React from "react";
 import AddItem from "./components/organisms/AddItem";
-import ItemsStateProvider from "./components/atoms/ItemsStateProvider";
+import ItemsStateProvider from "./state/contexts/ItemsStateProvider";
 import GearTable from "./components/organisms/GearTable";
 import Logo from "./components/molecules/Logo";
 import ItemInspector from "./components/organisms/ItemInspector";

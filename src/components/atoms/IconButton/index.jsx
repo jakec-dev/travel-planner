@@ -5,7 +5,7 @@ import "./style.css";
 
 const IconButton = forwardRef((props, ref) => {
   const { className, Icon, label, ...otherButtonProps } = props;
-  const styles = classnames("btn__icon", className);
+  const styles = classnames("iconButton", className);
 
   return (
     <button
