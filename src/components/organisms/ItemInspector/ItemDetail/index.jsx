@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FaEdit } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorMessage } from "@hookform/error-message";
 import EditField from "../../../molecules/EditField";
 import { updateItem } from "../../../../api/itemsAPI";
 import { useItemsState } from "../../../../state/contexts/ItemsStateProvider";
@@ -8,6 +11,7 @@ import { existingItemSchema } from "../../../../api/validation/itemsSchema";
 import Typography from "../../../atoms/Typography";
 import IconButton from "../../../atoms/IconButton";
 import Container from "../../../atoms/Container";
+import Button from "../../../atoms/Button";
 
 function ItemDetail(props) {
   const { itemId } = props;
@@ -15,33 +19,58 @@ function ItemDetail(props) {
   const item = items.find((i) => i.id === itemId);
   const [editName, setEditName] = useState(false);
   const [editBrand, setEditBrand] = useState(false);
-  const [saveErrorMessage, setSaveErrorMessage] = useState("");
 
-  const handleSave = (setEditField) => async (field, value) => {
-    const modifiedItem = { ...item, [field]: value };
+  const {
+    formState: { errors, isDirty },
+    handleSubmit,
+    register,
+    reset,
+    resetField,
+    setError,
+  } = useForm({
+    defaultValues: { id: itemId, name: item.name, brand: item.brand },
+    resolver: yupResolver(existingItemSchema),
+  });
+
+  const onSubmitHandler = async (data) => {
+    const modifiedItem = { ...item, ...data };
     try {
-      existingItemSchema.validate(modifiedItem);
       const updatedItem = await updateItem(modifiedItem);
       itemsActions.updateItem(updatedItem);
-      setEditField(false);
-      setSaveErrorMessage("");
+      setEditName(false);
+      setEditBrand(false);
+      reset();
     } catch (err) {
-      setSaveErrorMessage(err.message);
+      setError("submit", { message: err.message });
     }
   };
 
-  const handleCancel = (setEditField) => () => {
-    setEditField(false);
+  const handleCancel = (field) => () => {
+    switch (field) {
+      case "name":
+        setEditName(false);
+        break;
+      case "brand":
+        setEditBrand(false);
+        break;
+      default:
+        setEditName(false);
+        setEditBrand(false);
+        break;
+    }
+    resetField(field);
   };
 
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmitHandler)}>
+      <input type="hidden" value={itemId} {...register("id")} />
       {editName ? (
         <EditField
+          errors={errors}
           field="name"
           item={item}
-          handleSave={handleSave(setEditName)}
-          handleCancel={handleCancel(setEditName)}
+          handleCancel={handleCancel("name")}
+          register={register}
         />
       ) : (
         <Container flex="spread">
@@ -57,10 +86,11 @@ function ItemDetail(props) {
       )}
       {editBrand ? (
         <EditField
+          errors={errors}
           field="brand"
           item={item}
-          handleSave={handleSave(setEditBrand)}
-          handleCancel={handleCancel(setEditBrand)}
+          handleCancel={handleCancel("brand")}
+          register={register}
         />
       ) : (
         <Container flex="spread">
@@ -74,8 +104,13 @@ function ItemDetail(props) {
           />
         </Container>
       )}
-      {saveErrorMessage && <p>{saveErrorMessage}</p>}
-    </>
+      {isDirty ? <Button type="submit" label="Save Changes" /> : null}
+      <ErrorMessage
+        errors={errors}
+        name="submit"
+        render={({ message }) => <p>{message}</p>}
+      />
+    </form>
   );
 }
 

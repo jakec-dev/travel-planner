@@ -12,6 +12,8 @@ const initialItems = [
   { id: 3, name: "Third item name", brand: "Third item brand" },
 ];
 
+const SAVE_ITEMS_BUTTON_LABEL = "Save Changes";
+
 describe("<ItemInspector />", () => {
   beforeEach(() => {
     fetchMock.doMock();
@@ -137,12 +139,20 @@ describe("<ItemInspector />", () => {
         expect(editNameBtn).not.toBeInTheDocument();
         expect(editBrandBtn).not.toBeInTheDocument();
       });
-      it("should render buttons to save or cancel the changes", () => {
-        expect(
-          screen.queryByRole("button", { name: "Save Edits" })
-        ).toBeInTheDocument();
+      it("should render buttons to cancel any changes", () => {
         expect(
           screen.queryByRole("button", { name: "Cancel Edit" })
+        ).toBeInTheDocument();
+      });
+      it("should render a button to save changes when fields are changed", async () => {
+        const modifiedName = "Modified name";
+        expect(
+          screen.queryByRole("button", { name: SAVE_ITEMS_BUTTON_LABEL })
+        ).not.toBeInTheDocument();
+        const nameInputField = screen.getByDisplayValue(selectedItem.name);
+        await userEvent.type(nameInputField, modifiedName);
+        expect(
+          screen.queryByRole("button", { name: SAVE_ITEMS_BUTTON_LABEL })
         ).toBeInTheDocument();
       });
       describe("When the save button is clicked", () => {
@@ -156,12 +166,16 @@ describe("<ItemInspector />", () => {
           );
           const nameField = screen.getByDisplayValue(selectedItem.name);
           await userEvent.type(nameField, modifiedName);
-          const saveBtn = screen.getByRole("button", { name: "Save Edits" });
+          const saveBtn = screen.getByRole("button", {
+            name: SAVE_ITEMS_BUTTON_LABEL,
+          });
           await userEvent.click(saveBtn);
-          expect(screen.queryByTestId("itemDetailName")).toBeInTheDocument();
-          expect(
-            screen.queryByDisplayValue(modifiedName)
-          ).not.toBeInTheDocument();
+          await waitFor(() => {
+            expect(screen.queryByTestId("itemDetailName")).toBeInTheDocument();
+            expect(
+              screen.queryByDisplayValue(modifiedName)
+            ).not.toBeInTheDocument();
+          });
         });
         it("should remove the buttons to save or cancel the changes", async () => {
           await fetch.mockResponseOnce(
@@ -172,14 +186,18 @@ describe("<ItemInspector />", () => {
           );
           const nameField = screen.getByDisplayValue(selectedItem.name);
           await userEvent.type(nameField, modifiedName);
-          const saveBtn = screen.getByRole("button", { name: "Save Edits" });
+          const saveBtn = screen.getByRole("button", {
+            name: SAVE_ITEMS_BUTTON_LABEL,
+          });
           await userEvent.click(saveBtn);
-          expect(
-            screen.queryByRole("button", { name: "Save Edits" })
-          ).not.toBeInTheDocument();
-          expect(
-            screen.queryByRole("button", { name: "Cancel Edit" })
-          ).not.toBeInTheDocument();
+          await waitFor(() => {
+            expect(
+              screen.queryByRole("button", { name: SAVE_ITEMS_BUTTON_LABEL })
+            ).not.toBeInTheDocument();
+            expect(
+              screen.queryByRole("button", { name: "Cancel Edit" })
+            ).not.toBeInTheDocument();
+          });
         });
         it("should render a button to edit the field again", async () => {
           await fetch.mockResponseOnce(
@@ -190,11 +208,15 @@ describe("<ItemInspector />", () => {
           );
           const nameField = screen.getByDisplayValue(selectedItem.name);
           await userEvent.type(nameField, modifiedName);
-          const saveBtn = screen.getByRole("button", { name: "Save Edits" });
+          const saveBtn = screen.getByRole("button", {
+            name: SAVE_ITEMS_BUTTON_LABEL,
+          });
           await userEvent.click(saveBtn);
-          expect(
-            screen.queryByRole("button", { name: "Edit Name" })
-          ).toBeInTheDocument();
+          await waitFor(() => {
+            expect(
+              screen.queryByRole("button", { name: "Edit Name" })
+            ).toBeInTheDocument();
+          });
         });
         it("should display the updated value", async () => {
           await fetch.mockResponseOnce(
@@ -205,21 +227,27 @@ describe("<ItemInspector />", () => {
           );
           const nameField = screen.getByDisplayValue(selectedItem.name);
           await userEvent.type(nameField, modifiedName);
-          const saveBtn = screen.getByRole("button", { name: "Save Edits" });
+          const saveBtn = screen.getByRole("button", {
+            name: SAVE_ITEMS_BUTTON_LABEL,
+          });
           await userEvent.click(saveBtn);
-          expect(
-            screen.queryByText(modifiedName, { selector: "td" })
-          ).toBeInTheDocument();
-          expect(
-            screen.queryByText(selectedItem.name, { selector: "td" })
-          ).not.toBeInTheDocument();
+          await waitFor(() => {
+            expect(
+              screen.queryByText(modifiedName, { selector: "td" })
+            ).toBeInTheDocument();
+            expect(
+              screen.queryByText(selectedItem.name, { selector: "td" })
+            ).not.toBeInTheDocument();
+          });
         });
         it("should render error message if server request fails", async () => {
           const errorMessage = "Test error message";
           await fetch.mockReject(new Error(errorMessage));
           const nameField = screen.getByDisplayValue(selectedItem.name);
           await userEvent.type(nameField, modifiedName);
-          const saveBtn = screen.getByRole("button", { name: "Save Edits" });
+          const saveBtn = screen.getByRole("button", {
+            name: SAVE_ITEMS_BUTTON_LABEL,
+          });
           await userEvent.click(saveBtn);
           await waitFor(() => {
             expect(
@@ -244,7 +272,7 @@ describe("<ItemInspector />", () => {
         });
         it("should remove the buttons to save or cancel the changes", () => {
           expect(
-            screen.queryByRole("button", { name: "Save Edits" })
+            screen.queryByRole("button", { name: SAVE_ITEMS_BUTTON_LABEL })
           ).not.toBeInTheDocument();
           expect(
             screen.queryByRole("button", { name: "Cancel Edit" })
