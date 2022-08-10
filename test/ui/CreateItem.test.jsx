@@ -44,7 +44,10 @@ describe("<AddItem />", () => {
       fetch.resetMocks();
     });
     it("should add the item to list of all items", async () => {
-      const initialItems = [{ id: 1, name: "Initial item" }];
+      const initialItems = [
+        { id: 1, name: "Initial item 1", brand: "Initial brand 1" },
+        { id: 2, name: "Initial item 2", brand: "Initial brand 2" },
+      ];
       const newItem = {
         name: "New item name",
         brand: "New item brand",
@@ -61,10 +64,10 @@ describe("<AddItem />", () => {
           JSON.stringify({ status: "success", data: createdItem })
         );
       render(
-        <div>
+        <>
           <GearTable />
           <AddItem />
-        </div>
+        </>
       );
       const nameField = screen.getByLabelText("Item Name");
       const brandField = screen.getByLabelText("Brand");
