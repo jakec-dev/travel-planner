@@ -6,12 +6,12 @@ import IconButton from "../../atoms/IconButton";
 import Container from "../../atoms/Container";
 
 function EditField(props) {
-  const { errorMessage, handleCancel, field, item, register } = props;
+  const { errors, handleCancel, field, item, register } = props;
 
   return (
     <Container flex="spread">
       <TextField
-        errorMessage={errorMessage}
+        errors={errors}
         defaultValue={item[field]}
         name={field}
         register={register}
@@ -22,7 +22,9 @@ function EditField(props) {
 }
 
 EditField.propTypes = {
-  errorMessage: PropTypes.string,
+  errors: PropTypes.shape({
+    message: PropTypes.string,
+  }),
   field: PropTypes.string.isRequired,
   handleCancel: PropTypes.func.isRequired,
   item: PropTypes.shape({
@@ -34,7 +36,7 @@ EditField.propTypes = {
 };
 
 EditField.defaultProps = {
-  errorMessage: undefined,
+  errors: undefined,
 };
 
 export default EditField;

@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorMessage } from "@hookform/error-message";
 import { addItem } from "../../../api/itemsAPI";
 import { newItemSchema } from "../../../api/validation/itemsSchema";
 import { useItemsState } from "../../../state/contexts/ItemsStateProvider";
@@ -40,7 +41,7 @@ function AddItem() {
       <Typography variant="h2">Add Item</Typography>
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <TextField
-          errorMessage={errors.name?.message}
+          errors={errors}
           id="itemName"
           label="Item Name"
           name="name"
@@ -48,7 +49,7 @@ function AddItem() {
           register={register}
         />
         <TextField
-          errorMessage={errors.brand?.message}
+          errors={errors}
           id="itemBrand"
           label="Brand"
           name="brand"
@@ -61,7 +62,11 @@ function AddItem() {
           label="Add Item"
           type="submit"
         />
-        {errors.submit && <p>{errors.submit.message}</p>}
+        <ErrorMessage
+          errors={errors}
+          name="submit"
+          render={({ message }) => <p>{message}</p>}
+        />
       </form>
     </Card>
   );

@@ -1,12 +1,13 @@
 import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import { ErrorMessage } from "@hookform/error-message";
 import "./style.css";
 
 const TextField = forwardRef((props, ref) => {
   const {
     className,
-    errorMessage,
+    errors,
     id,
     label,
     labelProps,
@@ -32,14 +33,20 @@ const TextField = forwardRef((props, ref) => {
         {...register(name)}
         {...otherInputProps}
       />
-      {errorMessage && <p>{errorMessage}</p>}
+      <ErrorMessage
+        errors={errors}
+        name={name}
+        render={({ message }) => <p>{message}</p>}
+      />
     </>
   );
 });
 
 TextField.propTypes = {
   className: PropTypes.string,
-  errorMessage: PropTypes.string,
+  errors: PropTypes.shape({
+    message: PropTypes.string,
+  }),
   id: PropTypes.string,
   label: PropTypes.string,
   labelProps: PropTypes.shape({
@@ -51,7 +58,7 @@ TextField.propTypes = {
 
 TextField.defaultProps = {
   className: undefined,
-  errorMessage: undefined,
+  errors: undefined,
   id: undefined,
   label: undefined,
   labelProps: {

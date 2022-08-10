@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { FaEdit } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorMessage } from "@hookform/error-message";
 import EditField from "../../../molecules/EditField";
 import { updateItem } from "../../../../api/itemsAPI";
 import { useItemsState } from "../../../../state/contexts/ItemsStateProvider";
@@ -65,7 +66,7 @@ function ItemDetail(props) {
       <input type="hidden" value={itemId} {...register("id")} />
       {editName ? (
         <EditField
-          errorMessage={errors.name?.message}
+          errors={errors}
           field="name"
           item={item}
           handleCancel={handleCancel("name")}
@@ -85,7 +86,7 @@ function ItemDetail(props) {
       )}
       {editBrand ? (
         <EditField
-          errorMessage={errors.brand?.message}
+          errors={errors}
           field="brand"
           item={item}
           handleCancel={handleCancel("brand")}
@@ -104,7 +105,11 @@ function ItemDetail(props) {
         </Container>
       )}
       {isDirty ? <Button type="submit" label="Save Changes" /> : null}
-      {errors.submit && <p>{errors.submit.message}</p>}
+      <ErrorMessage
+        errors={errors}
+        name="submit"
+        render={({ message }) => <p>{message}</p>}
+      />
     </form>
   );
 }
