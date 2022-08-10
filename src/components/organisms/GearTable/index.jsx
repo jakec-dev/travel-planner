@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getItems } from "../../../api/itemsAPI";
-import { useItemsState } from "../../atoms/ItemsStateProvider";
+import { useItemsState } from "../../../state/contexts/ItemsStateProvider";
 import Card from "../../atoms/Card";
 import Checkbox from "../../atoms/Checkbox";
 import ItemRow from "./ItemRow";

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FaEdit } from "react-icons/fa";
 import EditField from "../../../molecules/EditField";
 import { updateItem } from "../../../../api/itemsAPI";
-import { useItemsState } from "../../../atoms/ItemsStateProvider";
+import { useItemsState } from "../../../../state/contexts/ItemsStateProvider";
 import { existingItemSchema } from "../../../../api/validation/itemsSchema";
 import Typography from "../../../atoms/Typography";
 import IconButton from "../../../atoms/IconButton";

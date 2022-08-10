@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { render } from "@testing-library/react";
-import ItemsStateProvider from "../../src/components/atoms/ItemsStateProvider";
+import ItemsStateProvider from "../../src/state/contexts/ItemsStateProvider";
 
 function AllTheProviders({ children }) {
   return <ItemsStateProvider>{children}</ItemsStateProvider>;

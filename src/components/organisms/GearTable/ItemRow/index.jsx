@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa";
 import { deleteItemById } from "../../../../api/itemsAPI";
-import { useItemsState } from "../../../atoms/ItemsStateProvider";
+import { useItemsState } from "../../../../state/contexts/ItemsStateProvider";
 import Checkbox from "../../../atoms/Checkbox";
 import IconButton from "../../../atoms/IconButton";
 

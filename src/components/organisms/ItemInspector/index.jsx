@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "../../atoms/Container";
-import { useItemsState } from "../../atoms/ItemsStateProvider";
+import { useItemsState } from "../../../state/contexts/ItemsStateProvider";
 import ItemDetail from "./ItemDetail";
 
 function ItemInspector() {
