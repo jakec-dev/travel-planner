@@ -25,8 +25,15 @@ function AddItem() {
   });
 
   const onSubmitHandler = async (data) => {
-    const { name, brand } = data;
-    const newItem = { name, brand: brand || undefined };
+    const { name, brand, weight, url, price, notes } = data;
+    const newItem = {
+      name,
+      brand: brand || undefined,
+      weight: weight || undefined,
+      url: url || undefined,
+      price: price || undefined,
+      notes: notes || undefined,
+    };
     try {
       const createdItem = await addItem(newItem);
       itemsActions.addItem(createdItem);
@@ -54,6 +61,38 @@ function AddItem() {
           label="Brand"
           name="brand"
           placeholder="Add item brand"
+          register={register}
+        />
+        <TextField
+          errors={errors}
+          id="itemWeight"
+          label="Weight"
+          name="weight"
+          placeholder="Add item weight"
+          register={register}
+        />
+        <TextField
+          errors={errors}
+          id="itemURL"
+          label="URL"
+          name="url"
+          placeholder="Add item URL"
+          register={register}
+        />
+        <TextField
+          errors={errors}
+          id="itemPrice"
+          label="Price"
+          name="price"
+          placeholder="Add item price"
+          register={register}
+        />
+        <TextField
+          errors={errors}
+          id="itemNotes"
+          label="Notes"
+          name="notes"
+          placeholder="Add item notes"
           register={register}
         />
         <Button

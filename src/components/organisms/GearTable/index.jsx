@@ -53,6 +53,10 @@ function GearTable() {
               </th>
               <th>Name</th>
               <th>Brand</th>
+              <th>Weight</th>
+              <th>URL</th>
+              <th>Price</th>
+              <th>Notes</th>
               <th>Actions</th>
             </tr>
           </thead>

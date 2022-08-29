@@ -3,17 +3,23 @@ import * as yup from "yup";
 const newItemSchema = yup.object().shape({
   name: yup.string().trim().required(),
   brand: yup.string().trim(),
-  weight: yup.number().trim(),
+  weight: yup
+    .number()
+    .transform((_, val) => (val !== "" ? Number(val) : null))
+    .nullable()
+    .notRequired(),
   url: yup.string().trim(),
   price: yup
     .number()
-    .trim()
-    .test({
-      name: "is-currency",
-      message:
-        "Price must be a positive number with a maximum of 2 decimal places",
-      test: (value) => value.match(/^[0-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/),
-    }),
+    .transform((_, val) => (val !== "" ? Number(val) : null))
+    .test(
+      "is-currency",
+      "Price must be a positive number with a maximum of 2 decimal places",
+      (value) =>
+        String(value).match(/^[0-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/) || !value
+    )
+    .nullable()
+    .notRequired(),
   notes: yup.string().trim(),
 });
 
