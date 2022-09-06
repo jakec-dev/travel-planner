@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { FaEdit } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
-import EditField from "../../../molecules/EditField";
 import { updateItem } from "../../../../api/itemsAPI";
 import { useItemsState } from "../../../../state/contexts/ItemsStateProvider";
 import { existingItemSchema } from "../../../../api/validation/itemsSchema";
-import Typography from "../../../atoms/Typography";
-import IconButton from "../../../atoms/IconButton";
-import Container from "../../../atoms/Container";
 import Button from "../../../atoms/Button";
+import ItemField from "./ItemField";
 
 function ItemDetail(props) {
   const { itemId } = props;
   const { items, itemsActions } = useItemsState();
   const item = items.find((i) => i.id === itemId);
-  const [editName, setEditName] = useState(false);
-  const [editBrand, setEditBrand] = useState(false);
+  const [editFields, setEditFields] = useState([]);
+  const FIELDS = [
+    { name: "name" },
+    { name: "brand" },
+    { name: "weight", inputProps: { type: "number" } },
+    { name: "url" },
+    { name: "price", inputProps: { type: "number", step: 0.01, min: 0 } },
+    { name: "notes" },
+  ];
 
   const {
     formState: { errors, isDirty },
@@ -28,82 +31,48 @@ function ItemDetail(props) {
     resetField,
     setError,
   } = useForm({
-    defaultValues: { id: itemId, name: item.name, brand: item.brand },
+    defaultValues: {
+      id: itemId,
+      name: item.name,
+      brand: item.brand || undefined,
+      weight: item.weight || undefined,
+      url: item.url || undefined,
+      price: item.price || undefined,
+      notes: item.notes || undefined,
+    },
     resolver: yupResolver(existingItemSchema),
   });
 
   const onSubmitHandler = async (data) => {
-    const modifiedItem = { ...item, ...data };
+    const modifiedItem = { ...item, ...data }; // seems that data already includes ...item, so this may not be required. Investigate further
+    console.log("modifiedItem: ", modifiedItem);
     try {
       const updatedItem = await updateItem(modifiedItem);
       itemsActions.updateItem(updatedItem);
-      setEditName(false);
-      setEditBrand(false);
+      setEditFields([]);
       reset();
     } catch (err) {
       setError("submit", { message: err.message });
     }
   };
 
-  const handleCancel = (field) => () => {
-    switch (field) {
-      case "name":
-        setEditName(false);
-        break;
-      case "brand":
-        setEditBrand(false);
-        break;
-      default:
-        setEditName(false);
-        setEditBrand(false);
-        break;
-    }
-    resetField(field);
-  };
-
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <input type="hidden" value={itemId} {...register("id")} />
-      {editName ? (
-        <EditField
+      {FIELDS.map((field) => (
+        <ItemField
+          dataTestId={`itemDetail${field.name}`}
+          editFields={editFields}
           errors={errors}
-          field="name"
+          field={field.name}
+          key={field.name}
+          inputProps={field.inputProps}
           item={item}
-          handleCancel={handleCancel("name")}
           register={register}
+          resetField={resetField}
+          setEditFields={setEditFields}
         />
-      ) : (
-        <Container flex="spread">
-          <Typography data-testid="itemDetailName" variant="h2">
-            {item.name}
-          </Typography>
-          <IconButton
-            Icon={FaEdit}
-            label="Edit Name"
-            onClick={() => setEditName(true)}
-          />
-        </Container>
-      )}
-      {editBrand ? (
-        <EditField
-          errors={errors}
-          field="brand"
-          item={item}
-          handleCancel={handleCancel("brand")}
-          register={register}
-        />
-      ) : (
-        <Container flex="spread">
-          <Typography data-testid="itemDetailBrand">
-            Brand: {item.brand}
-          </Typography>
-          <IconButton
-            Icon={FaEdit}
-            label="Edit Brand"
-            onClick={() => setEditBrand(true)}
-          />
-        </Container>
-      )}
+      ))}
       {isDirty ? <Button type="submit" label="Save Changes" /> : null}
       <ErrorMessage
         errors={errors}
