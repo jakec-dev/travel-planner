@@ -8,20 +8,13 @@ import { useItemsState } from "../../../../state/contexts/ItemsStateProvider";
 import { existingItemSchema } from "../../../../api/validation/itemsSchema";
 import Button from "../../../atoms/Button";
 import ItemField from "./ItemField";
+import FIELDS from "../../../_settings/_itemFields";
 
 function ItemDetail(props) {
   const { itemId } = props;
   const { items, itemsActions } = useItemsState();
   const item = items.find((i) => i.id === itemId);
   const [editFields, setEditFields] = useState([]);
-  const FIELDS = [
-    { name: "name" },
-    { name: "brand" },
-    { name: "weight", inputProps: { type: "number" } },
-    { name: "url" },
-    { name: "price", inputProps: { type: "number", step: 0.01, min: 0 } },
-    { name: "notes" },
-  ];
 
   const {
     formState: { errors, isDirty },

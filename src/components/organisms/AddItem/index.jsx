@@ -10,6 +10,7 @@ import Card from "../../atoms/Card";
 import Typography from "../../atoms/Typography";
 import TextField from "../../atoms/TextField";
 import "./style.css";
+import FIELDS from "../../_settings/_itemFields";
 
 function AddItem() {
   const { itemsActions } = useItemsState();
@@ -47,54 +48,17 @@ function AddItem() {
     <Card>
       <Typography variant="h2">Add Item</Typography>
       <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <TextField
-          errors={errors}
-          id="itemName"
-          label="Item Name"
-          name="name"
-          placeholder="Add item name"
-          register={register}
-        />
-        <TextField
-          errors={errors}
-          id="itemBrand"
-          label="Brand"
-          name="brand"
-          placeholder="Add item brand"
-          register={register}
-        />
-        <TextField
-          errors={errors}
-          id="itemWeight"
-          label="Weight"
-          name="weight"
-          placeholder="Add item weight"
-          register={register}
-        />
-        <TextField
-          errors={errors}
-          id="itemURL"
-          label="URL"
-          name="url"
-          placeholder="Add item URL"
-          register={register}
-        />
-        <TextField
-          errors={errors}
-          id="itemPrice"
-          label="Price"
-          name="price"
-          placeholder="Add item price"
-          register={register}
-        />
-        <TextField
-          errors={errors}
-          id="itemNotes"
-          label="Notes"
-          name="notes"
-          placeholder="Add item notes"
-          register={register}
-        />
+        {FIELDS.map((field) => (
+          <TextField
+            errors={errors}
+            label={field.name}
+            name={field.name}
+            placeholder={`Add item ${field.name}`}
+            register={register}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...field.inputProps}
+          />
+        ))}
         <Button
           className="addItem__btn"
           disabled={!isValid}
