@@ -45,7 +45,7 @@ describe("<ItemInspector />", () => {
       expect(selectSecondItemCheckbox).toBeInTheDocument();
     });
     await userEvent.click(selectSecondItemCheckbox);
-    expect(screen.getByTestId("itemDetailName")).toHaveTextContent(
+    expect(screen.getByTestId("itemDetailname")).toHaveTextContent(
       selectedItem.name
     );
   });
@@ -100,41 +100,41 @@ describe("<ItemInspector />", () => {
       await userEvent.click(selectSecondItemCheckbox);
     });
     it("should render the item name and brand", () => {
-      expect(screen.getByTestId("itemDetailName")).toHaveTextContent(
+      expect(screen.getByTestId("itemDetailname")).toHaveTextContent(
         selectedItem.name
       );
-      expect(screen.getByTestId("itemDetailBrand")).toHaveTextContent(
+      expect(screen.getByTestId("itemDetailbrand")).toHaveTextContent(
         selectedItem.brand
       );
     });
     it("should render buttons to edit each item field", () => {
       expect(
-        screen.queryByRole("button", { name: "Edit Name" })
+        screen.queryByRole("button", { name: "Edit name" })
       ).toBeInTheDocument();
       expect(
-        screen.queryByRole("button", { name: "Edit Brand" })
+        screen.queryByRole("button", { name: "Edit brand" })
       ).toBeInTheDocument();
     });
     describe("When an edit button is clicked", () => {
       let editNameBtn;
       beforeEach(async () => {
-        editNameBtn = screen.getByRole("button", { name: "Edit Name" });
+        editNameBtn = screen.getByRole("button", { name: "Edit name" });
         await userEvent.click(editNameBtn);
       });
       it("shoould convert the field to a text input", async () => {
-        const editBrandBtn = screen.getByRole("button", { name: "Edit Brand" });
+        const editBrandBtn = screen.getByRole("button", { name: "Edit brand" });
         await userEvent.click(editBrandBtn);
         expect(
           screen.queryByDisplayValue(selectedItem.name)
         ).toBeInTheDocument();
-        expect(screen.queryByTestId("itemDetailName")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("itemDetailname")).not.toBeInTheDocument();
         expect(
           screen.queryByDisplayValue(selectedItem.brand)
         ).toBeInTheDocument();
-        expect(screen.queryByTestId("itemDetailBrand")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("itemDetailbrand")).not.toBeInTheDocument();
       });
       it("should remove the button to edit the field", async () => {
-        const editBrandBtn = screen.getByRole("button", { name: "Edit Brand" });
+        const editBrandBtn = screen.getByRole("button", { name: "Edit brand" });
         await userEvent.click(editBrandBtn);
         expect(editNameBtn).not.toBeInTheDocument();
         expect(editBrandBtn).not.toBeInTheDocument();
@@ -171,7 +171,7 @@ describe("<ItemInspector />", () => {
           });
           await userEvent.click(saveBtn);
           await waitFor(() => {
-            expect(screen.queryByTestId("itemDetailName")).toBeInTheDocument();
+            expect(screen.queryByTestId("itemDetailname")).toBeInTheDocument();
             expect(
               screen.queryByDisplayValue(modifiedName)
             ).not.toBeInTheDocument();
@@ -214,7 +214,7 @@ describe("<ItemInspector />", () => {
           await userEvent.click(saveBtn);
           await waitFor(() => {
             expect(
-              screen.queryByRole("button", { name: "Edit Name" })
+              screen.queryByRole("button", { name: "Edit name" })
             ).toBeInTheDocument();
           });
         });
@@ -265,7 +265,7 @@ describe("<ItemInspector />", () => {
           await userEvent.click(cancelBtn);
         });
         it("should convert the field back to uneditable text", () => {
-          expect(screen.queryByTestId("itemDetailName")).toBeInTheDocument();
+          expect(screen.queryByTestId("itemDetailname")).toBeInTheDocument();
           expect(
             screen.queryByDisplayValue(modifiedName)
           ).not.toBeInTheDocument();
@@ -280,7 +280,7 @@ describe("<ItemInspector />", () => {
         });
         it("should render a button to edit the field again", () => {
           expect(
-            screen.queryByRole("button", { name: "Edit Name" })
+            screen.queryByRole("button", { name: "Edit name" })
           ).toBeInTheDocument();
         });
         it("should display the original value", () => {

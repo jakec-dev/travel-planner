@@ -43,6 +43,10 @@ function ItemRow(props) {
       </td>
       <td>{item.name}</td>
       <td data-testid="itemBrand">{item.brand}</td>
+      <td>{item.weight && `${item.weight}g`}</td>
+      <td>{item.url && <a href={item.url}>{item.url}</a>}</td>
+      <td>{item.price && `$${item.price}`}</td>
+      <td>{item.notes}</td>
       <td>
         <IconButton
           Icon={FaTimes}
@@ -60,6 +64,10 @@ ItemRow.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     brand: PropTypes.string,
+    weight: PropTypes.number,
+    url: PropTypes.string,
+    price: PropTypes.number,
+    notes: PropTypes.string,
   }).isRequired,
 };
 

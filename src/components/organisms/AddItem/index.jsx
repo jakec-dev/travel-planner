@@ -10,6 +10,7 @@ import Card from "../../atoms/Card";
 import Typography from "../../atoms/Typography";
 import TextField from "../../atoms/TextField";
 import "./style.css";
+import FIELDS from "../../_settings/_itemFields";
 
 function AddItem() {
   const { itemsActions } = useItemsState();
@@ -25,8 +26,15 @@ function AddItem() {
   });
 
   const onSubmitHandler = async (data) => {
-    const { name, brand } = data;
-    const newItem = { name, brand: brand || undefined };
+    const { name, brand, weight, url, price, notes } = data;
+    const newItem = {
+      name,
+      brand: brand || undefined,
+      weight: weight || undefined,
+      url: url || undefined,
+      price: price || undefined,
+      notes: notes || undefined,
+    };
     try {
       const createdItem = await addItem(newItem);
       itemsActions.addItem(createdItem);
@@ -40,22 +48,17 @@ function AddItem() {
     <Card>
       <Typography variant="h2">Add Item</Typography>
       <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <TextField
-          errors={errors}
-          id="itemName"
-          label="Item Name"
-          name="name"
-          placeholder="Add item name"
-          register={register}
-        />
-        <TextField
-          errors={errors}
-          id="itemBrand"
-          label="Brand"
-          name="brand"
-          placeholder="Add item brand"
-          register={register}
-        />
+        {FIELDS.map((field) => (
+          <TextField
+            errors={errors}
+            label={field.name}
+            name={field.name}
+            placeholder={`Add item ${field.name}`}
+            register={register}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...field.inputProps}
+          />
+        ))}
         <Button
           className="addItem__btn"
           disabled={!isValid}

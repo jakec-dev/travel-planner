@@ -15,4 +15,5 @@
 .textField__label {
   font-family: var(--base-font-family);
   padding: 16px 0;
+  text-transform: capitalize;
 }
