@@ -6,20 +6,23 @@ import Logo from "./components/molecules/Logo";
 import ItemInspector from "./components/organisms/ItemInspector";
 import Container from "./components/atoms/Container";
 import "./bootstrap";
+import ApolloProvider from "./api/graphQL/contexts/ApolloProvider";
 
 function App() {
   return (
     <Container align="center" element="main" width="page">
       <Logo />
-      <ItemsStateProvider>
-        <Container flex="default">
-          <GearTable />
-          <ItemInspector />
-        </Container>
-        <Container mt="m" width="full">
-          <AddItem />
-        </Container>
-      </ItemsStateProvider>
+      <ApolloProvider>
+        <ItemsStateProvider>
+          <Container flex="default">
+            <GearTable />
+            <ItemInspector />
+          </Container>
+          <Container mt="m" width="full">
+            <AddItem />
+          </Container>
+        </ItemsStateProvider>
+      </ApolloProvider>
     </Container>
   );
 }

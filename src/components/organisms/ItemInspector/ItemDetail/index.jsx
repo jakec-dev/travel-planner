@@ -37,8 +37,7 @@ function ItemDetail(props) {
   });
 
   const onSubmitHandler = async (data) => {
-    const modifiedItem = { ...item, ...data }; // seems that data already includes ...item, so this may not be required. Investigate further
-    console.log("modifiedItem: ", modifiedItem);
+    const modifiedItem = { ...item, ...data };
     try {
       const updatedItem = await updateItem(modifiedItem);
       itemsActions.updateItem(updatedItem);

@@ -50,6 +50,7 @@ function AddItem() {
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         {FIELDS.map((field) => (
           <TextField
+            key={field.name}
             errors={errors}
             label={field.name}
             name={field.name}
